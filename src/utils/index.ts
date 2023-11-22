@@ -1,1 +1,1 @@
-export * from './className.utility.ts';
+export * from './className.utility';
