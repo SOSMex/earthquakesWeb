@@ -3,7 +3,6 @@
     "next",
     "next/core-web-vitals",
     "airbnb",
-    "airbnb/hooks",
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/errors",
@@ -16,9 +15,6 @@
   "rules": {
     "no-unused-vars": "error",
     "linebreak-style": "off",
-    "react/jsx-filename-extension": [
-      2,
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
-    ]
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }]
   }
 }
