@@ -52,6 +52,17 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        brand: {
+          purple: 'hsl(var(--brand-purple))',
+        },
+        ritcher: {
+          scales: {
+            green: 'hsl(var(--ritcher-scales-green))',
+            yellow: 'hsl(var(--ritcher-scales-yellow))',
+            orange: 'hsl(var(--ritcher-scales-orange))',
+            red: 'hsl(var(--ritcher-scales-red))',
+          },
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
