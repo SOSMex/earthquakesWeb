@@ -1,9 +1,7 @@
-import { ModeToggle } from '@/features/switch-app-theme/SwitchAppTheme';
+import HomeHeroSection from '@/components/sections/HomeHeroSection/HomeHeroSection';
 
-export default function Home() {
-  return (
-    <main>
-      <ModeToggle />
-    </main>
-  );
+function App() {
+  return <HomeHeroSection />;
 }
+
+export default App;
