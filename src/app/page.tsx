@@ -1,4 +1,4 @@
-import HomeHeroSection from '@/components/sections/HomeHeroSection/HomeHeroSection';
+import { HomeHeroSection } from '@/components/sections';
 
 function App() {
   return <HomeHeroSection />;

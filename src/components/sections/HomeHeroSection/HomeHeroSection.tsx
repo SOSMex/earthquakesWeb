@@ -2,10 +2,10 @@ import { GoogleAdsBanner } from '@/features';
 
 function HomeHeroSection() {
   return (
-    <section className="container mx-auto my-4 text-center text-7xl font-black ">
+    <section className="container mx-auto my-4 text-center text-7xl font-black">
       <div className="flex flex-col-reverse gap-8 lg:flex-col">
         <GoogleAdsBanner />
-        <h1 className="text-5xl font-semibold text-[#48347A]">Sismos de México</h1>
+        <h1 className="text-brand-purple text-5xl font-semibold">Sismos de México</h1>
       </div>
       <p className="mt-8 text-xl font-normal">
         A continuacion te ofrecemos información oficial de los reportes de los últimos sismos

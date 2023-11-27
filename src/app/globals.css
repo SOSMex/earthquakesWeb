@@ -33,6 +33,13 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    /* Brand colors */
+    --brand-purple: 257, 40%, 34%;
+    --ritcher-scales-green: 122, 98%, 76%;
+    --ritcher-scales-yellow: 61, 91%, 71%;
+    --ritcher-scales-orange: 20, 98%, 76%;
+    --ritcher-scales-red: 0, 98%, 76%;
   }
 
   .dark {
@@ -63,6 +70,13 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    /* Brand colors */
+    --brand-purple: 257, 40%, 34%;
+    --ritcher-scales-green: 122, 98%, 76%;
+    --ritcher-scales-yellow: 61, 91%, 71%;
+    --ritcher-scales-orange: 20, 98%, 76%;
+    --ritcher-scales-red: 0, 98%, 76%;
   }
 }
 
