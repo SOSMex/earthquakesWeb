@@ -1,7 +1,12 @@
-import { HomeHeroSection } from '@/components/sections';
+import { HomeHeroSection, EarthquakesMapSection } from '@/components/sections';
 
-function App() {
-  return <HomeHeroSection />;
+function HomePage() {
+  return (
+    <>
+      <HomeHeroSection />
+      <EarthquakesMapSection />
+    </>
+  );
 }
 
-export default App;
+export default HomePage;
