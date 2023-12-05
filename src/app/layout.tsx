@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/AppThemeProvider/AppThemeProvider';
+import { NavBar } from '@/features';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,14 +13,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html id="app" lang="es">
+      <body
+        id="app-body"
+        className={`relative bg-primary text-primary-foreground ${inter.className}`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <NavBar />
           {children}
         </ThemeProvider>
       </body>
