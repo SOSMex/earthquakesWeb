@@ -19,6 +19,7 @@
     "import/extensions": "off",
     "react/jsx-props-no-spreading": "off",
     "object-curly-newline": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "import/no-cycle": "off"
   }
 }
