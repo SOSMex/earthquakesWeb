@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu } from 'lucide-react';
 import { NavbarMobileProps } from './model';
 import { NavItem } from '@/features';
@@ -10,23 +10,19 @@ export function NavbarMobile(props: NavbarMobileProps) {
   const { navigation } = props;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuStyles = isMenuOpen ? 'h-screen z-10' : 'h-[0rem]';
+  const bodyRef = useRef<HTMLBodyElement | null>(null);
 
   function handleOpenMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
 
-  document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
   useEffect(() => {
-    const htmlEl = document.getElementById('html');
-    const bodyEl = document.getElementById('body');
-    if (!htmlEl) return;
-    if (!bodyEl) return;
-    if (isMenuOpen) {
-      htmlEl.classList.add('overflow-hidden');
-      bodyEl.classList.add('overflow-hidden');
-    } else {
-      htmlEl.classList.remove('overflow-hidden');
-      bodyEl.classList.remove('overflow-hidden');
+    bodyRef.current = document.querySelector('body');
+  }, []);
+
+  useEffect(() => {
+    if (bodyRef.current) {
+      bodyRef.current.style.overflow = isMenuOpen ? 'hidden' : 'auto';
     }
   }, [isMenuOpen]);
 
@@ -42,7 +38,7 @@ export function NavbarMobile(props: NavbarMobileProps) {
         )}
       >
         {navigation.map((item) => (
-          <NavItem {...item} />
+          <NavItem {...item} onClick={() => handleOpenMenu()} />
         ))}
       </div>
       <button
