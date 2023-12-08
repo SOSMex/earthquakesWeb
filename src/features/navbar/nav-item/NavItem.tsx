@@ -3,13 +3,16 @@ import { NavItemProps } from './model';
 import { cn } from '@/utils';
 
 export function NavItem(props: NavItemProps) {
-  const { className, href, label, onClick } = props;
+  const { className, href, label, onClick, active } = props;
 
   return (
     <Link
       onClick={onClick}
       className={cn(
-        'my-5 cursor-pointer font-bold hover:text-[#48347A] hover:underline hover:decoration-[#72629B] hover:decoration-4 hover:underline-offset-[0.75rem] md:mx-4 md:my-0',
+        'hover:text-brand/80 hover:decoration-brand/80 cursor-pointer font-medium hover:underline hover:decoration-4 hover:underline-offset-[0.75rem]',
+        active
+          ? 'text-brand decoration-brand underline decoration-4 underline-offset-[0.75rem]'
+          : '',
         className,
       )}
       href={href}

@@ -3,4 +3,5 @@ export interface NavItemProps {
   href: string;
   className?: string;
   onClick?: () => void;
+  active?: boolean;
 }
