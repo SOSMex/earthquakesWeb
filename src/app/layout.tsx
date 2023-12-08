@@ -14,10 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html id="app" lang="es">
-      <body
-        id="app-body"
-        className={`relative bg-primary text-primary-foreground ${inter.className}`}
-      >
+      <body id="app-body" className={`relative ${inter.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
