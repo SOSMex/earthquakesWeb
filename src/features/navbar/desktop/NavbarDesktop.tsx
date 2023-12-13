@@ -12,7 +12,7 @@ export function NavbarDesktop(props: NavbarDesktopProps) {
   const pathname = usePathname();
 
   return (
-    <header className="container sticky top-0 mx-auto flex items-center justify-between bg-background px-8 py-4 max-md:hidden">
+    <header className="sticky top-0 mx-auto flex w-full items-center justify-between bg-background px-12 py-4 max-md:hidden">
       <Link href="/">
         <Image
           alt="Sismos México"
