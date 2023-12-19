@@ -3,10 +3,10 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Menu } from 'lucide-react';
-import { NavbarMobileProps } from './model';
 import { NavItem } from '@/features';
 import { cn } from '@/lib/utils';
 import { AppDownloadButton } from '@/components/widgets';
+import { NavbarMobileProps } from './model';
 
 export function NavbarMobile(props: NavbarMobileProps) {
   const { navigation } = props;
