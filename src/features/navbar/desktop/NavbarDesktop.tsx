@@ -3,9 +3,9 @@
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { NavItem } from '../nav-item/NavItem';
-import { NavbarDesktopProps } from './model';
 import { AppDownloadButton } from '@/components/widgets';
+import { NavItem } from '@/features';
+import { NavbarDesktopProps } from './model';
 
 export function NavbarDesktop(props: NavbarDesktopProps) {
   const { navigation } = props;
