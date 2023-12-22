@@ -5,7 +5,7 @@ export function RitcherCard(props: Level) {
   return (
     <li
       key={id}
-      className={`flex items-center justify-center gap-6 rounded-lg p-4 text-sm ${color}`}
+      className={`flex items-center justify-center gap-6 rounded-lg p-4 text-sm text-black ${color}`}
     >
       <h3 className="font-semibold">{label}</h3>
       <p>{description}</p>
