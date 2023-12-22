@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const host = request.headers.get('host') ?? 'no-host';
-  const allowedOrigins = process.env.ALLOWED_ORIGINS!.split(',');
+  const allowedOrigins = process.env.ALLOWED_ORIGINS!?.split(',') ?? [];
 
   if (allowedOrigins.includes(host)) {
     return NextResponse.next();
