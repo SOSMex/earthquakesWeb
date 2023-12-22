@@ -1,12 +1,11 @@
-import { HomeHeroSection, EarthquakesMapSection } from '@/components/sections';
-import RitcherCards from '@/components/sections/Cards/RitcherCard';
+import { HomeHeroSection, EarthquakesMapSection, RitcherScaleSection } from '@/components/sections';
 
 function HomePage() {
   return (
     <>
       <HomeHeroSection />
       <EarthquakesMapSection />
-      <RitcherCards />
+      <RitcherScaleSection />
     </>
   );
 }
