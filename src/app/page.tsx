@@ -1,4 +1,5 @@
 import { HomeHeroSection, EarthquakesMapSection, RitcherScaleSection } from '@/components/sections';
+import { SeeMoreSection } from '@/components/sections/SeeMoreSection/SeeMoreSection';
 
 function HomePage() {
   return (
@@ -6,6 +7,7 @@ function HomePage() {
       <HomeHeroSection />
       <EarthquakesMapSection />
       <RitcherScaleSection />
+      <SeeMoreSection />
     </>
   );
 }
