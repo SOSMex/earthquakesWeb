@@ -34,6 +34,8 @@
 
     --radius: 0.5rem;
 
+    --brand-background: 257 61% 91%;
+
     /* Brand colors */
     --brand-purple: 257 40% 34%;
 
@@ -78,6 +80,8 @@
     --ritcher-scales-yellow: 61 91% 71%;
     --ritcher-scales-orange: 20 98% 76%;
     --ritcher-scales-red: 0 98% 76%;
+
+    --brand-background: 256 59% 9%;
   }
 }
 
