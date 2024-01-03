@@ -52,7 +52,10 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        brand: 'hsl(var(--brand-purple))',
+        brand: {
+          DEFAULT: 'hsl(var(--brand-purple))',
+          background: 'hsl(var(--brand-background))',
+        },
 
         ritcher: {
           scales: {
