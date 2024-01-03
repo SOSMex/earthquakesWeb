@@ -1,7 +1,8 @@
 import * as React from 'react';
-import cn from 'classnames';
+import { cn } from '@/utils';
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
+  // eslint-disable-next-line react/prop-types
   ({ className, ...props }, ref) => (
     <div className="relative w-full overflow-auto">
       <table ref={ref} className={cn('w-full caption-bottom text-sm', className)} {...props} />
@@ -13,6 +14,7 @@ Table.displayName = 'Table';
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <thead ref={ref} className={cn('[&_tr]:border-b', className)} {...props} />
 ));
@@ -21,6 +23,7 @@ TableHeader.displayName = 'TableHeader';
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <tbody ref={ref} className={cn('[&_tr:last-child]:border-0', className)} {...props} />
 ));
@@ -29,6 +32,7 @@ TableBody.displayName = 'TableBody';
 const TableFooter = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
@@ -39,6 +43,7 @@ const TableFooter = React.forwardRef<
 TableFooter.displayName = 'TableFooter';
 
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
+  // eslint-disable-next-line react/prop-types
   ({ className, ...props }, ref) => (
     <tr
       ref={ref}
@@ -55,6 +60,7 @@ TableRow.displayName = 'TableRow';
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <th
     ref={ref}
@@ -70,6 +76,7 @@ TableHead.displayName = 'TableHead';
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
@@ -82,6 +89,7 @@ TableCell.displayName = 'TableCell';
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <caption ref={ref} className={cn('mt-4 text-sm text-muted-foreground', className)} {...props} />
 ));

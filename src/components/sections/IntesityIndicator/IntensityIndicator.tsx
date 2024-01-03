@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import cn from 'classnames';
+import { cn } from '@/utils';
 
 const LIGHT: number = 2;
 const MODERATE: number = 4;
