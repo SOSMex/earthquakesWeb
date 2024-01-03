@@ -36,7 +36,7 @@ const levels: Level[] = [
   },
 ];
 
-function RitcherScaleSection() {
+export function RitcherScaleSection() {
   return (
     <section className="container mx-auto my-8 p-4">
       <h2 className="mb-6 text-center text-3xl font-semibold text-brand">
@@ -50,5 +50,3 @@ function RitcherScaleSection() {
     </section>
   );
 }
-
-export default RitcherScaleSection;

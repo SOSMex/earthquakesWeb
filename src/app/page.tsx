@@ -1,4 +1,9 @@
-import { HomeHeroSection, EarthquakesMapSection, RitcherScaleSection } from '@/components/sections';
+import {
+  HomeHeroSection,
+  EarthquakesMapSection,
+  RitcherScaleSection,
+  SeeMoreSection,
+} from '@/components/sections';
 import { baseUrl } from '@/config';
 
 async function getEarthquakesData() {
@@ -24,6 +29,7 @@ async function HomePage() {
       <HomeHeroSection />
       <EarthquakesMapSection />
       <RitcherScaleSection />
+      <SeeMoreSection />
       {JSON.stringify(earthquakes)}
     </>
   );
