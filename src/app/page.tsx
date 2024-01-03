@@ -1,8 +1,23 @@
 import { HomeHeroSection, EarthquakesMapSection, RitcherScaleSection } from '@/components/sections';
+import { baseUrl } from '@/config';
+
+async function getEarthquakesData() {
+  try {
+    const response = await fetch(
+      `${baseUrl}/api/earthquakes/latest?key=${process.env.SELF_SECRET}`,
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return {};
+  }
+}
 
 async function HomePage() {
-  const response = await fetch(`${process.env.API_URL}/api/earthquakes/latest`);
-  const earthquakes = await response.json();
+  const earthquakes = await getEarthquakesData();
 
   return (
     <>
