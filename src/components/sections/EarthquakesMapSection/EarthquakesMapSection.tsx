@@ -1,4 +1,4 @@
-import { EarthquakesMap } from '@/features/earthquakes-map/EarthquakesMap';
+import { EarthquakesMap } from '@/features';
 
 function EarthquakesMapSection() {
   return (
