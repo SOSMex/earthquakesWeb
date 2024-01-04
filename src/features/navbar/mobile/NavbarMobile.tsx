@@ -30,7 +30,7 @@ export function NavbarMobile(props: NavbarMobileProps) {
   }, [isMenuOpen]);
 
   return (
-    <header className="sticky top-0 flex items-center justify-between bg-background px-8 py-4 md:hidden">
+    <header className="sticky top-0 z-50 flex items-center justify-between bg-background px-8 py-4 md:hidden">
       <button name="navigation menu" type="button" onClick={handleOpenMenu}>
         <Menu className="cursor-pointer md:hidden" />
       </button>
@@ -42,7 +42,12 @@ export function NavbarMobile(props: NavbarMobileProps) {
           )}
         >
           {navigation.map((item) => (
-            <NavItem {...item} onClick={() => handleOpenMenu()} active={pathname === item.href} />
+            <NavItem
+              {...item}
+              onClick={() => handleOpenMenu()}
+              active={pathname === item.href}
+              key={item.label}
+            />
           ))}
         </ul>
       </nav>

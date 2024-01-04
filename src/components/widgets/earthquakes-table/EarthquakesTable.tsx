@@ -23,14 +23,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   });
 
   return (
-    <div className="container mx-auto overflow-x-auto border px-12 sm:px-12 md:px-12 lg:px-24">
-      <Table className="w-full">
+    <section className="container mx-auto overflow-x-auto">
+      <Table className="mx-auto w-full max-w-7xl">
         {/* Ocultar TableHeader en resoluciones menores a lg */}
-        <TableHeader className="hidden lg:table-header-group">
+        <TableHeader className="hidden md:table-header-group">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className="whitespace-nowrap lg:whitespace-normal">
+                <TableHead
+                  key={header.id}
+                  className="whitespace-nowrap text-center text-primary lg:whitespace-normal"
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(header.column.columnDef.header, header.getContext())}
@@ -42,9 +45,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         <TableBody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
+              <TableRow className="border border-primary" key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="block lg:table-cell">
+                  <TableCell
+                    key={cell.id}
+                    className="block md:table-cell md:border md:border-primary md:text-center"
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
@@ -59,6 +65,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           )}
         </TableBody>
       </Table>
-    </div>
+    </section>
   );
 }

@@ -12,7 +12,7 @@ export function NavbarDesktop(props: NavbarDesktopProps) {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 mx-auto flex w-full items-center justify-between bg-background px-12 py-4 max-md:hidden">
+    <header className="sticky top-0 z-50 mx-auto flex w-full items-center justify-between bg-background px-12 py-4 max-md:hidden">
       <Link href="/">
         <Image
           alt="Sismos México"
@@ -25,7 +25,7 @@ export function NavbarDesktop(props: NavbarDesktopProps) {
       <nav>
         <ul className="flex gap-10 transition-all duration-500 ease-in">
           {navigation.map((item) => (
-            <NavItem {...item} active={pathname === item.href} />
+            <NavItem {...item} active={pathname === item.href} key={item.label} />
           ))}
         </ul>
       </nav>
