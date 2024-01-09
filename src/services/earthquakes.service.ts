@@ -50,5 +50,7 @@ function parseEarthquake(earthquake: Record<string, unknown>): EarthquakeProps {
 }
 
 export function parseEarthquakes(earthquakes: Record<string, unknown>[]) {
+  if (!earthquakes) return [];
+
   return earthquakes.map((earthquake) => parseEarthquake(earthquake));
 }
