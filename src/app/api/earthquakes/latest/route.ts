@@ -1,5 +1,7 @@
 import { apiGuard, isValidSecret } from '@/utils';
 
+const DATA_API_KEY = process.env.DATA_API_KEY!;
+
 export async function GET(request: Request) {
   const apiUrl = process.env.DATA_API_URL!;
   const apiVersion = process.env.DATA_API_VERSION!;
@@ -13,7 +15,7 @@ export async function GET(request: Request) {
   const res = await fetch(`${apiUrl}/${apiVersion}/sismos/latest/${limit}`, {
     headers: {
       'Content-Type': 'application/json',
-      'X-API-KEY': process.env.DATA_API_KEY!,
+      'X-ApiKey': DATA_API_KEY,
     },
   });
 
