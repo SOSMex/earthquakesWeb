@@ -32,7 +32,11 @@ function formatAMPM(date: Date) {
 // Parsers
 function parseEarthquake(earthquake: Record<string, unknown>): EarthquakeProps {
   const earthquakeDateTime = new Date(earthquake?.fecha as string);
-  const earthquakeDate = earthquakeDateTime.toLocaleDateString('es-MX');
+  const earthquakeDate = earthquakeDateTime.toLocaleDateString('es-MX', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
   const location = earthquake?.detalles as string;
   const locationArray = location.split('de')[1].split(',');
   const locationTown = locationArray[0];
@@ -46,6 +50,7 @@ function parseEarthquake(earthquake: Record<string, unknown>): EarthquakeProps {
     lng: earthquake?.longitud as number,
     date: earthquakeDate,
     time: formatAMPM(earthquakeDateTime),
+    details: earthquake?.detalles as string,
   };
 }
 

@@ -6,4 +6,5 @@ export interface EarthquakeProps {
   lng: number;
   date: string;
   time: string;
+  details: string;
 }

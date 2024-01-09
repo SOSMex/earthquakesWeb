@@ -12,20 +12,18 @@ export const columns: ColumnDef<EarthquakeProps>[] = [
       <MagnitudeIndicator magnitude={row.getValue('magnitude')} className="md:mx-auto" />
     ),
   },
+
   {
-    accessorKey: 'town',
-    header: 'Localidad',
+    accessorKey: 'details',
+    header: 'Epicentro',
+    cell: ({ row }) => row.getValue('details'),
   },
+
   {
-    accessorKey: 'state',
-    header: 'Estado',
-  },
-  {
-    accessorKey: 'date',
-    header: 'Fecha',
-  },
-  {
-    accessorKey: 'time',
-    header: 'Hora',
+    header: 'Fecha y hora',
+    cell: ({ row }) => {
+      const dateTimeLabel = `${row.original.date}, ${row.original.time}`;
+      return <span className="text-muted-foreground/60">{dateTimeLabel}</span>;
+    },
   },
 ];
