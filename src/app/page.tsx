@@ -1,38 +1,24 @@
+import { columns } from '@/components/widgets/earthquakes-table/columns';
+import { DataTable } from '@/components/widgets/earthquakes-table/EarthquakesTable';
 import {
-  HomeHeroSection,
   EarthquakesMapSection,
+  HomeHeroSection,
   RitcherScaleSection,
   SeeMoreSection,
 } from '@/components/sections';
-import { baseUrl } from '@/config';
+import { getEarthquakesData, parseEarthquakes } from '@/services';
 
-async function getEarthquakesData() {
-  try {
-    const response = await fetch(
-      `${baseUrl}/api/earthquakes/latest?key=${process.env.SELF_SECRET}`,
-    );
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-    return {};
-  }
-}
-
-async function HomePage() {
-  const earthquakes = await getEarthquakesData();
+export default async function HomePage() {
+  const response = await getEarthquakesData();
+  const eartquakes = parseEarthquakes(response?.data);
 
   return (
     <>
       <HomeHeroSection />
       <EarthquakesMapSection />
       <RitcherScaleSection />
+      <DataTable columns={columns} data={eartquakes} />
       <SeeMoreSection />
-      {JSON.stringify(earthquakes)}
     </>
   );
 }
-
-export default HomePage;
