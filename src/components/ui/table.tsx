@@ -24,9 +24,7 @@ const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
   // eslint-disable-next-line react/prop-types
->(({ className, ...props }, ref) => (
-  <tbody ref={ref} className={cn('[&_tr:last-child]:border-0', className)} {...props} />
-));
+>(({ className, ...props }, ref) => <tbody ref={ref} className={cn('', className)} {...props} />);
 TableBody.displayName = 'TableBody';
 
 const TableFooter = React.forwardRef<
