@@ -29,7 +29,7 @@ export function NavbarDesktop(props: NavbarDesktopProps) {
           ))}
         </ul>
       </nav>
-      <AppDownloadButton />
+      <AppDownloadButton label="Descarga la app" href="#download" />
     </header>
   );
 }

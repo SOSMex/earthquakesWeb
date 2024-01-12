@@ -1,9 +1,9 @@
 import { cn } from '@/utils';
 import { MagnitudeIndicatorProps } from './model';
 
-const LIGHT: number = 2;
-const MODERATE: number = 4;
-const STRONG: number = 6;
+const LIGHT: number = 3;
+const MODERATE: number = 5;
+const STRONG: number = 7;
 
 const getMagnitudeColor = (magnitude: number): string => {
   if (magnitude < LIGHT) return 'border-ritcher-scales-green';
