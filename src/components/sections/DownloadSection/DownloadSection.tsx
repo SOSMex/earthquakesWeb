@@ -1,27 +1,38 @@
-import { AndroidDownloadButton } from '@/components/widgets/android-download-button/AndroidDownloadButton';
-import { IosDownloadButton } from '@/components/widgets/ios-download-button/IosDownloadButton';
+import { AppDownloadButton } from '@/components/widgets';
 import Image from 'next/image';
 
 export function DownloadSection() {
   return (
-    <div className="w-full bg-brand">
-      <section className="container mx-auto my-[-1.91rem] flex flex-col items-center justify-center gap-x-[6.25rem] p-0 text-left lg:flex-row">
-        <div className="mt-[3.12rem] flex flex-col items-center lg:mt-[-15rem] lg:items-start">
-          <h2 className="mb-10 text-4xl font-semibold text-white dark:text-black">
-            ¡Descarga la App!
-          </h2>
-          <p className="mb-10 max-w-[21.5rem] text-center text-base text-white dark:text-black md:max-w-[31.1875rem] lg:text-left">
+    <div className="w-full bg-brand px-28 py-12">
+      <section id="download" className="mx-auto flex w-full max-w-5xl flex-col gap-24 lg:flex-row">
+        <div className="flex flex-col justify-center gap-10 lg:w-1/2">
+          <h2 className="text-4xl font-semibold text-white">¡Descarga la App!</h2>
+          <p className="text-white">
             ¿Sabías que en México ocurren, en promedio, 4 sismos al día? ¡No te preocupes! A partir
             de ahora, ¡estarás siempre informado!
           </p>
-          <div className="flex gap-[1.56rem]">
-            <AndroidDownloadButton />
-            <IosDownloadButton />
+          <div className="flex gap-7">
+            <AppDownloadButton
+              href={process.env.NEXT_PUBLIC_ANDROID_APP_URL as string}
+              label="Android"
+              target="_blank"
+              className="bg-brand-soft hover:bg-brand-soft/80"
+            />
+            <AppDownloadButton
+              href={process.env.NEXT_PUBLIC_IOS_APP_URL as string}
+              label="Apple Store"
+              target="_blank"
+              className="bg-brand-soft hover:bg-brand-soft/80"
+            />
           </div>
         </div>
-        <div className="relative mt-[6.25rem] h-96 w-full max-w-xs flex-shrink-0 lg:mt-[-6.231rem] lg:h-[40.54713rem] lg:w-[21.41156rem]">
-          <Image alt="Teléfono Móvil" src="/Vector.png" layout="fill" objectFit="contain" />
-        </div>
+        <Image
+          width={1920}
+          height={1080}
+          src="/app-ss.svg"
+          alt="Earthquake detail on the app"
+          className="lg:h-auto lg:w-1/2"
+        />
       </section>
     </div>
   );
