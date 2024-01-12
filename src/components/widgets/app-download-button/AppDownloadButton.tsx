@@ -1,14 +1,19 @@
-'use client';
+import { cn } from '@/utils';
+import { AppDownloadButtonProps } from './model';
 
-export function AppDownloadButton() {
+export function AppDownloadButton(props: AppDownloadButtonProps) {
+  const { href, label, target, className } = props;
   return (
     <a
-      href={process.env.NEXT_PUBLIC_APP_LINK as string}
-      target="_blank"
+      href={href}
+      target={target}
       rel="noopener noreferrer"
-      className="bg-brand hover:bg-brand/80 whitespace-nowrap rounded-3xl px-4 py-2 font-medium text-background hover:duration-200"
+      className={cn(
+        'hover:bg-brand-soft whitespace-nowrap rounded-3xl bg-brand px-4 py-2 font-medium text-background hover:duration-200',
+        className,
+      )}
     >
-      Descarga la app
+      {label}
     </a>
   );
 }

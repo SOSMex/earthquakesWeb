@@ -37,7 +37,7 @@ export function NavbarMobile(props: NavbarMobileProps) {
       <nav>
         <ul
           className={cn(
-            'absolute left-0 top-16 flex w-full flex-col space-y-8 overflow-hidden bg-background px-8 pt-4 transition-all duration-150 ease-in',
+            'absolute left-0 top-14 flex w-full flex-col space-y-8 overflow-hidden bg-background px-8 pt-4 transition-all duration-150 ease-in',
             menuStyles,
           )}
         >
@@ -51,7 +51,7 @@ export function NavbarMobile(props: NavbarMobileProps) {
           ))}
         </ul>
       </nav>
-      <AppDownloadButton />
+      <AppDownloadButton label="Descarga la app" href="#download" />
     </header>
   );
 }
