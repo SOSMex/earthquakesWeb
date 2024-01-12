@@ -19,7 +19,13 @@ export default async function HomePage() {
       <EarthquakesMapSection />
       <RitcherScaleSection />
       <DataTable columns={columns} data={eartquakes} />
-      <SeeMoreSection />
+      <SeeMoreSection
+        title="¿Quieres enterarte de más sismos?"
+        button={{
+          label: 'Listado de sismos',
+          href: '/earthquakes',
+        }}
+      />
       <DownloadSection />
     </>
   );
