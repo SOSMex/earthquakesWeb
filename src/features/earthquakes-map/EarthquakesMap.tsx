@@ -1,3 +1,19 @@
+'use client';
+
+// import { useState } from "react";
+// import { APIProvider, Map } from '@vis.gl/react-google-maps';
+
 export function EarthquakesMap() {
-  return <div className="mx-auto my-4 h-80 max-w-7xl bg-gray-100" />;
+  // const position = { lat: 53.54, lng: 10 };
+
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+
+  return (
+    // <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
+    //   <div style={{ height: '100vh' }}>
+    //     <Map zoom={9} center={position} />
+    //   </div>
+    // </APIProvider>
+    <>a</>
+  );
 }
