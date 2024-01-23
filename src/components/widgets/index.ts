@@ -3,6 +3,7 @@ export * from './app-download-button/model';
 export * from './earthquakes-table/EarthquakesTable';
 export * from './earthquakes-table/columns';
 export * from './earthquakes-table/model';
+export * from './earthquakes-table/paginated/PaginatedEarthquakesTable';
 export * from './ritcher-card/RithcerCard';
 export * from './ritcher-card/model';
 export * from './see-more-button/SeeMoreButton';
