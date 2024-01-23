@@ -1,4 +1,6 @@
+export * from './DownloadSection/DownloadSection';
 export * from './SeeMoreSection/SeeMoreSection';
+export * from './SeeMoreSection/model';
 export { default as EarthquakesMapSection } from './earthquakes-map-section/EarthquakesMapSection';
 export { default as HomeHeroSection } from './home-hero-section/HomeHeroSection';
 export * from './legal-notice-section/LegalNoticeSection';
