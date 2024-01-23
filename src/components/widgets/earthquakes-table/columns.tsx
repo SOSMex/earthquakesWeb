@@ -20,10 +20,8 @@ export const columns: ColumnDef<EarthquakeProps>[] = [
   },
 
   {
+    accessorKey: 'date',
     header: 'Fecha y hora',
-    cell: ({ row }) => {
-      const dateTimeLabel = `${row.original.date}, ${row.original.time}`;
-      return <span className="text-muted-foreground/60">{dateTimeLabel}</span>;
-    },
+    cell: ({ row }) => row.getValue('date'), // aquí aplicas la función de formato
   },
 ];

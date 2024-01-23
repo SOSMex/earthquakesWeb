@@ -54,6 +54,7 @@ const config: Config = {
         },
         brand: {
           DEFAULT: 'hsl(var(--brand-purple))',
+          soft: 'hsl(var(--brand-soft-purple))',
           background: 'hsl(var(--brand-background))',
         },
 

@@ -1,20 +1,4 @@
-import { BASE_URL } from '@/config';
 import { EarthquakeProps } from '@/components/widgets';
-
-export async function getEarthquakesData() {
-  try {
-    const response = await fetch(
-      `${BASE_URL}/api/earthquakes/latest?key=${process.env.SELF_SECRET}`,
-    );
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-    return {};
-  }
-}
 
 function formatAMPM(date: Date) {
   let hours = date.getHours();

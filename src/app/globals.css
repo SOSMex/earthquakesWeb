@@ -38,6 +38,7 @@
 
     /* Brand colors */
     --brand-purple: 257 40% 34%;
+    --brand-soft-purple: 257 40% 66%;
 
     --ritcher-scales-green: 122 98% 76%;
     --ritcher-scales-yellow: 61 91% 71%;
@@ -75,7 +76,8 @@
     --ring: 212.7 26.8% 83.9%;
 
     /* Brand colors */
-    --brand-purple: 257 40% 66%;
+    --brand-purple: 257 40% 34%;
+    --brand-soft-purple: 257 40% 66%;
     --ritcher-scales-green: 122 98% 76%;
     --ritcher-scales-yellow: 61 91% 71%;
     --ritcher-scales-orange: 20 98% 76%;
@@ -92,4 +94,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
