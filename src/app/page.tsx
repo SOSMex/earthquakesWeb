@@ -8,6 +8,7 @@ import {
 } from '@/components/sections';
 import { getEarthquakesData, parseEarthquakes } from '@/services';
 import { DownloadSection } from '@/components/sections/DownloadSection/DownloadSection';
+import { EarthquakesDataProvider } from '@/components/providers';
 
 export default async function HomePage() {
   const response = await getEarthquakesData();
@@ -16,9 +17,11 @@ export default async function HomePage() {
   return (
     <>
       <HomeHeroSection />
-      <EarthquakesMapSection />
-      <RitcherScaleSection />
-      <DataTable columns={columns} data={eartquakes} />
+      <EarthquakesDataProvider earthquakes={eartquakes}>
+        <EarthquakesMapSection />
+        <RitcherScaleSection />
+        <DataTable columns={columns} data={eartquakes} />
+      </EarthquakesDataProvider>
       <SeeMoreSection
         title="¿Quieres enterarte de más sismos?"
         button={{
