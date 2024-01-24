@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { DataTable, EarthquakeProps, columns } from '@/components/widgets';
+import { EarthquakesTable, EarthquakeProps, columns } from '@/components/widgets';
 import { getEarthquakesData, parseEarthquakes } from '@/services';
 import { Button } from '@/components/ui';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -44,7 +44,11 @@ export function PaginatedEarthquakesTable() {
 
   return (
     <>
-      <DataTable columns={columns} data={earthquakes} onRowClick={(row) => handleRowClick(row)} />
+      <EarthquakesTable
+        columns={columns}
+        data={earthquakes}
+        onRowClick={(row) => handleRowClick(row)}
+      />
       <section className="mx-auto mt-12 flex w-full max-w-7xl items-center justify-center gap-2 pb-12">
         <Button variant="ghost" onClick={handlePrevious} disabled={page === 1}>
           <ChevronLeft size={24} />

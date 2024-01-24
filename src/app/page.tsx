@@ -1,5 +1,5 @@
 import { columns } from '@/components/widgets/earthquakes-table/columns';
-import { DataTable } from '@/components/widgets/earthquakes-table/EarthquakesTable';
+import { EarthquakesTable } from '@/components/widgets/earthquakes-table/EarthquakesTable';
 import {
   EarthquakesMapSection,
   HomeHeroSection,
@@ -20,7 +20,7 @@ export default async function HomePage() {
       <EarthquakesDataProvider earthquakes={eartquakes}>
         <EarthquakesMapSection />
         <RitcherScaleSection />
-        <DataTable columns={columns} data={eartquakes} />
+        <EarthquakesTable columns={columns} data={eartquakes} />
       </EarthquakesDataProvider>
       <SeeMoreSection
         title="¿Quieres enterarte de más sismos?"
