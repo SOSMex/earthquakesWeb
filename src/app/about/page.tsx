@@ -1,5 +1,5 @@
-import { HomeHeroSection } from '@/components/sections';
+import { AboutAcordion } from '@/components/sections';
 
 export default async function faqsPage() {
-  return <HomeHeroSection />;
+  return <AboutAcordion />;
 }
