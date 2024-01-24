@@ -45,7 +45,7 @@ export function PaginatedEarthquakesTable() {
   return (
     <>
       <DataTable columns={columns} data={earthquakes} onRowClick={(row) => handleRowClick(row)} />
-      <section className="mt-12 flex w-full max-w-7xl items-center justify-center gap-2 pb-12">
+      <section className="mx-auto mt-12 flex w-full max-w-7xl items-center justify-center gap-2 pb-12">
         <Button variant="ghost" onClick={handlePrevious} disabled={page === 1}>
           <ChevronLeft size={24} />
         </Button>
