@@ -1,10 +1,10 @@
-import { GoogleAdsBanner } from '@/features';
+// import { GoogleAdsBanner } from '@/features';
 import { LegalNoticeSection } from '@/components/sections';
 
 function LegalPage() {
   return (
     <main>
-      <GoogleAdsBanner />
+      {/* <GoogleAdsBanner /> */}
       <LegalNoticeSection />
     </main>
   );
