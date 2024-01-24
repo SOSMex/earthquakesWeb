@@ -8,3 +8,5 @@ export * from './ritcher-card/RithcerCard';
 export * from './ritcher-card/model';
 export * from './see-more-button/SeeMoreButton';
 export * from './see-more-button/model';
+export * from './earthquakes-table/factory/EarthquakesTableFactory';
+export * from './earthquakes-table/factory/model';
