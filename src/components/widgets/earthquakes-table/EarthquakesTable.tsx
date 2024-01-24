@@ -13,14 +13,24 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  // eslint-disable-next-line no-unused-vars
+  onRowClick?: (row: TData) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  onRowClick,
+}: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const handleRowClick = (row: TData) => {
+    if (onRowClick) onRowClick(row);
+  };
 
   return (
     <section className="container mx-auto overflow-x-auto">
@@ -45,7 +55,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         <TableBody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow className="border border-primary" key={row.id}>
+              <TableRow
+                className="border border-primary"
+                key={row.id}
+                onClick={() => handleRowClick(row.original)}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
