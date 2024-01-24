@@ -56,6 +56,9 @@ const config: Config = {
           DEFAULT: 'hsl(var(--brand-purple))',
           soft: 'hsl(var(--brand-soft-purple))',
           background: 'hsl(var(--brand-background))',
+          pale: 'hsl(var(--brand-pale-purple))',
+          pdark: 'hsl(var(--brand-dark-purple))',
+          pink: 'hsl(var(--brand-pale-pink))',
         },
 
         ritcher: {
