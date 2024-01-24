@@ -1,4 +1,3 @@
-export * from './earthquakes-map/EarthquakesMap';
 export * from './google-ads/GoogleAdsBanner';
 export * from './navbar/NavBar';
 export * from './navbar/desktop/NavbarDesktop';
@@ -8,3 +7,4 @@ export * from './navbar/mobile/model';
 export * from './navbar/nav-item/NavItem';
 export * from './navbar/nav-item/model';
 export * from './switch-app-theme/SwitchAppTheme';
+export * from './earthquakes-map/EarthquakesMap';

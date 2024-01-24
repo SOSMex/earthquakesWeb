@@ -3,10 +3,10 @@ import { LegalNoticeSection } from '@/components/sections';
 
 function LegalPage() {
   return (
-    <>
+    <main>
       <GoogleAdsBanner />
       <LegalNoticeSection />
-    </>
+    </main>
   );
 }
 

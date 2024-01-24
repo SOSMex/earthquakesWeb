@@ -1,24 +1,19 @@
-import { columns } from '@/components/widgets/earthquakes-table/columns';
-import { DataTable } from '@/components/widgets/earthquakes-table/EarthquakesTable';
 import {
-  EarthquakesMapSection,
   HomeHeroSection,
-  RitcherScaleSection,
+  EarthquakesSection,
   SeeMoreSection,
+  DownloadSection,
 } from '@/components/sections';
 import { getEarthquakesData, parseEarthquakes } from '@/services';
-import { DownloadSection } from '@/components/sections/DownloadSection/DownloadSection';
 
 export default async function HomePage() {
   const response = await getEarthquakesData();
   const eartquakes = parseEarthquakes(response?.data);
 
   return (
-    <>
+    <main>
       <HomeHeroSection />
-      <EarthquakesMapSection />
-      <RitcherScaleSection />
-      <DataTable columns={columns} data={eartquakes} />
+      <EarthquakesSection earthquakes={eartquakes} />
       <SeeMoreSection
         title="¿Quieres enterarte de más sismos?"
         button={{
@@ -27,6 +22,6 @@ export default async function HomePage() {
         }}
       />
       <DownloadSection />
-    </>
+    </main>
   );
 }
