@@ -2,13 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { MarkerClusterer, Marker as MarkerType } from '@googlemaps/markerclusterer';
-import { Marker, useMap } from '@vis.gl/react-google-maps';
+import { AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import { MagnitudeIndicator } from '@/components/ui';
 
 type MarkerProps = {
   points: {
     id: string;
     lat: number;
     lng: number;
+    magnitude: number;
   }[];
 };
 
@@ -55,7 +57,13 @@ export function Markers({ points }: MarkerProps) {
   return (
     <>
       {points.map((point) => (
-        <Marker position={point} key={point.id} ref={(marker) => setMarkerRef(marker, point.id)} />
+        <AdvancedMarker
+          position={point}
+          key={point.id}
+          ref={(marker) => setMarkerRef(marker, point.id)}
+        >
+          <MagnitudeIndicator magnitude={point.magnitude} />
+        </AdvancedMarker>
       ))}
     </>
   );
