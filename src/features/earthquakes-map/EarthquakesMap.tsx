@@ -15,6 +15,7 @@ const parseMarkers = (earthquakes: EarthquakeProps[]) => {
     id: `${earthquake.magnitude}-${idx}`,
     lat: earthquake.lat,
     lng: earthquake.lng,
+    magnitude: earthquake.magnitude,
   }));
 };
 
@@ -40,7 +41,7 @@ export function EarthquakesMap(props: EarthquakesMapProps) {
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
       <div className="h-96 lg:h-[31.25rem]" style={{ width: '100%' }}>
-        <Map zoom={zoom} center={position}>
+        <Map zoom={zoom} center={position} mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID as string}>
           <Markers points={markers} />
         </Map>
       </div>
