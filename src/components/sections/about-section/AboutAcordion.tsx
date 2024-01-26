@@ -15,7 +15,7 @@ export function AboutAcordion() {
           Preguntas frecuentes
         </h1>
         <p className="mb-12 mt-12 font-normal">
-          Sabemos que en ocaciones se pueden tener dudas respecto a los simos, así que a
+          Sabemos que en ocasiones se pueden tener dudas respecto a los sismos, así que a
           continuación tratamos de brindarte la mayor información posible.
         </p>
       </section>
