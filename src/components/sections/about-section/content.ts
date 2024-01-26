@@ -17,7 +17,7 @@ export const faqQuestions = [
   {
     question: '¿Qué debo hacer durante un sismo?',
     answer:
-      'El sismo es un movimiento brusco de la tierra causado por la liberación de energía acumulada en las placas tectónicas.',
+      'Durante un sismo, busca un lugar seguro lejos de ventanas, objetos que puedan caer y estructuras inestables. Adopta la posición de cubrirte y resguárdate bajo una mesa o mueble resistente.',
   },
   {
     question: '¿Qué es un simulacro sísmico?',
