@@ -12,12 +12,14 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: {
     template: '%s | Sismos México App',
-    default: 'Sismos México App',
+    default: 'Últimos sismos | Sismos, México App',
   },
   description:
     'Sismos México: Accede a información actualizada sobre los últimos sismos ocurridos en México. Con nuestra app, obtén datos en tiempo real, alertas sísmicas y análisis detallado de sismos México hoy y el último sismo México para Android e iOS.',
   keywords: [
     'Sismos México',
+    'Sismos México hoy',
+    'Sismos México Alerta s´sismica',
     'Servicios Sismológico Nacional',
     'app de sismos',
     'alerta sísmicas',
