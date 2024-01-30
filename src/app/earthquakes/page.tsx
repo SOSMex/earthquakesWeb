@@ -1,17 +1,19 @@
-'use client';
-
 import { EarthquakesSection, HomeHeroSection } from '@/components/sections';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientWrapper } from '@/components/providers';
 
-const queryClient = new QueryClient();
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Listado de sismos',
+};
 
 export default function EarthquakesPage() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientWrapper>
       <main>
         <HomeHeroSection />
         <EarthquakesSection paginated earthquakes={[]} />
       </main>
-    </QueryClientProvider>
+    </QueryClientWrapper>
   );
 }
