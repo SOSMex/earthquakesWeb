@@ -2,17 +2,20 @@
 
 import { EarthquakesSection, HomeHeroSection, DownloadSection } from '@/components/sections';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Metadata } from 'next';
 
-const queryClient = new QueryClient();
+export const metadata: Metadata = {
+  title: 'Listado de últimos sismos en México',
+};
 
 export default function EarthquakesPage() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientWrapper>
       <main>
         <HomeHeroSection />
         <EarthquakesSection paginated earthquakes={[]} />
         <DownloadSection />
       </main>
-    </QueryClientProvider>
+    </QueryClientWrapper>
   );
 }
