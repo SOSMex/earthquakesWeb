@@ -4,7 +4,7 @@ import { QueryClientWrapper } from '@/components/providers';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Listado de sismos',
+  title: 'Listado de últimos sismos en México',
 };
 
 export default function EarthquakesPage() {
