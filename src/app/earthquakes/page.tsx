@@ -1,6 +1,5 @@
-import { EarthquakesSection, HomeHeroSection } from '@/components/sections';
+import { EarthquakesSection, HomeHeroSection, DownloadSection } from '@/components/sections';
 import { QueryClientWrapper } from '@/components/providers';
-
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,6 +12,7 @@ export default function EarthquakesPage() {
       <main>
         <HomeHeroSection />
         <EarthquakesSection paginated earthquakes={[]} />
+        <DownloadSection />
       </main>
     </QueryClientWrapper>
   );
