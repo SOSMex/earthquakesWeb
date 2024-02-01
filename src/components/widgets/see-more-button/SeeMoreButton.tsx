@@ -12,7 +12,7 @@ export function SeeMoreButton(props: SeeMoreButtonProps) {
       target={target}
       rel="noopener noreferrer"
       className={cn(
-        'mx-auto flex w-fit justify-center whitespace-nowrap rounded-3xl bg-brand px-4 py-2 font-medium text-background hover:bg-brand/80 hover:duration-200',
+        'dark:bg-brand-bright dark:hover:bg-brand-bright/80 mx-auto flex w-fit justify-center whitespace-nowrap rounded-3xl bg-brand px-4 py-2 font-medium text-background hover:bg-brand/80 hover:duration-200 dark:text-black',
         className,
       )}
     >

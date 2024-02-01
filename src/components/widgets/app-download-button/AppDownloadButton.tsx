@@ -9,7 +9,7 @@ export function AppDownloadButton(props: AppDownloadButtonProps) {
       target={target}
       rel="noopener noreferrer"
       className={cn(
-        'hover:bg-brand-soft whitespace-nowrap rounded-3xl bg-brand px-4 py-2 font-medium text-background hover:duration-200',
+        'dark:bg-brand-bright whitespace-nowrap rounded-3xl bg-brand px-4 py-2 font-medium text-background hover:bg-brand-soft hover:duration-200',
         className,
       )}
     >
