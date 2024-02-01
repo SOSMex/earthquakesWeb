@@ -9,9 +9,9 @@ export function NavItem(props: NavItemProps) {
     <Link
       onClick={onClick}
       className={cn(
-        'cursor-pointer font-medium hover:text-brand/80 hover:underline hover:decoration-brand/80 hover:decoration-4 hover:underline-offset-[0.75rem]',
+        'dark:hover:text-brand-bright/80 dark:hover:decoration-brand-bright/80 cursor-pointer font-medium hover:text-brand hover:underline hover:decoration-brand/80 hover:decoration-4 hover:underline-offset-[0.75rem]',
         active
-          ? 'text-brand underline decoration-brand decoration-4 underline-offset-[0.75rem]'
+          ? 'dark:text-brand-bright dark:decoration-brand-bright text-brand underline decoration-brand decoration-4 underline-offset-[0.75rem]'
           : '',
         className,
       )}

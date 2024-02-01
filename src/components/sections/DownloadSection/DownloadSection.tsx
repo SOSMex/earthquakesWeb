@@ -16,13 +16,13 @@ export function DownloadSection() {
               href={process.env.NEXT_PUBLIC_ANDROID_APP_URL as string}
               label="Android"
               target="_blank"
-              className="bg-brand-soft hover:bg-brand-soft/80"
+              className="hover:bg-brand-bright/80 bg-brand-bright text-brand"
             />
             <AppDownloadButton
               href={process.env.NEXT_PUBLIC_IOS_APP_URL as string}
               label="Apple Store"
               target="_blank"
-              className="bg-brand-soft hover:bg-brand-soft/80"
+              className="hover:bg-brand-bright/80 bg-brand-bright text-brand"
             />
           </div>
         </div>
