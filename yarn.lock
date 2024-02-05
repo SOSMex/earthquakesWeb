@@ -701,10 +701,10 @@
   dependencies:
     server-only "^0.0.1"
 
-"@vis.gl/react-google-maps@^0.4.3":
-  version "0.4.3"
-  resolved "https://registry.npmjs.org/@vis.gl/react-google-maps/-/react-google-maps-0.4.3.tgz"
-  integrity sha512-/BsX2i03UpbzR/s71OM+A3h5EZoDQECQMdGkSYZ3Yq2pHTVbNvzhccVuM+exeeSA69EZ3d1jP1hf53VuAO1P8Q==
+"@vis.gl/react-google-maps@^0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@vis.gl/react-google-maps/-/react-google-maps-0.5.4.tgz#5bce648c3c832ad2053de5ef1333fe9be574ff8d"
+  integrity sha512-mivcZPhH0WbA034CP6JqMYqHBgptEiYH07YKtcNQ2RciJTk6a1sU5ooUzWwNA7HRjbOkbHHw9Y636Fr+XF4iXQ==
   dependencies:
     "@types/google.maps" "^3.54.10"
 
