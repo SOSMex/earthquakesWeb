@@ -21,10 +21,11 @@ function parseEarthquake(earthquake: Record<string, unknown>): EarthquakeProps {
     month: 'long',
     day: 'numeric',
   });
+
   const location = earthquake?.detalles as string;
-  const locationArray = location.split('de')[1].split(',');
-  const locationTown = locationArray[0];
-  const locationState = locationArray[1];
+  const locationArray = location?.split('de')[1]?.split(',');
+  const locationTown = locationArray?.length > 0 ? locationArray[0] : '';
+  const locationState = locationArray?.length > 0 ? locationArray[1] : '';
 
   return {
     magnitude: earthquake?.magnitud as number,
