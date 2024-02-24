@@ -7,11 +7,11 @@ export const navigation: NavItemProps[] = [
   },
   {
     label: 'Listado de sismos',
-    href: '/earthquakes',
+    href: '/sismos',
   },
   {
     label: 'Acerca de',
-    href: '/about',
+    href: '/acerca-de',
   },
   {
     label: 'Legal',

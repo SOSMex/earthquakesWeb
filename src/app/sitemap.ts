@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${process.env.API_URL}/earthquakes`,
+      url: `${process.env.API_URL}/sismos`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
