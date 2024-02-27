@@ -16,3 +16,18 @@ export async function getEarthquakesData(limit: number = 10, page: number = 1) {
     return {};
   }
 }
+
+export async function getEarthquakeDetail(id: string) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/earthquakes/detail?key=${process.env.SELF_SECRET}&id=${id}`,
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return {};
+  }
+}
