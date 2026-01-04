@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "7GZ754TPZQ.com.oscar.sismos_v2",
+        "paths": ["/join/*"]
+      }
+    ]
+  }
+}

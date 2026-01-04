@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.oscar.sismos_v2",
+      "sha256_cert_fingerprints": [
+        "50:2B:81:F2:3F:B9:CF:CD:25:D3:80:A9:E8:FD:DD:2E:2E:AE:09:FC:AD:79:C4:81:D6:37:C3:EA:C6:67:2A:1C"
+      ]
+    }
+  }
+]
