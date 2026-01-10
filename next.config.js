@@ -24,6 +24,15 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/earthquakes',
+        destination: '/sismos',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
