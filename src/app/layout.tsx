@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/AppThemeProvider/AppThemeProvider';
 import { Analytics } from '@vercel/analytics/react';
 
-const inter = Inter({ subsets: ['latin'] });
+const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html id="app" lang="es">
-      <body id="app-body" className={`relative ${inter.className}`}>
+      <body id="app-body" className={`relative ${montserrat.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -55,6 +55,7 @@ const config: Config = {
         brand: {
           DEFAULT: 'hsl(var(--brand-purple))',
           soft: 'hsl(var(--brand-soft-purple))',
+          dark: 'hsl(var(--brand-dark-purple))',
           background: 'hsl(var(--brand-background))',
           pale: 'hsl(var(--brand-pale-purple))',
           pdark: 'hsl(var(--brand-dark-purple))',
@@ -73,8 +74,15 @@ const config: Config = {
       },
       borderRadius: {
         lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        md: 'calc(var(--radius) - 4px)',
+        sm: 'calc(var(--radius) - 8px)',
+        card: '1.25rem',
+        button: '0.75rem',
+      },
+      boxShadow: {
+        card: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        'card-dark': '0 2px 8px rgba(255, 255, 255, 0.05)',
+        flutter: '0 2px 8px rgba(72, 52, 122, 0.15)',
       },
       keyframes: {
         'accordion-down': {
