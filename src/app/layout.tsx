@@ -70,6 +70,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  verification: {
+    google: '8cX3ODVvTl97NBldbcYPkyl3HYFWkf042VTZ_moQOsQ',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
