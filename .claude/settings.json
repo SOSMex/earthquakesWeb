@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "tools": ["Edit", "Write"],
+        "pattern": "**/*.{ts,tsx,js,jsx}",
+        "command": "npm run lint --fix",
+        "description": "Run ESLint after editing files"
+      }
+    ]
+  }
+}
