@@ -6,7 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 const SITE_NAME = 'Sismos México';
 
 export interface BreadcrumbItem {

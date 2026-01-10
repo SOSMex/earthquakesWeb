@@ -92,7 +92,7 @@ function HoyHeroSection({ fecha }: { fecha: string }) {
 }
 
 function SismosHoyJsonLd({ fecha }: { fecha: string | null }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
   const isoDate = fecha ? new Date(fecha).toISOString() : new Date().toISOString();
 
   const data = {
@@ -133,7 +133,7 @@ export default async function SismosHoyPage() {
     ? formatDateForTitle(fechaUltimoSismo)
     : getDefaultFormattedDate();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Sismos', url: `${siteUrl}/sismos` },

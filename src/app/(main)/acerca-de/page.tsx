@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function FaqsPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Acerca de', url: `${siteUrl}/acerca-de` },

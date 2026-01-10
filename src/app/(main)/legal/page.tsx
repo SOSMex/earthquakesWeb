@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function LegalPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Legal', url: `${siteUrl}/legal` },

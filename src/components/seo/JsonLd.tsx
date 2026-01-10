@@ -20,14 +20,14 @@ export function WebSiteJsonLd() {
     '@type': 'WebSite',
     name: 'Sismos México',
     alternateName: 'Sismos México App',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app',
     description:
       'Información en tiempo real sobre los últimos sismos ocurridos en México. Datos oficiales del Servicio Sismológico Nacional.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app'}/sismos?q={search_term_string}`,
+        urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app'}/sismos?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -37,7 +37,7 @@ export function WebSiteJsonLd() {
 }
 
 export function OrganizationJsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 
   const data = {
     '@context': 'https://schema.org',
@@ -91,7 +91,7 @@ interface EarthquakeEventJsonLdProps {
 }
 
 export function EarthquakeEventJsonLd({ earthquake, url }: EarthquakeEventJsonLdProps) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 
   const data = {
     '@context': 'https://schema.org',
@@ -138,7 +138,7 @@ export function EarthquakeEventJsonLd({ earthquake, url }: EarthquakeEventJsonLd
 }
 
 export function EarthquakesListJsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 
   const data = {
     '@context': 'https://schema.org',

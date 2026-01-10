@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function EarthquakesPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Sismos', url: `${siteUrl}/sismos` },

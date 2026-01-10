@@ -59,7 +59,7 @@ export default async function EarthquakeDetailPage({ params }: Props) {
   const detail = parseEarthquakes([response?.data]);
   const earthquake = detail[0];
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismos.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Sismos', url: `${siteUrl}/sismos` },
