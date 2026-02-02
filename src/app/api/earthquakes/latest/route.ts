@@ -4,7 +4,6 @@ const DATA_API_KEY = process.env.DATA_API_KEY!;
 
 export async function GET(request: Request) {
   const apiUrl = process.env.DATA_API_URL!;
-  const apiVersion = process.env.DATA_API_VERSION!;
 
   const { searchParams } = new URL(request.url);
   const limit = searchParams.get('limit') || '10';
@@ -13,7 +12,7 @@ export async function GET(request: Request) {
 
   if (!secret || !isValidSecret(secret)) return apiGuard();
 
-  const res = await fetch(`${apiUrl}/${apiVersion}/sismos/latest/${limit}/${page}`, {
+  const res = await fetch(`${apiUrl}/api/sismos/info/latest/${limit}/${page}`, {
     headers: {
       'Content-Type': 'application/json',
       'X-ApiKey': DATA_API_KEY,
@@ -23,11 +22,11 @@ export async function GET(request: Request) {
   const earthquakes = await res.json();
 
   return Response.json({
-    data: earthquakes.Items,
+    data: earthquakes.Earthquakes,
     pagination: {
-      current: earthquakes.CurrentPage,
-      next: earthquakes.NextPage,
-      total: earthquakes.MaxPage,
+      current: earthquakes.Pagination.Page,
+      next: earthquakes.Pagination.HasNext ? earthquakes.Pagination.Page + 1 : null,
+      total: earthquakes.Pagination.TotalPages,
     },
   });
 }
