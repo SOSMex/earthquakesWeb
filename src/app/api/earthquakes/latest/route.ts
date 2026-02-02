@@ -22,11 +22,11 @@ export async function GET(request: Request) {
   const earthquakes = await res.json();
 
   return Response.json({
-    data: earthquakes.Earthquakes,
+    data: earthquakes.earthquakes,
     pagination: {
-      current: earthquakes.Pagination.Page,
-      next: earthquakes.Pagination.HasNext ? earthquakes.Pagination.Page + 1 : null,
-      total: earthquakes.Pagination.TotalPages,
+      current: earthquakes.pagination.page,
+      next: earthquakes.pagination.hasNext ? earthquakes.pagination.page + 1 : null,
+      total: earthquakes.pagination.totalPages,
     },
   });
 }
