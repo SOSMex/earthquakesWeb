@@ -51,7 +51,7 @@ export function NavbarMobile(props: NavbarMobileProps) {
           ))}
         </ul>
       </nav>
-      <AppDownloadButton label="Descarga la app" href="#download" />
+      <span className="text-sm font-semibold text-brand">Sismos MX</span>
     </header>
   );
 }

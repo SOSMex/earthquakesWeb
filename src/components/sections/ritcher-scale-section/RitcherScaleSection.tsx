@@ -1,5 +1,6 @@
 import React from 'react';
 import { RitcherCard, Level } from '@/components/widgets';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui';
 
 const levels: Level[] = [
   {
@@ -39,11 +40,33 @@ const levels: Level[] = [
 export function RitcherScaleSection() {
   return (
     <section className="container mx-auto my-8 w-full py-4">
-      <h2 className="mb-6 text-center text-3xl font-semibold text-brand">
+      {/* Mobile: single collapsible with title as trigger */}
+      <Accordion type="single" collapsible className="mx-auto max-w-7xl px-4 md:hidden">
+        <AccordionItem value="richter-scale" className="border-none">
+          <AccordionTrigger className="justify-center gap-2">
+            <span className="text-xl font-semibold text-brand">
+              ¿Cómo funciona la escala de Richter?
+            </span>
+          </AccordionTrigger>
+          <AccordionContent>
+            <ol className="flex flex-col gap-3 pt-2">
+              {levels.map((level) => (
+                <li key={level.id} className="flex items-center gap-3">
+                  <span className={`inline-block size-4 shrink-0 rounded-full ${level.color}`} />
+                  <span className="font-medium">{level.label}</span>
+                  <span className="text-sm text-muted-foreground">{level.range}</span>
+                </li>
+              ))}
+            </ol>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Desktop: title + grid */}
+      <h2 className="mb-6 hidden text-center text-3xl font-semibold text-brand md:block">
         ¿Cómo funciona la escala de Richter?
       </h2>
-
-      <ol className="mx-auto grid max-w-7xl grid-cols-1  gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <ol className="mx-auto hidden max-w-7xl grid-cols-1 gap-12 md:grid md:grid-cols-2 lg:grid-cols-4">
         {levels.map((level) => (
           <RitcherCard {...level} key={level.id} />
         ))}

@@ -10,3 +10,5 @@ export * from './see-more-button/SeeMoreButton';
 export * from './see-more-button/model';
 export * from './earthquakes-table/factory/EarthquakesTableFactory';
 export * from './earthquakes-table/factory/model';
+export * from './earthquake-card/EarthquakeCard';
+export * from './smart-app-banner/SmartAppBanner';
