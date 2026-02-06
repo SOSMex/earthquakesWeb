@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "7GZ754TPZQ.com.oscar.sismosv2",
-        "paths": ["/join/*"]
+        "paths": ["/join/*", "/sismos/detalle/*"]
       }
     ]
   }
