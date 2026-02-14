@@ -27,6 +27,17 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.sismosmx.app',
+          },
+        ],
+        destination: 'https://sismosmx.app/:path*',
+        permanent: true,
+      },
+      {
         source: '/earthquakes',
         destination: '/sismos',
         permanent: true,
