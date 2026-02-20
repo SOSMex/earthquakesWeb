@@ -31,7 +31,8 @@ function Step({
       </div>
       <div>
         <span className="text-xs text-purple-500 dark:text-purple-400 font-semibold">
-          Paso {number}
+          {'Paso '}
+          {number}
         </span>
         <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">
           {text}
@@ -45,8 +46,10 @@ export function ReferralLanding({ code }: Props) {
   const [isAndroid, setIsAndroid] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
 
-  const hasValidCode =
-    code && code.startsWith('REF-') && code.length >= 10 && code !== '[code]';
+  const hasValidCode = code
+    && code.startsWith('REF-')
+    && code.length >= 10
+    && code !== '[code]';
   const displayCode = hasValidCode ? code : null;
 
   useEffect(() => {
@@ -72,8 +75,7 @@ export function ReferralLanding({ code }: Props) {
     } else if (isIOS) {
       window.location.href = `sismosmx://invite/${displayCode}`;
       setTimeout(() => {
-        window.location.href =
-          'https://apps.apple.com/app/sismos-mx/id1234567890';
+        window.location.href = 'https://apps.apple.com/app/sismos-mx/id1234567890';
       }, 2000);
     }
   };
@@ -91,12 +93,13 @@ export function ReferralLanding({ code }: Props) {
         </h1>
 
         <p className="text-gray-600 dark:text-gray-300 mb-6">
-          Un amigo te invita a{' '}
+          {'Un amigo te invita a '}
           <strong className="text-purple-700 dark:text-purple-400">
             Sismos MX
           </strong>
-          . Descarga la app y ambos se acercan a ganar{' '}
-          <strong>1 mes de Premium</strong>.
+          {'. Descarga la app y ambos se acercan a ganar '}
+          <strong>1 mes de Premium</strong>
+          .
         </p>
 
         {/* Code display */}
@@ -149,7 +152,7 @@ export function ReferralLanding({ code }: Props) {
         )}
 
         <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
-          {hasValidCode ? '¿No tienes la app?' : 'Descarga la app'}
+          {hasValidCode ? 'No tienes la app?' : 'Descarga la app'}
         </p>
 
         {/* Download buttons */}

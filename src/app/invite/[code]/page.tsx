@@ -8,7 +8,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
   return {
-    title: `Gana Premium Gratis - Sismos MX`,
+    title: 'Gana Premium Gratis - Sismos MX',
     description:
       'Un amigo te invita a Sismos MX. Descarga la app y ambos se acercan a ganar 1 mes de Premium gratis.',
     openGraph: {
