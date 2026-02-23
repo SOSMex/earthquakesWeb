@@ -54,16 +54,29 @@ export function ReferralLanding({ code }: Props) {
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
-      setIsAndroid(/Android/i.test(navigator.userAgent));
-      setIsIOS(/iPhone|iPad|iPod/i.test(navigator.userAgent));
+      const ua = navigator.userAgent;
+      const android = /Android/i.test(ua);
+      const ios = /iPhone|iPad|iPod/i.test(ua);
+      setIsAndroid(android);
+      setIsIOS(ios);
+      // eslint-disable-next-line no-console
+      console.log('[Referral] Device detection:', { android, ios, ua });
     }
 
     if (hasValidCode) {
       localStorage.setItem('pendingReferralCode', code);
+      // eslint-disable-next-line no-console
+      console.log('[Referral] Code saved to localStorage:', code);
 
       if (/Android/i.test(navigator.userAgent)) {
-        window.location.href = `intent://invite/${code}#Intent;scheme=sismosmx;package=com.oscar.sismos_v2;end`;
+        const intentUrl = `intent://invite/${code}#Intent;scheme=sismosmx;package=com.oscar.sismos_v2;end`;
+        // eslint-disable-next-line no-console
+        console.log('[Referral] Auto-redirect (Android):', intentUrl);
+        window.location.href = intentUrl;
       }
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('[Referral] Invalid code, skipping auto-redirect:', code);
     }
   }, [code, hasValidCode]);
 
@@ -71,12 +84,23 @@ export function ReferralLanding({ code }: Props) {
     if (!displayCode) return;
 
     if (isAndroid) {
-      window.location.href = `intent://invite/${displayCode}#Intent;scheme=sismosmx;package=com.oscar.sismos_v2;end`;
+      const intentUrl = `intent://invite/${displayCode}#Intent;scheme=sismosmx;package=com.oscar.sismos_v2;end`;
+      // eslint-disable-next-line no-console
+      console.log('[Referral] Opening app (Android intent):', intentUrl);
+      window.location.href = intentUrl;
     } else if (isIOS) {
-      window.location.href = `sismosmx://invite/${displayCode}`;
+      const schemeUrl = `sismosmx://invite/${displayCode}`;
+      // eslint-disable-next-line no-console
+      console.log('[Referral] Opening app (iOS custom scheme):', schemeUrl);
+      window.location.href = schemeUrl;
       setTimeout(() => {
+        // eslint-disable-next-line no-console
+        console.log('[Referral] Fallback to App Store (iOS)');
         window.location.href = 'https://apps.apple.com/app/sismos-mx/id1234567890';
       }, 2000);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('[Referral] No platform detected, cannot open app');
     }
   };
 
