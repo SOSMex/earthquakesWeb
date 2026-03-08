@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
 import Image from 'next/image';
 
@@ -8,6 +9,8 @@ const BANNER_DISMISSED_KEY = 'smart-app-banner-dismissed';
 
 export function SmartAppBanner() {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
+  const isDetailPage = pathname.startsWith('/sismos/detalle/');
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(BANNER_DISMISSED_KEY);
@@ -19,7 +22,7 @@ export function SmartAppBanner() {
     setVisible(false);
   };
 
-  if (!visible) return null;
+  if (!visible || isDetailPage) return null;
 
   const storeUrl = (process.env.NEXT_PUBLIC_IOS_APP_URL as string)
     || (process.env.NEXT_PUBLIC_ANDROID_APP_URL as string)
