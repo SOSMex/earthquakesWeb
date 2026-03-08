@@ -102,6 +102,19 @@ export async function GET(
 
   const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/pin-l+ef4444(${lng},${lat})/${lng},${lat},6,0/1200x400@2x?access_token=${MAPBOX_ACCESS_TOKEN}&logo=false&attribution=false`;
 
+  // Satori cannot fetch external URLs in <img> — pre-fetch as base64 data URL
+  let mapSrc = mapUrl;
+  try {
+    const mapRes = await fetch(mapUrl);
+    if (mapRes.ok) {
+      const buffer = await mapRes.arrayBuffer();
+      const base64 = Buffer.from(buffer).toString('base64');
+      mapSrc = `data:image/png;base64,${base64}`;
+    }
+  } catch {
+    // If map fetch fails, the image will render without the map background
+  }
+
   return new ImageResponse(
     (
       <div
@@ -115,7 +128,7 @@ export async function GET(
         }}
       >
         <img
-          src={mapUrl}
+          src={mapSrc}
           width={1200}
           height={400}
           alt="map"
@@ -172,12 +185,22 @@ export async function GET(
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              gap: 8,
             }}
           >
-            <span style={{ fontSize: 18, color: '#a0a0b0' }}>
-              Sismos México
+            <span
+              style={{
+                fontSize: 18,
+                fontWeight: 700,
+                color: 'white',
+                backgroundColor: '#7c3aed',
+                padding: '8px 20px',
+                borderRadius: 24,
+              }}
+            >
+              Descarga la app
             </span>
-            <span style={{ fontSize: 14, color: '#7c3aed', marginTop: 4 }}>
+            <span style={{ fontSize: 14, color: '#a0a0b0' }}>
               sismosmx.app
             </span>
           </div>
