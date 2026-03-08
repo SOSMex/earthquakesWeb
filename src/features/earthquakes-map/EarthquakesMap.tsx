@@ -22,8 +22,15 @@ const parseMarkers = (earthquakes: EarthquakeProps[]) => {
 export function EarthquakesMap(props: EarthquakesMapProps) {
   const { earthquakes } = props;
   const { selected } = useEarthquakesData();
-  const [zoom, setZoom] = useState(4.7);
-  const [position, setPosition] = useState(DEFAULT_CENTER);
+
+  const isSingle = earthquakes?.length === 1;
+  const initialCenter = isSingle
+    ? { lat: earthquakes[0].lat, lng: earthquakes[0].lng }
+    : DEFAULT_CENTER;
+  const initialZoom = isSingle ? 8 : 4.7;
+
+  const [zoom, setZoom] = useState(initialZoom);
+  const [position, setPosition] = useState(initialCenter);
   const [markers, setMarkers] = useState(parseMarkers(earthquakes));
 
   useEffect(() => {

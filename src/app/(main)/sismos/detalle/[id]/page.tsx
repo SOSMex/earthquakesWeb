@@ -93,8 +93,7 @@ export default async function EarthquakeDetailPage({ params }: Props) {
         {earthquake ? (
           <EarthquakeHeroSection earthquake={earthquake} />
         ) : null}
-        <EarthquakesSection earthquakes={detail} />
-        <DownloadSection />
+        <EarthquakesSection earthquakes={detail} mapTitle="Detalle del sismo" />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"
           button={{
@@ -102,6 +101,7 @@ export default async function EarthquakeDetailPage({ params }: Props) {
             href: '/sismos',
           }}
         />
+        <DownloadSection />
         <StickyDownloadBar />
       </main>
     </>
