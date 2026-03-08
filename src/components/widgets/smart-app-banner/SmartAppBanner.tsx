@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
 import Image from 'next/image';
+import { useStoreUrl } from '@/utils/useStoreUrl';
 
 const BANNER_DISMISSED_KEY = 'smart-app-banner-dismissed';
 
@@ -11,6 +12,7 @@ export function SmartAppBanner() {
   const [visible, setVisible] = useState(false);
   const pathname = usePathname();
   const isDetailPage = pathname.startsWith('/sismos/detalle/');
+  const storeUrl = useStoreUrl();
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(BANNER_DISMISSED_KEY);
@@ -23,10 +25,6 @@ export function SmartAppBanner() {
   };
 
   if (!visible || isDetailPage) return null;
-
-  const storeUrl = (process.env.NEXT_PUBLIC_IOS_APP_URL as string)
-    || (process.env.NEXT_PUBLIC_ANDROID_APP_URL as string)
-    || '#';
 
   return (
     <div className="flex items-center gap-3 bg-muted px-4 py-2 md:hidden">
