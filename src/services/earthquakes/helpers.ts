@@ -36,6 +36,7 @@ function parseEarthquake(earthquake: Record<string, unknown>): EarthquakeProps {
     date: earthquakeDate,
     time: formatAMPM(earthquakeDateTime),
     details: earthquake?.detalles as string,
+    isoDate: earthquakeDateTime.toISOString(),
   };
 }
 

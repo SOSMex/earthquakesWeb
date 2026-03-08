@@ -7,4 +7,5 @@ export interface EarthquakeProps {
   date: string;
   time: string;
   details: string;
+  isoDate: string;
 }

@@ -10,6 +10,10 @@ export const navigation: NavItemProps[] = [
     href: '/sismos',
   },
   {
+    label: 'Estadísticas',
+    href: '/sismos/estadisticas',
+  },
+  {
     label: 'Acerca de',
     href: '/acerca-de',
   },
