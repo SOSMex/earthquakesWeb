@@ -6,13 +6,15 @@ import { EarthquakeCardList } from './EarthquakeCardList';
 export function EarthquakesSection({
   paginated = false,
   earthquakes,
+  mapTitle,
 }: {
   paginated?: boolean;
   earthquakes: EarthquakeProps[];
+  mapTitle?: string;
 }) {
   return (
     <EarthquakesDataProvider earthquakes={earthquakes}>
-      <EarthquakesMapSection />
+      <EarthquakesMapSection title={mapTitle} />
       <RitcherScaleSection />
 
       {!paginated && (

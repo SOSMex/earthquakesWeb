@@ -93,7 +93,7 @@ export default async function EarthquakeDetailPage({ params }: Props) {
         {earthquake ? (
           <EarthquakeHeroSection earthquake={earthquake} />
         ) : null}
-        <EarthquakesSection earthquakes={detail} />
+        <EarthquakesSection earthquakes={detail} mapTitle="Detalle del sismo" />
         <DownloadSection />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"

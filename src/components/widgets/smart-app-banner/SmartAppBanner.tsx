@@ -37,7 +37,7 @@ export function SmartAppBanner() {
       </button>
 
       <Image
-        src="/icon-app.png"
+        src="/logo.svg"
         alt="Sismos México App"
         width={40}
         height={40}
