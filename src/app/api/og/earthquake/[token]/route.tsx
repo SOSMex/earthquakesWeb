@@ -185,12 +185,22 @@ export async function GET(
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              gap: 8,
             }}
           >
-            <span style={{ fontSize: 18, color: '#a0a0b0' }}>
-              Sismos México
+            <span
+              style={{
+                fontSize: 18,
+                fontWeight: 700,
+                color: 'white',
+                backgroundColor: '#7c3aed',
+                padding: '8px 20px',
+                borderRadius: 24,
+              }}
+            >
+              Descarga la app
             </span>
-            <span style={{ fontSize: 14, color: '#7c3aed', marginTop: 4 }}>
+            <span style={{ fontSize: 14, color: '#a0a0b0' }}>
               sismosmx.app
             </span>
           </div>
