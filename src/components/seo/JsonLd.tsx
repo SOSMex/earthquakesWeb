@@ -92,13 +92,14 @@ interface EarthquakeEventJsonLdProps {
 
 export function EarthquakeEventJsonLd({ earthquake, url }: EarthquakeEventJsonLdProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+  const pageId = url.split('/').pop() || '';
 
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: `Sismo de magnitud ${earthquake.magnitude} en ${earthquake.state || 'México'}`,
     description: earthquake.details || `Sismo registrado con magnitud ${earthquake.magnitude}`,
-    startDate: earthquake.date,
+    startDate: earthquake.isoDate,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
@@ -131,7 +132,7 @@ export function EarthquakeEventJsonLd({ earthquake, url }: EarthquakeEventJsonLd
         value: earthquake.magnitude,
       },
     ],
-    image: `${siteUrl}/logo.svg`,
+    image: `${siteUrl}/api/og/earthquake/${pageId}`,
   };
 
   return <JsonLd data={data} />;

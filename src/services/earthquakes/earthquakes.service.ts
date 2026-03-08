@@ -17,6 +17,22 @@ export async function getEarthquakesData(limit: number = 10, page: number = 1) {
   }
 }
 
+export async function getStatistics(startDate: string, endDate: string) {
+  try {
+    const params = new URLSearchParams({ startDate, endDate });
+    const response = await fetch(
+      `${BASE_URL}/api/earthquakes/statistics?key=${process.env.SELF_SECRET}&${params}`,
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return {};
+  }
+}
+
 export async function getEarthquakeDetail(id: string) {
   try {
     const response = await fetch(
