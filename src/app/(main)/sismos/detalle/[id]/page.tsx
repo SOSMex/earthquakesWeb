@@ -34,18 +34,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `Sismo de magnitud ${earthquake.magnitude} en ${location}`;
   const description = `Sismo registrado el ${earthquake.date} a las ${earthquake.time} con magnitud ${earthquake.magnitude} en ${location}. ${earthquake.details || ''}`;
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismosmx.app';
+  const ogImageUrl = `${siteUrl}/api/og/earthquake/${id}`;
+  const ogTitle = `Sismo M${earthquake.magnitude} en ${location}`;
+
   return {
     title,
     description,
     openGraph: {
-      title: `${title} | Sismos México`,
+      title: `${ogTitle} | Sismos México`,
       description,
       type: 'article',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `Mapa del sismo de magnitud ${earthquake.magnitude} en ${location}`,
+        },
+      ],
     },
     twitter: {
-      card: 'summary',
-      title,
+      card: 'summary_large_image',
+      title: ogTitle,
       description,
+      images: [ogImageUrl],
     },
     alternates: {
       canonical: `/sismos/detalle/${id}`,
