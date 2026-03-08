@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import {
-  HomeHeroSection,
+  EarthquakeHeroSection,
   EarthquakesSection,
   SeeMoreSection,
   DownloadSection,
 } from '@/components/sections';
+import { StickyDownloadBar } from '@/components/widgets';
 import { BreadcrumbJsonLd, EarthquakeEventJsonLd } from '@/components/seo';
 import { getEarthquakeDetail, parseEarthquakes } from '@/services';
 
@@ -89,8 +90,11 @@ export default async function EarthquakeDetailPage({ params }: Props) {
         />
       )}
       <main>
-        <HomeHeroSection />
+        {earthquake ? (
+          <EarthquakeHeroSection earthquake={earthquake} />
+        ) : null}
         <EarthquakesSection earthquakes={detail} />
+        <DownloadSection />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"
           button={{
@@ -98,7 +102,7 @@ export default async function EarthquakeDetailPage({ params }: Props) {
             href: '/sismos',
           }}
         />
-        <DownloadSection />
+        <StickyDownloadBar />
       </main>
     </>
   );
