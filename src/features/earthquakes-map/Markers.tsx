@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { MarkerClusterer, Marker as MarkerType } from '@googlemaps/markerclusterer';
-import { AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
-import { MagnitudeIndicator } from '@/components/ui';
+import { Marker, useMap } from '@vis.gl/react-google-maps';
 
 type MarkerProps = {
   points: {
@@ -13,6 +12,22 @@ type MarkerProps = {
     magnitude: number;
   }[];
 };
+
+function getMagnitudeColor(magnitude: number): string {
+  if (magnitude >= 7) return '#ef4444';
+  if (magnitude >= 5) return '#f97316';
+  if (magnitude >= 3) return '#eab308';
+  return '#22c55e';
+}
+
+function createMarkerIcon(magnitude: number) {
+  const color = getMagnitudeColor(magnitude);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="14" fill="${color}" stroke="white" stroke-width="2"/>
+    <text x="16" y="21" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="sans-serif">${magnitude.toFixed(1)}</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
 
 export function Markers({ points }: MarkerProps) {
   const map = useMap();
@@ -57,13 +72,16 @@ export function Markers({ points }: MarkerProps) {
   return (
     <>
       {points.map((point) => (
-        <AdvancedMarker
+        <Marker
           position={point}
           key={point.id}
           ref={(marker) => setMarkerRef(marker, point.id)}
-        >
-          <MagnitudeIndicator magnitude={point.magnitude} />
-        </AdvancedMarker>
+          icon={{
+            url: createMarkerIcon(point.magnitude),
+            scaledSize: { width: 32, height: 32, equals: () => false },
+            anchor: { x: 16, y: 16, equals: () => false },
+          }}
+        />
       ))}
     </>
   );
