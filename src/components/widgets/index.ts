@@ -12,3 +12,4 @@ export * from './earthquakes-table/factory/EarthquakesTableFactory';
 export * from './earthquakes-table/factory/model';
 export * from './earthquake-card/EarthquakeCard';
 export * from './smart-app-banner/SmartAppBanner';
+export * from './sticky-download-bar/StickyDownloadBar';
