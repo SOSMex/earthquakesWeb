@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import { DEFAULT_CENTER } from '@/config';
+import { DEFAULT_CENTER, darkMapStyle } from '@/config';
 import { EarthquakeProps } from '@/components/widgets';
 import { useEarthquakesData } from '@/components/providers';
 import { Markers } from './Markers';
@@ -48,7 +48,7 @@ export function EarthquakesMap(props: EarthquakesMapProps) {
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
       <div className="h-[65vh] md:h-96 lg:h-[31.25rem]" style={{ width: '100%' }}>
-        <Map zoom={zoom} center={position} mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID as string}>
+        <Map zoom={zoom} center={position} styles={darkMapStyle}>
           <Markers points={markers} />
         </Map>
       </div>

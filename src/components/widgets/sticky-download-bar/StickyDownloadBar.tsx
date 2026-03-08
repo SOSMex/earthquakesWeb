@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useStoreUrl } from '@/utils/useStoreUrl';
 
 const STICKY_DISMISSED_KEY = 'sticky-download-dismissed';
 
 export function StickyDownloadBar() {
   const [visible, setVisible] = useState(false);
+  const storeUrl = useStoreUrl();
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(STICKY_DISMISSED_KEY);
@@ -19,10 +21,6 @@ export function StickyDownloadBar() {
   };
 
   if (!visible) return null;
-
-  const storeUrl = (process.env.NEXT_PUBLIC_IOS_APP_URL as string)
-    || (process.env.NEXT_PUBLIC_ANDROID_APP_URL as string)
-    || '#';
 
   return (
     <div className="fixed bottom-0 left-0 z-50 flex w-full items-center justify-between gap-3 bg-brand px-4 py-3 shadow-lg md:hidden">
