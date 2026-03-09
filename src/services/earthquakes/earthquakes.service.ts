@@ -17,18 +17,27 @@ export async function getEarthquakesData(limit: number = 10, page: number = 1) {
   }
 }
 
-export async function getStatistics(startDate: string, endDate: string) {
+export async function getStatistics(
+  startDate: string,
+  endDate: string,
+) {
   try {
     const params = new URLSearchParams({ startDate, endDate });
-    const response = await fetch(
-      `${BASE_URL}/api/earthquakes/statistics?key=${process.env.SELF_SECRET}&${params}`,
-    );
-    const data = await response.json();
+    const url = `${BASE_URL}/api/earthquakes/statistics`
+      + `?key=${process.env.SELF_SECRET}&${params}`;
+    const response = await fetch(url);
 
+    if (!response.ok) {
+      // eslint-disable-next-line no-console
+      console.error('[getStatistics] HTTP', response.status);
+      return {};
+    }
+
+    const data = await response.json();
     return data;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(error);
+    console.error('[getStatistics] Error:', error);
     return {};
   }
 }
@@ -45,5 +54,37 @@ export async function getEarthquakeDetail(id: string) {
     // eslint-disable-next-line no-console
     console.error(error);
     return {};
+  }
+}
+
+export interface ReportStats {
+  earthquakeToken: string;
+  totalReports: number;
+  intensityBreakdown: {
+    leve: number;
+    moderado: number;
+    fuerte: number;
+  };
+  featuredReports: {
+    intensity: string;
+    comment: string | null;
+    reportedAt: string;
+  }[];
+}
+
+export async function getReportStats(
+  earthquakeToken: string,
+): Promise<ReportStats | null> {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/earthquakes/report-stats?key=${process.env.SELF_SECRET}&token=${earthquakeToken}`,
+    );
+    const json = await response.json();
+
+    return json?.data ?? null;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[getReportStats] Error:', error);
+    return null;
   }
 }

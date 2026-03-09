@@ -1,4 +1,5 @@
 import { EarthquakeProps } from '@/components/widgets';
+import { ReportStats } from '@/services';
 
 interface JsonLdProps {
   data: Record<string, unknown>;
@@ -88,13 +89,49 @@ export function BreadcrumbJsonLd({ items }: BreadcrumbJsonLdProps) {
 interface EarthquakeEventJsonLdProps {
   earthquake: EarthquakeProps;
   url: string;
+  reportStats?: ReportStats | null;
 }
 
-export function EarthquakeEventJsonLd({ earthquake, url }: EarthquakeEventJsonLdProps) {
+export function EarthquakeEventJsonLd({
+  earthquake, url, reportStats,
+}: EarthquakeEventJsonLdProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
   const pageId = url.split('/').pop() || '';
 
-  const data = {
+  const additionalProperties: Record<string, unknown>[] = [
+    {
+      '@type': 'PropertyValue',
+      name: 'Magnitud',
+      value: earthquake.magnitude,
+    },
+  ];
+
+  if (reportStats && reportStats.totalReports > 0) {
+    additionalProperties.push(
+      {
+        '@type': 'PropertyValue',
+        name: 'Reportes comunitarios',
+        value: reportStats.totalReports,
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Intensidad leve',
+        value: reportStats.intensityBreakdown.leve,
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Intensidad moderada',
+        value: reportStats.intensityBreakdown.moderado,
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Intensidad fuerte',
+        value: reportStats.intensityBreakdown.fuerte,
+      },
+    );
+  }
+
+  const data: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: `Sismo de magnitud ${earthquake.magnitude} en ${earthquake.state || 'México'}`,
@@ -125,13 +162,7 @@ export function EarthquakeEventJsonLd({ earthquake, url }: EarthquakeEventJsonLd
     },
     url,
     isAccessibleForFree: true,
-    additionalProperty: [
-      {
-        '@type': 'PropertyValue',
-        name: 'Magnitud',
-        value: earthquake.magnitude,
-      },
-    ],
+    additionalProperty: additionalProperties,
     image: `${siteUrl}/api/og/earthquake/${pageId}`,
   };
 

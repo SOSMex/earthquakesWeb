@@ -9,3 +9,4 @@ export * from './legal-notice-section/content';
 export * from './ritcher-scale-section/RitcherScaleSection';
 export * from './earthquakes-section/EarthquakesSection';
 export * from './earthquake-hero-section/EarthquakeHeroSection';
+export * from './community-reports-section/CommunityReportsSection';
