@@ -14,14 +14,32 @@ export async function GET(request: Request) {
 
   const params = new URLSearchParams({ startDate, endDate });
 
-  const res = await fetch(`${apiUrl}/api/sismos/info/statistics?${params}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-ApiKey': DATA_API_KEY,
-    },
-  });
+  try {
+    const url = `${apiUrl}/api/sismos/info/statistics?${params}`;
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-ApiKey': DATA_API_KEY,
+      },
+    });
 
-  const stats = await res.json();
+    if (!res.ok) {
+      // eslint-disable-next-line no-console
+      console.error('[statistics] Backend error:', res.status);
+      return Response.json(
+        { success: false, data: null },
+        { status: res.status },
+      );
+    }
 
-  return Response.json(stats);
+    const stats = await res.json();
+    return Response.json(stats);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[statistics] Fetch error:', error);
+    return Response.json(
+      { success: false, data: null },
+      { status: 500 },
+    );
+  }
 }

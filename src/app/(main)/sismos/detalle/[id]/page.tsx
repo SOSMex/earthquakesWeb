@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import {
+  CommunityReportsSection,
   EarthquakeHeroSection,
   EarthquakesSection,
   SeeMoreSection,
@@ -7,7 +8,7 @@ import {
 } from '@/components/sections';
 import { StickyDownloadBar } from '@/components/widgets';
 import { BreadcrumbJsonLd, EarthquakeEventJsonLd } from '@/components/seo';
-import { getEarthquakeDetail, parseEarthquakes } from '@/services';
+import { getEarthquakeDetail, getReportStats, parseEarthquakes } from '@/services';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +18,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const response = await getEarthquakeDetail(id);
+  const [response, reportStats] = await Promise.all([
+    getEarthquakeDetail(id),
+    getReportStats(id),
+  ]);
   const earthquakes = parseEarthquakes([response?.data]);
   const earthquake = earthquakes[0];
 
@@ -33,7 +37,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : earthquake.state || 'México';
 
   const title = `Sismo de magnitud ${earthquake.magnitude} en ${location}`;
-  const description = `Sismo registrado el ${earthquake.date} a las ${earthquake.time} con magnitud ${earthquake.magnitude} en ${location}. ${earthquake.details || ''}`;
+
+  const reportsSuffix = reportStats && reportStats.totalReports > 0
+    ? ` ${reportStats.totalReports} personas reportaron este sismo.`
+    : '';
+  const description = `Sismo registrado el ${earthquake.date} a las ${earthquake.time} con magnitud ${earthquake.magnitude} en ${location}.${reportsSuffix} ${earthquake.details || ''}`;
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismosmx.app';
   const ogImageUrl = `${siteUrl}/api/og/earthquake/${id}`;
@@ -69,7 +77,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function EarthquakeDetailPage({ params }: Props) {
   const { id } = await params;
-  const response = await getEarthquakeDetail(id);
+  const [response, reportStats] = await Promise.all([
+    getEarthquakeDetail(id),
+    getReportStats(id),
+  ]);
   const detail = parseEarthquakes([response?.data]);
   const earthquake = detail[0];
 
@@ -87,6 +98,7 @@ export default async function EarthquakeDetailPage({ params }: Props) {
         <EarthquakeEventJsonLd
           earthquake={earthquake}
           url={`${siteUrl}/sismos/detalle/${id}`}
+          reportStats={reportStats}
         />
       )}
       <main>
@@ -94,6 +106,9 @@ export default async function EarthquakeDetailPage({ params }: Props) {
           <EarthquakeHeroSection earthquake={earthquake} />
         ) : null}
         <EarthquakesSection earthquakes={detail} mapTitle="Detalle del sismo" />
+        {reportStats && reportStats.totalReports > 0 && (
+          <CommunityReportsSection stats={reportStats} />
+        )}
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"
           button={{
