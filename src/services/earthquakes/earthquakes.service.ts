@@ -72,6 +72,35 @@ export interface ReportStats {
   }[];
 }
 
+export interface ReportLocation {
+  latitude: number;
+  longitude: number;
+  intensity: string;
+}
+
+export interface ReportLocationsResponse {
+  earthquakeToken: string;
+  totalCount: number;
+  locations: ReportLocation[];
+}
+
+export async function getReportLocations(
+  earthquakeToken: string,
+): Promise<ReportLocationsResponse | null> {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/earthquakes/report-locations?key=${process.env.SELF_SECRET}&token=${earthquakeToken}`,
+    );
+    const json = await response.json();
+
+    return json?.data ?? null;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[getReportLocations] Error:', error);
+    return null;
+  }
+}
+
 export async function getReportStats(
   earthquakeToken: string,
 ): Promise<ReportStats | null> {

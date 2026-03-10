@@ -6,6 +6,7 @@ import { DEFAULT_CENTER, darkMapStyle } from '@/config';
 import { EarthquakeProps } from '@/components/widgets';
 import { useEarthquakesData } from '@/components/providers';
 import { Markers } from './Markers';
+import { PerceptionMarkers } from './PerceptionMarkers';
 import { EarthquakesMapProps } from './model';
 
 const parseMarkers = (earthquakes: EarthquakeProps[]) => {
@@ -20,7 +21,7 @@ const parseMarkers = (earthquakes: EarthquakeProps[]) => {
 };
 
 export function EarthquakesMap(props: EarthquakesMapProps) {
-  const { earthquakes } = props;
+  const { earthquakes, perceptionLocations } = props;
   const { selected } = useEarthquakesData();
 
   const isSingle = earthquakes?.length === 1;
@@ -43,12 +44,19 @@ export function EarthquakesMap(props: EarthquakesMapProps) {
 
   useEffect(() => {
     setMarkers(parseMarkers(earthquakes));
+    if (earthquakes?.length === 1) {
+      setPosition({ lat: earthquakes[0].lat, lng: earthquakes[0].lng });
+      setZoom(8);
+    }
   }, [earthquakes]);
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
       <div className="h-[65vh] md:h-96 lg:h-[31.25rem]" style={{ width: '100%' }}>
         <Map zoom={zoom} center={position} styles={darkMapStyle}>
+          {perceptionLocations && perceptionLocations.length > 0 && (
+            <PerceptionMarkers locations={perceptionLocations} />
+          )}
           <Markers points={markers} />
         </Map>
       </div>

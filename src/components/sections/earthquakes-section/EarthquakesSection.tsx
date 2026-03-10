@@ -1,20 +1,23 @@
 import { EarthquakesDataProvider } from '@/components/providers';
 import { EarthquakesMapSection, RitcherScaleSection } from '@/components/sections';
 import { EarthquakeProps, EarthquakesTableFactory } from '@/components/widgets';
+import type { ReportLocation } from '@/services';
 import { EarthquakeCardList } from './EarthquakeCardList';
 
 export function EarthquakesSection({
   paginated = false,
   earthquakes,
   mapTitle,
+  perceptionLocations,
 }: {
   paginated?: boolean;
   earthquakes: EarthquakeProps[];
   mapTitle?: string;
+  perceptionLocations?: ReportLocation[];
 }) {
   return (
     <EarthquakesDataProvider earthquakes={earthquakes}>
-      <EarthquakesMapSection title={mapTitle} />
+      <EarthquakesMapSection title={mapTitle} perceptionLocations={perceptionLocations} />
       <RitcherScaleSection />
 
       {!paginated && (

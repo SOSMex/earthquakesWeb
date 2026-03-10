@@ -8,7 +8,7 @@ import {
 } from '@/components/sections';
 import { StickyDownloadBar } from '@/components/widgets';
 import { BreadcrumbJsonLd, EarthquakeEventJsonLd } from '@/components/seo';
-import { getEarthquakeDetail, getReportStats, parseEarthquakes } from '@/services';
+import { getEarthquakeDetail, getReportLocations, getReportStats, parseEarthquakes } from '@/services';
 
 export const dynamic = 'force-dynamic';
 
@@ -77,9 +77,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function EarthquakeDetailPage({ params }: Props) {
   const { id } = await params;
-  const [response, reportStats] = await Promise.all([
+  const [response, reportStats, reportLocations] = await Promise.all([
     getEarthquakeDetail(id),
     getReportStats(id),
+    getReportLocations(id),
   ]);
   const detail = parseEarthquakes([response?.data]);
   const earthquake = detail[0];
@@ -105,7 +106,11 @@ export default async function EarthquakeDetailPage({ params }: Props) {
         {earthquake ? (
           <EarthquakeHeroSection earthquake={earthquake} />
         ) : null}
-        <EarthquakesSection earthquakes={detail} mapTitle="Detalle del sismo" />
+        <EarthquakesSection
+          earthquakes={detail}
+          mapTitle="Detalle del sismo"
+          perceptionLocations={reportLocations?.locations}
+        />
         {reportStats && reportStats.totalReports > 0 && (
           <CommunityReportsSection stats={reportStats} />
         )}
