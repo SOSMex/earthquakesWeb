@@ -110,6 +110,7 @@ export default async function EarthquakeDetailPage({ params }: Props) {
           earthquakes={detail}
           mapTitle="Detalle del sismo"
           perceptionLocations={reportLocations?.locations}
+          hideTable
         />
         {reportStats && reportStats.totalReports > 0 && (
           <CommunityReportsSection stats={reportStats} />

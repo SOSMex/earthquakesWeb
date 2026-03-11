@@ -31,9 +31,9 @@ export async function GET(request: Request) {
       return Response.json({ data: null });
     }
 
-    const data = await res.json();
+    const json = await res.json();
 
-    return Response.json({ data });
+    return Response.json({ data: json?.data ?? null });
   } catch {
     return Response.json({ data: null });
   }
