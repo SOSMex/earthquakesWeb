@@ -5,4 +5,5 @@ export {
   EarthquakeEventJsonLd,
   EarthquakesListJsonLd,
   SoftwareAppJsonLd,
+  FAQPageJsonLd,
 } from './JsonLd';

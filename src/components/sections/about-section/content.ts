@@ -1,5 +1,30 @@
 export const faqQuestions = [
   {
+    question: '¿Cómo recibir alertas de sismos en mi celular?',
+    answer:
+      'Descarga Sismos MX gratis en Google Play o App Store. La app te envía notificaciones push cada vez que se registra un sismo en México, combinando datos oficiales del Servicio Sismológico Nacional con reportes de la comunidad para avisarte lo antes posible. Más de 860,000 descargas en Android y iOS.',
+  },
+  {
+    question: '¿Por qué no me llegó la alerta sísmica?',
+    answer:
+      'La alerta sísmica de SASMEX es un sistema preventivo que se activa para sismos mayores a magnitud 6 y solo en algunas ciudades. Sismos MX es diferente: te envía una notificación informativa cada vez que el SSN registra un sismo, sin importar la magnitud o tu ubicación. Además, los reportes de la comunidad ayudan a complementar la información oficial.',
+  },
+  {
+    question: '¿Cuál es la diferencia entre la alerta sísmica y una app de sismos?',
+    answer:
+      'La alerta sísmica (SASMEX) es un sistema de alerta temprana preventivo: avisa segundos antes de que lleguen las ondas sísmicas a ciertas ciudades, pero solo para sismos fuertes. Sismos MX es una app informativa post-evento: te notifica cuando el SSN registra un sismo, te muestra su ubicación, magnitud y profundidad en un mapa interactivo, y te permite avisar a tu familia que estás bien a través del Círculo de Seguridad. Ambos se complementan.',
+  },
+  {
+    question: '¿La app de sismos funciona en todo México?',
+    answer:
+      'Sí. Sismos MX funciona en todo el territorio mexicano. A diferencia de la alerta sísmica oficial que solo cubre algunas ciudades, nuestra app te notifica de sismos registrados en cualquier parte de México con datos del Servicio Sismológico Nacional.',
+  },
+  {
+    question: '¿Cómo avisar a mi familia que estoy bien después de un sismo?',
+    answer:
+      'Con el Círculo de Seguridad de Sismos MX puedes notificar a tus seres queridos que estás a salvo con un solo toque. También puedes configurar el botón de encendido del celular para enviar un aviso de SOS rápidamente. Tu familia recibirá una notificación instantánea.',
+  },
+  {
     question: '¿Qué es un sismo?',
     answer:
       'El sismo es un movimiento brusco de la tierra causado por la liberación de energía acumulada en las placas tectónicas.',
@@ -42,6 +67,6 @@ export const faqQuestions = [
   {
     question: '¿Dónde puedo obtener información actualizada sobre sismos en México?',
     answer:
-      'Puedes obtener información actualizada sobre sismos en México a través de instituciones como el Servicio Sismológico Nacional (SSN) y el Centro de Instrumentación y Registro Sísmico (CIRES).',
+      'Puedes obtener información actualizada sobre sismos en México a través de instituciones como el Servicio Sismológico Nacional (SSN), el Centro de Instrumentación y Registro Sísmico (CIRES), o descargando Sismos MX que te muestra los sismos en tiempo real con mapa interactivo y notificaciones.',
   },
 ];

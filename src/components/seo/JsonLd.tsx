@@ -226,6 +226,25 @@ export function SoftwareAppJsonLd() {
   return <JsonLd data={data} />;
 }
 
+interface FAQItem { question: string; answer: string }
+
+export function FAQPageJsonLd({ questions }: { questions: FAQItem[] }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: questions.map((q) => ({
+      '@type': 'Question',
+      name: q.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: q.answer,
+      },
+    })),
+  };
+
+  return <JsonLd data={data} />;
+}
+
 export function EarthquakesListJsonLd() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 

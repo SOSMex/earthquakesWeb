@@ -26,7 +26,7 @@ const REVIEWS = [
 ];
 
 const STATS = [
-  { value: '860k+', label: 'Descargas' },
+  { value: '860k+', label: 'Descargas totales' },
   { value: '4.6', label: 'Estrellas' },
   { value: '2017', label: 'Desde' },
 ];
