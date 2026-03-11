@@ -3,9 +3,10 @@ import {
   HomeHeroSection,
   EarthquakesSection,
   SeeMoreSection,
+  TestimonialsSection,
   DownloadSection,
 } from '@/components/sections';
-import { WebSiteJsonLd, OrganizationJsonLd } from '@/components/seo';
+import { WebSiteJsonLd, OrganizationJsonLd, SoftwareAppJsonLd } from '@/components/seo';
 import { getEarthquakesData, parseEarthquakes } from '@/services';
 
 export const dynamic = 'force-dynamic';
@@ -27,6 +28,7 @@ export default async function HomePage() {
     <>
       <WebSiteJsonLd />
       <OrganizationJsonLd />
+      <SoftwareAppJsonLd />
       <main>
         <HomeHeroSection />
         <EarthquakesSection earthquakes={eartquakes} />
@@ -37,6 +39,7 @@ export default async function HomePage() {
             href: '/sismos',
           }}
         />
+        <TestimonialsSection />
         <DownloadSection />
       </main>
     </>

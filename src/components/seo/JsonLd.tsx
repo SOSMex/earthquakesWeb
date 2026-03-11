@@ -169,6 +169,63 @@ export function EarthquakeEventJsonLd({
   return <JsonLd data={data} />;
 }
 
+export function SoftwareAppJsonLd() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Sismos MX',
+    operatingSystem: 'Android, iOS',
+    applicationCategory: 'UtilitiesApplication',
+    url: siteUrl,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'MXN',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.6',
+      ratingCount: '860',
+      bestRating: '5',
+      worstRating: '1',
+    },
+    review: [
+      {
+        '@type': 'Review',
+        author: { '@type': 'Person', name: 'Gerardo Aboytes' },
+        datePublished: '2026-02-21',
+        reviewRating: { '@type': 'Rating', ratingValue: '5' },
+        reviewBody: 'Me avisa oportunamente de los multiples sismos que ocurren en México. Desde 2019 que lo utilicé hasta ahora hay muchos avances en la App.',
+      },
+      {
+        '@type': 'Review',
+        author: { '@type': 'Person', name: 'Jessica RuBel' },
+        datePublished: '2026-01-10',
+        reviewRating: { '@type': 'Rating', ratingValue: '5' },
+        reviewBody: 'En el último sismo la alerta sonó en tiempo, incluso antes que otras alertas, el tono de la alerta ayuda mucho, ya que es clara.',
+      },
+      {
+        '@type': 'Review',
+        author: { '@type': 'Person', name: 'Un usuario de Google' },
+        datePublished: '2020-02-12',
+        reviewRating: { '@type': 'Rating', ratingValue: '5' },
+        reviewBody: 'Desde que la descargué en 2017 me ha avisado de los sismos. CDMX con internet de alta velocidad me llega las notificaciones antes que suene la alarma, ya me salvó 2 veces.',
+      },
+      {
+        '@type': 'Review',
+        author: { '@type': 'Person', name: 'Diana García Ibarra' },
+        datePublished: '2022-03-03',
+        reviewRating: { '@type': 'Rating', ratingValue: '5' },
+        reviewBody: 'Es una aplicación muy completa. Avisa al momento y permite mandar mensaje a los familiares de SOS. No contiene anuncios molestos y te mantiene informado.',
+      },
+    ],
+  };
+
+  return <JsonLd data={data} />;
+}
+
 export function EarthquakesListJsonLd() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
 

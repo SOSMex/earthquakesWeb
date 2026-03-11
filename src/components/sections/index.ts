@@ -10,3 +10,4 @@ export * from './ritcher-scale-section/RitcherScaleSection';
 export * from './earthquakes-section/EarthquakesSection';
 export * from './earthquake-hero-section/EarthquakeHeroSection';
 export * from './community-reports-section/CommunityReportsSection';
+export * from './testimonials-section/TestimonialsSection';
