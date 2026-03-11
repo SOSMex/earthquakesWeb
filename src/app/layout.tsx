@@ -73,6 +73,12 @@ export const metadata: Metadata = {
   verification: {
     google: '8cX3ODVvTl97NBldbcYPkyl3HYFWkf042VTZ_moQOsQ',
   },
+  other: {
+    'al:ios:app_store_id': '6473684021',
+    'al:ios:app_name': 'Sismos México',
+    'al:android:package': 'com.sosmex.sismos',
+    'al:android:app_name': 'Sismos MX',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
