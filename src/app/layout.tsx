@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   other: {
     'al:ios:app_store_id': '6473684021',
     'al:ios:app_name': 'Sismos México',
-    'al:android:package': 'com.sosmex.sismos',
+    'al:android:package': 'com.oscar.sismos_v2',
     'al:android:app_name': 'Sismos MX',
   },
 };

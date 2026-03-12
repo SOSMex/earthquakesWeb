@@ -49,7 +49,7 @@ export function OrganizationJsonLd() {
     description:
       'Aplicación de monitoreo de sismos en México con información en tiempo real del Servicio Sismológico Nacional.',
     sameAs: [
-      'https://play.google.com/store/apps/details?id=com.sosmex.sismos',
+      'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2',
       'https://apps.apple.com/mx/app/sismos-m%C3%A9xico/id6473684021',
     ],
     contactPoint: {
@@ -224,7 +224,7 @@ export function SoftwareAppJsonLd() {
     operatingSystem: 'Android',
     applicationCategory: 'UtilitiesApplication',
     url: siteUrl,
-    downloadUrl: 'https://play.google.com/store/apps/details?id=com.sosmex.sismos',
+    downloadUrl: 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2',
     offers: softwareAppOffers,
     aggregateRating: softwareAppRating,
     review: softwareAppReviews,
