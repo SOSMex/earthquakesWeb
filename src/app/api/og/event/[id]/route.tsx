@@ -5,6 +5,7 @@ export const runtime = 'edge';
 
 const MONITOR_ALERTS_URL = process.env.MONITOR_ALERTS_URL!;
 const MONITOR_ALERTS_API_KEY = process.env.MONITOR_ALERTS_API_KEY!;
+const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN!;
 
 const INTENSITY_ORDER = ['Extremo', 'MuyViolento', 'Violento', 'Fuerte', 'Moderado'];
 
@@ -43,7 +44,9 @@ function fallbackImage() {
           color: 'white',
         }}
       >
-        <span style={{ fontSize: 64, fontWeight: 800 }}>Sismos M&#233;xico</span>
+        <span style={{ fontSize: 64, fontWeight: 800 }}>
+          {'Sismos M\u00E9xico'}
+        </span>
         <span style={{ fontSize: 28, color: '#a0a0b0', marginTop: 16 }}>
           sismosmx.app
         </span>
@@ -51,6 +54,19 @@ function fallbackImage() {
     ),
     { width: 1200, height: 630 },
   );
+}
+
+async function fetchMapBase64(lat: number, lng: number): Promise<string | null> {
+  const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/pin-l+ef4444(${lng},${lat})/${lng},${lat},6,0/1200x350@2x?access_token=${MAPBOX_ACCESS_TOKEN}&logo=false&attribution=false`;
+  try {
+    const res = await fetch(mapUrl);
+    if (!res.ok) return null;
+    const buffer = await res.arrayBuffer();
+    const base64 = Buffer.from(buffer).toString('base64');
+    return `data:image/png;base64,${base64}`;
+  } catch {
+    return null;
+  }
 }
 
 export async function GET(
@@ -64,6 +80,8 @@ export async function GET(
     location: string;
     dateUtc: string;
     latencySeconds?: number;
+    epicenterLat?: number;
+    epicenterLng?: number;
     etas: Record<string, { eta?: number; intensity?: string }>;
   } | null = null;
 
@@ -88,51 +106,88 @@ export async function GET(
     minute: '2-digit',
   });
 
+  // Pre-fetch map as base64 (Satori can't fetch external URLs in <img>)
+  const hasCoords = event.epicenterLat != null && event.epicenterLng != null;
+  const mapSrc = hasCoords
+    ? await fetchMapBase64(event.epicenterLat!, event.epicenterLng!)
+    : null;
+
   return new ImageResponse(
     (
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
           width: '100%',
           height: '100%',
           backgroundColor: '#1a1a2e',
           fontFamily: 'sans-serif',
-          padding: '60px',
         }}
       >
-        {heroEta && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <span style={{ fontSize: 120, fontWeight: 800, color: '#FFD600' }}>
-              {`${heroEta}s`}
-            </span>
-            <span style={{ fontSize: 36, color: '#a0a0b0', marginTop: 8 }}>
-              de anticipaci&#243;n
-            </span>
-          </div>
+        {/* Map header */}
+        {mapSrc && (
+          <img
+            src={mapSrc}
+            width={1200}
+            height={350}
+            alt="map"
+            style={{ objectFit: 'cover' }}
+          />
         )}
 
-        <span
+        {/* Content */}
+        <div
           style={{
-            fontSize: 48,
-            fontWeight: 700,
-            color: 'white',
-            marginTop: heroEta ? 40 : 0,
-            textAlign: 'center',
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px 60px',
           }}
         >
-          {`Sismo ${event.intensity} — ${event.location}`}
-        </span>
+          {/* Hero stat + earthquake info row */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
+            {heroEta && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span style={{ fontSize: 96, fontWeight: 800, color: '#FFD600' }}>
+                  {`${heroEta}s`}
+                </span>
+                <span style={{ fontSize: 20, color: '#a0a0b0', letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>
+                  {'de anticipaci\u00F3n'}
+                </span>
+              </div>
+            )}
 
-        <span style={{ fontSize: 28, color: '#a0a0b0', marginTop: 16 }}>
-          {dateFormatted}
-        </span>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <span style={{ fontSize: 36, fontWeight: 700, color: 'white' }}>
+                {`Sismo ${event.intensity} \u2014 ${event.location}`}
+              </span>
+              <span style={{ fontSize: 22, color: '#a0a0b0', marginTop: 8 }}>
+                {dateFormatted}
+              </span>
+            </div>
 
-        <span style={{ fontSize: 24, color: '#606070', marginTop: 60 }}>
-          Sismos MX &#8212; sismosmx.app
-        </span>
+            {/* Branding */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <span
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  color: 'white',
+                  backgroundColor: '#7c3aed',
+                  padding: '8px 20px',
+                  borderRadius: 24,
+                }}
+              >
+                Descarga la app
+              </span>
+              <span style={{ fontSize: 14, color: '#a0a0b0' }}>
+                sismosmx.app
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     ),
     {
