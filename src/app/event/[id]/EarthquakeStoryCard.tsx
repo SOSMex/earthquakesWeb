@@ -93,15 +93,35 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
           </div>
         )}
 
-        {/* Narrative */}
-        {heroEta && (
-          <p className="mt-10 max-w-md text-center text-base leading-relaxed text-white/50">
-            {`Usuarios de Sismos MX recibieron la alerta ${heroEta} segundos antes de que las ondas s\u00EDsmicas llegaran.`}
-          </p>
-        )}
+        {/* Narrative — contextual by audience */}
+        <div className="mt-10 max-w-md text-center">
+          {isFromPush ? (
+            <>
+              {heroEta && (
+                <p className="text-base leading-relaxed text-white/50">
+                  {`Tu alerta lleg\u00F3 ${heroEta} segundos antes que las ondas s\u00EDsmicas.`}
+                </p>
+              )}
+              <p className="mt-3 text-base leading-relaxed text-white/70">
+                {'Comparte con tu familia y amigos para que tambi\u00E9n est\u00E9n prevenidos en el pr\u00F3ximo sismo.'}
+              </p>
+            </>
+          ) : (
+            <>
+              {heroEta && (
+                <p className="text-base leading-relaxed text-white/50">
+                  {`Usuarios de Sismos MX recibieron la alerta ${heroEta} segundos antes de que las ondas s\u00EDsmicas llegaran.`}
+                </p>
+              )}
+              <p className="mt-3 text-base leading-relaxed text-white/70">
+                {'Recibe alertas s\u00EDsmicas con segundos de anticipaci\u00F3n. Prot\u00E9gete a ti y a tu familia.'}
+              </p>
+            </>
+          )}
+        </div>
 
         {/* CTAs */}
-        <div className="mt-12 flex w-full max-w-sm flex-col gap-3">
+        <div className="mt-10 flex w-full max-w-sm flex-col gap-3">
           {isFromPush ? (
             <>
               <button
@@ -109,7 +129,7 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
                 onClick={handleShare}
                 className="rounded-xl bg-yellow-400 py-4 text-center text-lg font-bold text-black shadow-[0_0_20px_rgba(250,204,21,0.2)] transition-shadow hover:shadow-[0_0_30px_rgba(250,204,21,0.35)]"
               >
-                Compartir
+                Invitar a familia y amigos
               </button>
               <a
                 href="https://apps.apple.com/app/id6473684021?action=write-review"
