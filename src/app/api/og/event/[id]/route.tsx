@@ -57,7 +57,7 @@ function fallbackImage() {
 }
 
 async function fetchMapBase64(lat: number, lng: number): Promise<string | null> {
-  const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/pin-l+ef4444(${lng},${lat})/${lng},${lat},6,0/1200x350@2x?access_token=${MAPBOX_ACCESS_TOKEN}&logo=false&attribution=false`;
+  const mapUrl = `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/pin-l+ef4444(${lng},${lat})/${lng},${lat},6,0/1200x240@2x?access_token=${MAPBOX_ACCESS_TOKEN}&logo=false&attribution=false`;
   try {
     const res = await fetch(mapUrl);
     if (!res.ok) return null;
@@ -106,7 +106,6 @@ export async function GET(
     minute: '2-digit',
   });
 
-  // Pre-fetch map as base64 (Satori can't fetch external URLs in <img>)
   const hasCoords = event.epicenterLat != null && event.epicenterLng != null;
   const mapSrc = hasCoords
     ? await fetchMapBase64(event.epicenterLat!, event.epicenterLng!)
@@ -124,18 +123,18 @@ export async function GET(
           fontFamily: 'sans-serif',
         }}
       >
-        {/* Map header */}
+        {/* Map — slim strip at top */}
         {mapSrc && (
           <img
             src={mapSrc}
             width={1200}
-            height={350}
+            height={240}
             alt="map"
             style={{ objectFit: 'cover' }}
           />
         )}
 
-        {/* Content */}
+        {/* Content — vertically centered in remaining space */}
         <div
           style={{
             display: 'flex',
@@ -143,49 +142,54 @@ export async function GET(
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '24px 60px',
+            padding: '20px 60px',
           }}
         >
-          {/* Hero stat + earthquake info row */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
-            {heroEta && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <span style={{ fontSize: 96, fontWeight: 800, color: '#FFD600' }}>
-                  {`${heroEta}s`}
-                </span>
-                <span style={{ fontSize: 20, color: '#a0a0b0', letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>
-                  {'de anticipaci\u00F3n'}
-                </span>
-              </div>
-            )}
-
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <span style={{ fontSize: 36, fontWeight: 700, color: 'white' }}>
-                {`Sismo ${event.intensity} \u2014 ${event.location}`}
+          {/* Hero stat */}
+          {heroEta && (
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 16 }}>
+              <span style={{ fontSize: 80, fontWeight: 800, color: '#FFD600' }}>
+                {`${heroEta}s`}
               </span>
-              <span style={{ fontSize: 22, color: '#a0a0b0', marginTop: 8 }}>
-                {dateFormatted}
+              <span style={{ fontSize: 24, color: '#a0a0b0', letterSpacing: '0.1em' }}>
+                {'de anticipaci\u00F3n'}
               </span>
             </div>
+          )}
 
-            {/* Branding */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-              <span
-                style={{
-                  fontSize: 16,
-                  fontWeight: 700,
-                  color: 'white',
-                  backgroundColor: '#7c3aed',
-                  padding: '8px 20px',
-                  borderRadius: 24,
-                }}
-              >
-                Descarga la app
-              </span>
-              <span style={{ fontSize: 14, color: '#a0a0b0' }}>
-                sismosmx.app
-              </span>
-            </div>
+          {/* Earthquake info */}
+          <span
+            style={{
+              fontSize: heroEta ? 36 : 48,
+              fontWeight: 700,
+              color: 'white',
+              textAlign: 'center',
+            }}
+          >
+            {`Sismo ${event.intensity} \u2014 ${event.location}`}
+          </span>
+
+          <span style={{ fontSize: 24, color: '#a0a0b0', marginTop: 12 }}>
+            {dateFormatted}
+          </span>
+
+          {/* Branding */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 24 }}>
+            <span
+              style={{
+                fontSize: 16,
+                fontWeight: 700,
+                color: 'white',
+                backgroundColor: '#7c3aed',
+                padding: '6px 18px',
+                borderRadius: 20,
+              }}
+            >
+              Descarga la app
+            </span>
+            <span style={{ fontSize: 16, color: '#606070' }}>
+              sismosmx.app
+            </span>
           </div>
         </div>
       </div>

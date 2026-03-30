@@ -5,19 +5,13 @@ import { Suspense } from 'react';
 import { EarthquakeEventResponse } from '@/services';
 import { AppDownloadButton } from '@/components/widgets';
 
-const MAPBOX_STYLE = 'mapbox/dark-v11';
-
-function buildMapUrl(lat: number, lng: number): string {
-  const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
-  return `https://api.mapbox.com/styles/v1/${MAPBOX_STYLE}/static/pin-l+ef4444(${lng},${lat})/${lng},${lat},5.5,0/800x300@2x?access_token=${token}&logo=false&attribution=false`;
-}
-
 interface Props {
   event: EarthquakeEventResponse;
   heroEta: number | null;
+  mapUrl: string | null;
 }
 
-function StoryCardContent({ event, heroEta }: Props) {
+function StoryCardContent({ event, heroEta, mapUrl }: Props) {
   const searchParams = useSearchParams();
   const isFromPush = searchParams.get('ref') === 'push';
 
@@ -49,17 +43,15 @@ function StoryCardContent({ event, heroEta }: Props) {
     .sort(([, a], [, b]) => (a.eta ?? 0) - (b.eta ?? 0))
     .slice(0, 4);
 
-  const hasMap = event.epicenterLat != null && event.epicenterLng != null;
-
   return (
     <div className="flex min-h-screen flex-col items-center bg-[#1a1a2e] text-white">
 
       {/* Mapbox static map header */}
-      {hasMap && (
+      {mapUrl && (
         <div className="relative w-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={buildMapUrl(event.epicenterLat!, event.epicenterLng!)}
+            src={mapUrl}
             alt={`Epicentro del sismo en ${event.location}`}
             className="h-[200px] w-full object-cover md:h-[280px]"
           />
@@ -67,7 +59,7 @@ function StoryCardContent({ event, heroEta }: Props) {
         </div>
       )}
 
-      <div className={`flex w-full flex-1 flex-col items-center justify-center px-6 ${hasMap ? 'pb-12' : 'py-12'}`}>
+      <div className={`flex w-full flex-1 flex-col items-center justify-center px-6 ${mapUrl ? 'pb-12' : 'py-12'}`}>
 
         {/* Hero stat */}
         {heroEta && (

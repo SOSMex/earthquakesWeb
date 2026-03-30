@@ -76,10 +76,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function buildMapUrl(lat: number, lng: number): string | null {
+  const token = process.env.MAPBOX_ACCESS_TOKEN;
+  if (!token) return null;
+  return `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/pin-l+ef4444(${lng},${lat})/${lng},${lat},5.5,0/800x300@2x?access_token=${token}&logo=false&attribution=false`;
+}
+
 export default async function EventPage({ params }: Props) {
   const { id } = await params;
   const event = await getEarthquakeEvent(id);
   if (!event) notFound();
 
-  return <EarthquakeStoryCard event={event} heroEta={getHeroEta(event)} />;
+  const mapUrl = event.epicenterLat != null && event.epicenterLng != null
+    ? buildMapUrl(event.epicenterLat, event.epicenterLng)
+    : null;
+
+  return <EarthquakeStoryCard event={event} heroEta={getHeroEta(event)} mapUrl={mapUrl} />;
 }
