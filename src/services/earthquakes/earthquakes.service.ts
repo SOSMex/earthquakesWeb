@@ -101,6 +101,42 @@ export async function getReportLocations(
   }
 }
 
+// --- Earthquake Event (story page) ---
+
+export interface CityEta {
+  intensity?: string;
+  eta?: number;
+  lat: number;
+  lng: number;
+}
+
+export interface EarthquakeEventResponse {
+  collapseKey: string;
+  intensity: string;
+  location: string;
+  epicenterLat?: number;
+  epicenterLng?: number;
+  dateUtc: string;
+  latencySeconds?: number;
+  etas: Record<string, CityEta>;
+}
+
+export async function getEarthquakeEvent(
+  id: string,
+): Promise<EarthquakeEventResponse | null> {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/api/earthquakes/event?key=${process.env.SELF_SECRET}&id=${id}`,
+    );
+    const json = await response.json();
+    return json?.data ?? null;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[getEarthquakeEvent] Error:', error);
+    return null;
+  }
+}
+
 export async function getReportStats(
   earthquakeToken: string,
 ): Promise<ReportStats | null> {
