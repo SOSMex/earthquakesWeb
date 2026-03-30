@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import { EarthquakeEventResponse } from '@/services';
-import { AppDownloadButton } from '@/components/widgets';
+import { useStoreUrl } from '@/utils';
 
 interface Props {
   event: EarthquakeEventResponse;
@@ -14,6 +14,7 @@ interface Props {
 function StoryCardContent({ event, heroEta, mapUrl }: Props) {
   const searchParams = useSearchParams();
   const isFromPush = searchParams.get('ref') === 'push';
+  const storeUrl = useStoreUrl();
 
   const dateFormatted = new Date(event.dateUtc).toLocaleDateString('es-MX', {
     day: 'numeric',
@@ -140,12 +141,14 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
             </>
           ) : (
             <>
-              <AppDownloadButton
-                href="https://sismosmx.app"
-                label="Descargar Sismos MX"
+              <a
+                href={storeUrl}
                 target="_blank"
-                className="!rounded-xl !bg-yellow-400 !text-black py-4 text-center text-lg font-bold shadow-[0_0_20px_rgba(250,204,21,0.2)]"
-              />
+                rel="noopener noreferrer"
+                className="rounded-xl bg-yellow-400 py-4 text-center text-lg font-bold text-black shadow-[0_0_20px_rgba(250,204,21,0.2)]"
+              >
+                Descargar Sismos MX
+              </a>
               <button
                 type="button"
                 onClick={handleShare}
