@@ -60,11 +60,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {
+      canonical: `${siteUrl}/event/${id}`,
+    },
     openGraph: {
       title,
       description,
       type: 'article',
       siteName: 'Sismos MX',
+      url: `${siteUrl}/event/${id}`,
       images: [{ url: ogImageUrl, width: 1200, height: 630 }],
     },
     twitter: {
