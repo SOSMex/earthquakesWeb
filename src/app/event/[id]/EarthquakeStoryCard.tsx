@@ -1,9 +1,25 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { EarthquakeEventResponse } from '@/services';
 import { useStoreUrl } from '@/utils';
+
+const IOS_REVIEW_URL = 'https://apps.apple.com/app/id6473684021?action=write-review';
+const ANDROID_REVIEW_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2';
+
+function useReviewUrl(): string {
+  const [reviewUrl, setReviewUrl] = useState(IOS_REVIEW_URL);
+
+  useEffect(() => {
+    if (typeof navigator === 'undefined') return;
+    if (/Android/i.test(navigator.userAgent)) {
+      setReviewUrl(ANDROID_REVIEW_URL);
+    }
+  }, []);
+
+  return reviewUrl;
+}
 
 interface Props {
   event: EarthquakeEventResponse;
@@ -15,6 +31,7 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
   const searchParams = useSearchParams();
   const isFromPush = searchParams.get('ref') === 'push';
   const storeUrl = useStoreUrl();
+  const reviewUrl = useReviewUrl();
 
   const dateFormatted = new Date(event.dateUtc).toLocaleDateString('es-MX', {
     day: 'numeric',
@@ -133,7 +150,7 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
                 Invitar a familia y amigos
               </button>
               <a
-                href="https://apps.apple.com/app/id6473684021?action=write-review"
+                href={reviewUrl}
                 className="rounded-xl bg-white/10 py-4 text-center text-lg font-bold text-white"
               >
                 {'\u00BFTe ayud\u00F3 la alerta? Calif\u00EDcanos'}
