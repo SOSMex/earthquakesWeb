@@ -10,6 +10,16 @@ type Props = {
 const INTENSITY_ORDER = ['Extremo', 'MuyViolento', 'Violento', 'Fuerte', 'Moderado'];
 
 /**
+ * RFC-033: a drill share URL must surface drill-flavored OG metadata so
+ * recipients on WhatsApp / Twitter see "Completé el simulacro nacional"
+ * instead of "Sismo Fuerte" — even though the URL pattern is identical
+ * to a real-event share.
+ */
+function isDrillEvent(eventType?: string): boolean {
+  return eventType === 'drill' || eventType === 'drill_staging';
+}
+
+/**
  * Hero stat: best available anticipation metric.
  * 1. City with highest intensity that has ETA > 0
  * 2. Any city with smallest ETA > 0
@@ -46,13 +56,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const event = await getEarthquakeEvent(id);
   if (!event) return { title: 'Sismo no encontrado' };
 
+  const isDrill = isDrillEvent(event.eventType);
   const heroEta = getHeroEta(event);
-  const title = heroEta
-    ? `${heroEta}s de anticipacion — Sismo ${event.intensity} en ${event.location}`
-    : `Sismo ${event.intensity} en ${event.location}`;
-  const description = heroEta
-    ? `Sismos MX envio la alerta ${heroEta} segundos antes. Descarga la app.`
-    : `Sismo ${event.intensity} en ${event.location}. Descarga Sismos MX.`;
+  let title: string;
+  let description: string;
+  if (isDrill) {
+    // Drill share: reframe around participation. Same URL serves both real
+    // and drill events; only the OG payload changes.
+    title = 'Completé el simulacro nacional con Sismos MX';
+    description = 'Practiqué el simulacro nacional 2026. '
+      + 'Descarga Sismos MX para participar la próxima vez.';
+  } else if (heroEta) {
+    title = `${heroEta}s de anticipacion — Sismo ${event.intensity} en ${event.location}`;
+    description = `Sismos MX envio la alerta ${heroEta} segundos antes. Descarga la app.`;
+  } else {
+    title = `Sismo ${event.intensity} en ${event.location}`;
+    description = `Sismo ${event.intensity} en ${event.location}. Descarga Sismos MX.`;
+  }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismosmx.app';
   const ogImageUrl = `${siteUrl}/api/og/event/${id}`;
