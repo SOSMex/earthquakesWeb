@@ -29,7 +29,12 @@ interface Props {
 
 function StoryCardContent({ event, heroEta, mapUrl }: Props) {
   const searchParams = useSearchParams();
-  const isFromPush = searchParams.get('ref') === 'push';
+  const ref = searchParams.get('ref');
+  // RFC-033: drill_close pushes also count as "from push" — they go through
+  // the same OneSignal story-push pipeline, only the ref tag differs so we
+  // can split analytics later.
+  const isFromPush = ref === 'push' || ref === 'drill_close';
+  const isDrill = event.eventType === 'drill' || event.eventType === 'drill_staging';
   const storeUrl = useStoreUrl();
   const reviewUrl = useReviewUrl();
 
@@ -44,9 +49,14 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
   const shareUrl = typeof window !== 'undefined'
     ? window.location.origin + window.location.pathname
     : '';
-  const shareText = heroEta
-    ? `Recibi alerta sismica ${heroEta}s antes del sismo ${event.intensity} en ${event.location}`
-    : `Sismo ${event.intensity} en ${event.location}`;
+  let shareText: string;
+  if (isDrill) {
+    shareText = 'Participé en el simulacro nacional con Sismos MX';
+  } else if (heroEta) {
+    shareText = `Recibi alerta sismica ${heroEta}s antes del sismo ${event.intensity} en ${event.location}`;
+  } else {
+    shareText = `Sismo ${event.intensity} en ${event.location}`;
+  }
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -93,8 +103,16 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
 
         {/* Earthquake info */}
         <div className={`text-center ${heroEta ? 'mt-8' : 'mt-0'}`}>
+          {isDrill && (
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-yellow-400/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-yellow-300 ring-1 ring-yellow-400/30">
+              <span aria-hidden="true">{'\uD83C\uDFAF'}</span>
+              Simulacro nacional
+            </div>
+          )}
           <h1 className="text-3xl font-bold md:text-4xl">
-            {`Sismo ${event.intensity} \u2014 ${event.location}`}
+            {isDrill
+              ? `Simulacro nacional \u2014 ${event.location}`
+              : `Sismo ${event.intensity} \u2014 ${event.location}`}
           </h1>
           <p className="mt-2 text-lg text-white/50">{dateFormatted}</p>
         </div>
@@ -111,9 +129,24 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
           </div>
         )}
 
-        {/* Narrative — contextual by audience */}
+        {/* Narrative — contextual by audience and event type */}
         <div className="mt-10 max-w-md text-center">
-          {isFromPush ? (
+          {isDrill && isFromPush && (
+            <>
+              <p className="text-base leading-relaxed text-white/50">
+                Practicaste el simulacro nacional 2026.
+              </p>
+              <p className="mt-3 text-base leading-relaxed text-white/70">
+                {'Comparte tu participaci\u00F3n para que m\u00E1s personas est\u00E9n preparadas en el pr\u00F3ximo sismo.'}
+              </p>
+            </>
+          )}
+          {isDrill && !isFromPush && (
+            <p className="text-base leading-relaxed text-white/70">
+              {'Esto fue parte del simulacro nacional 2026. Descarga Sismos MX para participar la pr\u00F3xima vez.'}
+            </p>
+          )}
+          {!isDrill && isFromPush && (
             <>
               {heroEta && (
                 <p className="text-base leading-relaxed text-white/50">
@@ -124,7 +157,8 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
                 {'Comparte con tu familia y amigos para que tambi\u00E9n est\u00E9n prevenidos en el pr\u00F3ximo sismo.'}
               </p>
             </>
-          ) : (
+          )}
+          {!isDrill && !isFromPush && (
             <>
               {heroEta && (
                 <p className="text-base leading-relaxed text-white/50">
@@ -140,23 +174,28 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
 
         {/* CTAs */}
         <div className="mt-10 flex w-full max-w-sm flex-col gap-3">
-          {isFromPush ? (
+          {isFromPush && (
             <>
               <button
                 type="button"
                 onClick={handleShare}
                 className="rounded-xl bg-yellow-400 py-4 text-center text-lg font-bold text-black shadow-[0_0_20px_rgba(250,204,21,0.2)] transition-shadow hover:shadow-[0_0_30px_rgba(250,204,21,0.35)]"
               >
-                Invitar a familia y amigos
+                {isDrill ? 'Comparte tu simulacro' : 'Invitar a familia y amigos'}
               </button>
-              <a
-                href={reviewUrl}
-                className="rounded-xl bg-white/10 py-4 text-center text-lg font-bold text-white"
-              >
-                {'\u00BFTe ayud\u00F3 la alerta? Calif\u00EDcanos'}
-              </a>
+              {/* Suppress the app-review CTA for drills — asking for a rating
+                  after a simulacro doesn't fit the moment. */}
+              {!isDrill && (
+                <a
+                  href={reviewUrl}
+                  className="rounded-xl bg-white/10 py-4 text-center text-lg font-bold text-white"
+                >
+                  {'\u00BFTe ayud\u00F3 la alerta? Calif\u00EDcanos'}
+                </a>
+              )}
             </>
-          ) : (
+          )}
+          {!isFromPush && (
             <>
               <a
                 href={storeUrl}

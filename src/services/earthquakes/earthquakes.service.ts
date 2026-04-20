@@ -112,6 +112,17 @@ export interface CityEta {
 
 export interface EarthquakeEventResponse {
   collapseKey: string;
+  /**
+   * RFC-033 discriminator. `real` (default) for genuine seismic events,
+   * `drill` for the national simulacro, `drill_staging` for QA. The web
+   * branches OG metadata + body copy off this — the URL pattern stays
+   * the same between real and drill so a single shared link works for
+   * both.
+   *
+   * Optional in the type because pre-RFC-033 backends omitted it; the
+   * page treats anything not strictly `drill` / `drill_staging` as real.
+   */
+  eventType?: string;
   intensity: string;
   location: string;
   epicenterLat?: number;
