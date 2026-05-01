@@ -1,22 +1,13 @@
 import { EarthquakeProps } from '@/components/widgets';
-
-function formatAMPM(date: Date) {
-  let hours = date.getHours();
-  let minutes: number | string = date.getMinutes();
-  const ampm = hours >= 12 ? 'pm' : 'am';
-
-  hours %= 12;
-  hours = hours || 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? `0${minutes}` : minutes;
-
-  const strTime = `${hours}:${minutes} ${ampm}`;
-  return strTime;
-}
+import {
+  formatDateInMexicoCity,
+  formatTimeInMexicoCity,
+} from '@/utils/dateTime.utility';
 
 // Parsers
 function parseEarthquake(earthquake: Record<string, unknown>): EarthquakeProps {
-  const earthquakeDateTime = new Date(earthquake?.fecha as string);
-  const earthquakeDate = earthquakeDateTime.toLocaleDateString('es-MX', {
+  const earthquakeDateTime = earthquake?.fecha as string;
+  const earthquakeDate = formatDateInMexicoCity(earthquakeDateTime, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -34,9 +25,9 @@ function parseEarthquake(earthquake: Record<string, unknown>): EarthquakeProps {
     lat: parseFloat(earthquake?.laltitud as string),
     lng: parseFloat(earthquake?.longitud as string),
     date: earthquakeDate,
-    time: formatAMPM(earthquakeDateTime),
+    time: formatTimeInMexicoCity(earthquakeDateTime),
     details: earthquake?.detalles as string,
-    isoDate: earthquakeDateTime.toISOString(),
+    isoDate: new Date(earthquakeDateTime).toISOString(),
   };
 }
 

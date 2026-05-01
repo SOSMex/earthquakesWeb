@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
+import { formatDateTimeInMexicoCity } from '@/utils/dateTime.utility';
 
 export const runtime = 'edge';
 
@@ -98,12 +99,10 @@ export async function GET(
   if (!event) return fallbackImage();
 
   const heroEta = getHeroEta(event);
-  const dateFormatted = new Date(event.dateUtc).toLocaleDateString('es-MX', {
+  const dateFormatted = formatDateTimeInMexicoCity(event.dateUtc, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
   });
 
   const hasCoords = event.epicenterLat != null && event.epicenterLng != null;

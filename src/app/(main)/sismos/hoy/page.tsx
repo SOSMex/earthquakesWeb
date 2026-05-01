@@ -6,12 +6,15 @@ import {
 } from '@/components/sections';
 import { BreadcrumbJsonLd, EarthquakesListJsonLd } from '@/components/seo';
 import { getEarthquakesData, parseEarthquakes } from '@/services';
+import {
+  formatDateInMexicoCity,
+  getCurrentMexicoCityDate,
+} from '@/utils/dateTime.utility';
 
 export const dynamic = 'force-dynamic';
 
 function formatDateForTitle(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('es-MX', {
+  return formatDateInMexicoCity(dateString, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -19,8 +22,7 @@ function formatDateForTitle(dateString: string): string {
 }
 
 function formatDateForSEO(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('es-MX', {
+  return formatDateInMexicoCity(dateString, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -29,7 +31,7 @@ function formatDateForSEO(dateString: string): string {
 }
 
 function getDefaultFormattedDate(): string {
-  return new Date().toLocaleDateString('es-MX', {
+  return getCurrentMexicoCityDate({
     day: 'numeric',
     month: 'long',
     year: 'numeric',
