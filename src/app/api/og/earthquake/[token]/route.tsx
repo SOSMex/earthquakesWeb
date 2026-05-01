@@ -1,5 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
+import {
+  formatDateInMexicoCity,
+  formatTimeInMexicoCity,
+} from '@/utils/dateTime.utility';
 
 export const runtime = 'edge';
 
@@ -23,19 +27,12 @@ function parseLocation(detalles: string): { town: string; state: string } {
 }
 
 function formatDate(fecha: string): { date: string; time: string } {
-  const dt = new Date(fecha);
-  const date = dt.toLocaleDateString('es-MX', {
+  const date = formatDateInMexicoCity(fecha, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
-  let hours = dt.getHours();
-  let minutes: number | string = dt.getMinutes();
-  const ampm = hours >= 12 ? 'pm' : 'am';
-  hours %= 12;
-  hours = hours || 12;
-  minutes = minutes < 10 ? `0${minutes}` : minutes;
-  return { date, time: `${hours}:${minutes} ${ampm}` };
+  return { date, time: formatTimeInMexicoCity(fecha) };
 }
 
 export async function GET(
