@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { EarthquakeEventResponse } from '@/services';
-import { useStoreUrl } from '@/utils';
+import { formatDateTimeInMexicoCity, useStoreUrl } from '@/utils';
 
 const IOS_REVIEW_URL = 'https://apps.apple.com/app/id6473684021?action=write-review';
 const ANDROID_REVIEW_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2';
@@ -38,12 +38,10 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
   const storeUrl = useStoreUrl();
   const reviewUrl = useReviewUrl();
 
-  const dateFormatted = new Date(event.dateUtc).toLocaleDateString('es-MX', {
+  const dateFormatted = formatDateTimeInMexicoCity(event.dateUtc, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
   });
 
   const shareUrl = typeof window !== 'undefined'
