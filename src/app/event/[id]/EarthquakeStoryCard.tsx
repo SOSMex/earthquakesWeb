@@ -1,12 +1,15 @@
 'use client';
 
+import { track } from '@vercel/analytics';
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { EarthquakeEventResponse } from '@/services';
 import { formatDateTimeInMexicoCity, useStoreUrl } from '@/utils';
 
 const IOS_REVIEW_URL = 'https://apps.apple.com/app/id6473684021?action=write-review';
 const ANDROID_REVIEW_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2';
+
+const WEB_EVENT_CTA_SOURCE = 'web_event_page';
 
 function useReviewUrl(): string {
   const [reviewUrl, setReviewUrl] = useState(IOS_REVIEW_URL);
@@ -25,6 +28,65 @@ interface Props {
   event: EarthquakeEventResponse;
   heroEta: number | null;
   mapUrl: string | null;
+}
+
+interface PremiumCtaCardProps {
+  eventId: string;
+  isDrill: boolean;
+}
+
+function PremiumCtaCard({ eventId, isDrill }: PremiumCtaCardProps) {
+  const storeUrl = useStoreUrl();
+  const loggedImpression = useRef(false);
+
+  useEffect(() => {
+    if (loggedImpression.current) return;
+    loggedImpression.current = true;
+    track('web_event_cta_shown', {
+      source: WEB_EVENT_CTA_SOURCE,
+      event_id: eventId,
+      event_type: isDrill ? 'drill' : 'real',
+    });
+  }, [eventId, isDrill]);
+
+  const handleClick = () => {
+    track('web_event_cta_tapped', {
+      source: WEB_EVENT_CTA_SOURCE,
+      event_id: eventId,
+      event_type: isDrill ? 'drill' : 'real',
+    });
+  };
+
+  const target = new URL(storeUrl);
+  target.searchParams.set('utm_source', WEB_EVENT_CTA_SOURCE);
+  target.searchParams.set('utm_medium', 'premium_cta');
+  target.searchParams.set('utm_campaign', `event_${eventId}`);
+
+  return (
+    <a
+      href={target.toString()}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={handleClick}
+      className="rounded-2xl border border-yellow-400/20 bg-gradient-to-br from-yellow-400/10 to-white/[0.04] p-5 text-left backdrop-blur-sm"
+    >
+      <div className="flex items-start gap-3">
+        <span className="text-2xl" aria-hidden="true">🏠</span>
+        <div className="flex-1">
+          <p className="text-lg font-bold leading-tight text-white">
+            Sabe cuándo llega a tu casa
+          </p>
+          <p className="mt-1 text-sm leading-snug text-white/60">
+            Premium te avisa los segundos antes en tu casa, oficina y la escuela.
+          </p>
+          <p className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-yellow-300">
+            <span>Activar Premium</span>
+            <span aria-hidden="true">→</span>
+          </p>
+        </div>
+      </div>
+    </a>
+  );
 }
 
 function StoryCardContent({ event, heroEta, mapUrl }: Props) {
@@ -172,6 +234,9 @@ function StoryCardContent({ event, heroEta, mapUrl }: Props) {
 
         {/* CTAs */}
         <div className="mt-10 flex w-full max-w-sm flex-col gap-3">
+          {!isDrill && (
+            <PremiumCtaCard eventId={event.collapseKey} isDrill={isDrill} />
+          )}
           {isFromPush && (
             <>
               <button
