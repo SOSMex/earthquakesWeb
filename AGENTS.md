@@ -18,6 +18,19 @@ changes, or work with meaningful ambiguity before editing implementation code.
 - Plans must name validation such as `npm run lint`, `npm run build`, link
   checks, and manual web/deep-link checks depending on the touched surface.
 
+### SDD Agent Roles
+
+Use `.agents/agents/` as role definitions for Spec-Driven Development. Roles
+define phase accountability; skills are the tools each role uses.
+
+- `sdd-spec-steward`: spec, clarification, requirements checklist.
+- `sdd-repo-planner`: plan, research, data model, contracts, quickstart, tasks.
+- `sdd-contract-guardian`: public URL, SEO, AASA, `assetlinks.json`, deep-link
+  and API-consumer safety.
+- `sdd-implementation-driver`: task execution in this repo.
+- `sdd-verification-release`: artifact consistency, validation loop and PR
+  readiness.
+
 ## Cross-Repo Reminders
 
 - Preserve app-store/mobile deep-link compatibility when changing public URLs.

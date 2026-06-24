@@ -2,6 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Spec Kit / SDD Agent Roles
+
+Spec Kit is initialized for this repo. Use `.claude/agents/` for SDD role
+definitions and `.claude/skills/` / `.agents/skills/` for the concrete tools.
+
+- `sdd-spec-steward`: spec, clarification, requirements checklist.
+- `sdd-repo-planner`: plan, research, data model, contracts, quickstart, tasks.
+- `sdd-contract-guardian`: public URL, SEO, AASA, `assetlinks.json`, deep-link
+  and API-consumer safety.
+- `sdd-implementation-driver`: task execution in this repo.
+- `sdd-verification-release`: artifact consistency, validation loop and PR
+  readiness.
+
 ## Project Overview
 
 Sismos México Web - A Next.js 14 application that displays real-time earthquake data for Mexico. The app fetches seismic data from an external API and presents it through an interactive Google Maps interface with earthquake markers.
