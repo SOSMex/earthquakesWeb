@@ -96,7 +96,7 @@ export function ReferralLanding({ code }: Props) {
       setTimeout(() => {
         // eslint-disable-next-line no-console
         console.log('[Referral] Fallback to App Store (iOS)');
-        window.location.href = 'https://apps.apple.com/app/sismos-mx/id1234567890';
+        window.location.href = 'https://apps.apple.com/app/id6473684021';
       }, 2000);
     } else {
       // eslint-disable-next-line no-console
@@ -190,7 +190,7 @@ export function ReferralLanding({ code }: Props) {
         </a>
 
         <a
-          href="https://apps.apple.com/app/sismos-mx/id1234567890"
+          href="https://apps.apple.com/app/id6473684021"
           className="w-full bg-gray-900 dark:bg-gray-700 text-white py-4 rounded-2xl font-semibold
                      hover:bg-gray-800 dark:hover:bg-gray-600 transition flex items-center justify-center gap-2"
         >
