@@ -15,7 +15,7 @@ const IOS_DOWNLOAD_URL = 'https://apps.apple.com/app/id6473684021';
 export const metadata: Metadata = {
   title: 'Simulacro Nacional 2026 - Sismos MX',
   description:
-    'Sismos MX participa en el Simulacro Nacional 2026. Mañana 11 AM, todo México practica como si fuera un sismo real. Abre la app y prepárate.',
+    'Sismos MX participa en el Simulacro Nacional 2026. Este 19 de septiembre a las 12:00 h, México practica como si fuera un sismo real. Abre la app y prepárate.',
   alternates: {
     canonical: '/simulacrum',
   },
@@ -51,11 +51,11 @@ export default function SimulacrumPage() {
       <section className="mx-auto flex w-full max-w-3xl flex-col px-5 py-10">
         <div className="mb-7 inline-flex w-fit items-center gap-2 rounded-lg border border-amber-300/25 bg-amber-300/10 px-3 py-2 text-sm font-semibold text-amber-200">
           <Waves className="h-4 w-4" />
-          Simulacro Nacional 2026 - Miércoles 6 de mayo, 11:00 AM
+          Simulacro Nacional 2026 · Sábado 19 de septiembre, 12:00 h
         </div>
 
         <h1 className="max-w-2xl text-4xl font-extrabold leading-tight text-white md:text-5xl">
-          Hoy todo México practica.
+          Este 19 de septiembre, México practica.
           <br />
           Sismos MX practica contigo.
         </h1>
@@ -71,7 +71,7 @@ export default function SimulacrumPage() {
             <div className="mb-1 inline-flex items-center justify-center text-amber-300">
               <Clock className="h-4 w-4" />
             </div>
-            <p className="text-base font-bold text-white">11:00 AM</p>
+            <p className="text-base font-bold text-white">12:00 h</p>
             <p className="mt-1 text-xs font-medium uppercase tracking-wide text-white/55">
               Hora del centro
             </p>
@@ -104,7 +104,7 @@ export default function SimulacrumPage() {
           <StepCard
             step="1"
             title="Abre la app"
-            description="Asegúrate de tener Sismos MX instalada y con notificaciones activas antes de las 11:00 AM."
+            description="Asegúrate de tener Sismos MX instalada y con notificaciones activas antes de las 12:00 h."
           />
           <StepCard
             step="2"
@@ -123,7 +123,7 @@ export default function SimulacrumPage() {
         </h2>
 
         <p className="mt-3 text-base text-white/70">
-          Descárgala gratis y participa en el simulacro mañana junto a todo México.
+          Descárgala gratis y participa en el simulacro este 19 de septiembre junto a todo México.
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
