@@ -167,7 +167,7 @@ export function JoinCircleLanding({ code }: Props) {
 
         {/* Download buttons */}
         <a
-          href="https://play.google.com/store/apps/details?id=com.oscar.sismos_v2"
+          href="https://play.google.com/store/apps/details?id=com.oscar.sismos_v2&hl=es_MX&gl=MX"
           className="w-full bg-gray-900 dark:bg-gray-700 text-white py-4 rounded-2xl font-semibold mb-3
                      hover:bg-gray-800 dark:hover:bg-gray-600 transition flex items-center justify-center gap-2"
         >

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { MarkerClusterer, Marker as MarkerType } from '@googlemaps/markerclusterer';
+import { MarkerClusterer, Renderer, Marker as MarkerType } from '@googlemaps/markerclusterer';
 import { Marker, useMap } from '@vis.gl/react-google-maps';
 
 type MarkerProps = {
@@ -13,12 +13,61 @@ type MarkerProps = {
   }[];
 };
 
-function getMagnitudeColor(magnitude: number): string {
+export function getMagnitudeColor(magnitude: number): string {
   if (magnitude >= 7) return '#ef4444';
   if (magnitude >= 5) return '#f97316';
   if (magnitude >= 3) return '#eab308';
   return '#22c55e';
 }
+
+const CLUSTER_GRAY = '#6b7280';
+
+type GoogleMapsApi = {
+  maps: {
+    // Constructor parameter names are type-only; ESLint has no TS unused-vars plugin.
+    // eslint-disable-next-line no-unused-vars
+    Marker: new (options: Record<string, unknown>) => MarkerType;
+    // eslint-disable-next-line no-unused-vars
+    Size: new (width: number, height: number) => object;
+    // eslint-disable-next-line no-unused-vars
+    Point: new (x: number, y: number) => object;
+  };
+};
+
+function googleMaps(): GoogleMapsApi['maps'] {
+  const maps = (window as unknown as { google?: GoogleMapsApi }).google?.maps;
+  if (!maps) {
+    throw new Error('Google Maps is not loaded');
+  }
+  return maps;
+}
+
+const grayClusterRenderer: Renderer = {
+  render({ count, position }) {
+    const maps = googleMaps();
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="${CLUSTER_GRAY}">
+      <circle cx="120" cy="120" r="90" />
+    </svg>`;
+    const url = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+
+    return new maps.Marker({
+      position,
+      icon: {
+        url,
+        scaledSize: new maps.Size(44, 44),
+        anchor: new maps.Point(22, 22),
+      },
+      label: {
+        text: String(count),
+        color: '#ffffff',
+        fontSize: '12px',
+        fontWeight: '700',
+      },
+      title: `${count} sismos agrupados`,
+      zIndex: 1000 + count,
+    });
+  },
+};
 
 function createMarkerIcon(magnitude: number) {
   const color = getMagnitudeColor(magnitude);
@@ -37,7 +86,7 @@ export function Markers({ points }: MarkerProps) {
   useEffect(() => {
     if (!map) return;
     if (!clusterer.current) {
-      clusterer.current = new MarkerClusterer({ map });
+      clusterer.current = new MarkerClusterer({ map, renderer: grayClusterRenderer });
     }
   }, [map]);
 

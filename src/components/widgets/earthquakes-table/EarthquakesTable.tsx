@@ -9,10 +9,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { SsnSource } from '@/components/widgets/ssn-source/SsnSource';
+import { cn } from '@/utils';
+
+const LEFT_ALIGNED_COLUMNS = new Set(['details', 'occurredAt']);
+
+function columnAlignClass(columnId: string, header = false): string {
+  if (LEFT_ALIGNED_COLUMNS.has(columnId)) return 'text-left';
+  return header ? 'text-center' : 'md:text-center';
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  updatedAt?: string;
   // eslint-disable-next-line no-unused-vars
   onRowClick?: (row: TData) => void;
 }
@@ -20,6 +30,7 @@ interface DataTableProps<TData, TValue> {
 export function EarthquakesTable<TData, TValue>({
   columns,
   data,
+  updatedAt,
   onRowClick,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
@@ -34,7 +45,10 @@ export function EarthquakesTable<TData, TValue>({
 
   return (
     <section className="container mx-auto overflow-x-auto">
-      <Table className="mx-auto w-full max-w-7xl">
+      <Table className="mx-auto w-full max-w-7xl caption-top">
+        <caption className="mb-3 px-4 text-left text-sm font-normal">
+          <SsnSource updatedAt={updatedAt} />
+        </caption>
         {/* Ocultar TableHeader en resoluciones menores a lg */}
         <TableHeader className="hidden md:table-header-group">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -42,7 +56,10 @@ export function EarthquakesTable<TData, TValue>({
               {headerGroup.headers.map((header) => (
                 <TableHead
                   key={header.id}
-                  className="whitespace-nowrap text-center text-primary lg:whitespace-normal"
+                  className={cn(
+                    'whitespace-nowrap text-primary lg:whitespace-normal',
+                    columnAlignClass(header.column.id, true),
+                  )}
                 >
                   {header.isPlaceholder
                     ? null
@@ -63,7 +80,10 @@ export function EarthquakesTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className="block md:table-cell md:border md:border-primary md:text-center"
+                    className={cn(
+                      'block md:table-cell md:border md:border-primary',
+                      columnAlignClass(cell.column.id),
+                    )}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

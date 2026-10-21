@@ -10,7 +10,7 @@ import {
 import { EarthquakesTableFactoryProps } from './model';
 
 export function EarthquakesTableFactory(props: EarthquakesTableFactoryProps) {
-  const { type, earthquakes } = props;
+  const { type, earthquakes, updatedAt } = props;
   const { setSelected } = useEarthquakesData();
 
   const handleRowClick = (row: EarthquakeProps) => {
@@ -19,10 +19,17 @@ export function EarthquakesTableFactory(props: EarthquakesTableFactoryProps) {
 
   switch (type) {
     case 'default':
-      return <EarthquakesTable columns={columns} data={earthquakes} onRowClick={handleRowClick} />;
+      return (
+        <EarthquakesTable
+          columns={columns}
+          data={earthquakes}
+          updatedAt={updatedAt}
+          onRowClick={handleRowClick}
+        />
+      );
 
     case 'paginated':
-      return <PaginatedEarthquakesTable />;
+      return <PaginatedEarthquakesTable updatedAt={updatedAt} />;
 
     default:
       break;

@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { EarthquakesTable, EarthquakeProps, columns } from '@/components/widgets';
 import { getEarthquakesData, parseEarthquakes } from '@/services';
+import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
 import { Button } from '@/components/ui';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEarthquakesData } from '@/components/providers';
 
 const PAGE_SIZE = 25;
 
-export function PaginatedEarthquakesTable() {
+export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string }) {
   const { earthquakes, setEarthquakes, setSelected } = useEarthquakesData();
   const [page, setPage] = useState(1);
 
@@ -42,11 +43,15 @@ export function PaginatedEarthquakesTable() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  const pageUpdatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate))
+    || updatedAt;
+
   return (
     <>
       <EarthquakesTable
         columns={columns}
         data={earthquakes}
+        updatedAt={pageUpdatedAt}
         onRowClick={(row) => handleRowClick(row)}
       />
       <section className="mx-auto mt-12 flex w-full max-w-7xl items-center justify-center gap-2 pb-12">

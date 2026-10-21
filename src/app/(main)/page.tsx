@@ -7,6 +7,7 @@ import {
   DownloadSection,
 } from '@/components/sections';
 import { WebSiteJsonLd, OrganizationJsonLd, SoftwareAppJsonLd } from '@/components/seo';
+import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
 import { getEarthquakesData, parseEarthquakes } from '@/services';
 
 export const dynamic = 'force-dynamic';
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const response = await getEarthquakesData();
   const eartquakes = parseEarthquakes(response?.data);
+  const updatedAt = latestIsoTimestamp(eartquakes.map((earthquake) => earthquake.isoDate));
 
   return (
     <>
@@ -30,7 +32,7 @@ export default async function HomePage() {
       <OrganizationJsonLd />
       <SoftwareAppJsonLd />
       <main>
-        <HomeHeroSection />
+        <HomeHeroSection updatedAt={updatedAt} />
         <EarthquakesSection earthquakes={eartquakes} />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"

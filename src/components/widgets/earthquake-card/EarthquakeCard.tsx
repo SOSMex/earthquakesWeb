@@ -23,6 +23,7 @@ export function EarthquakeCard({ earthquake, isSelected, onSelect }: EarthquakeC
       <MagnitudeIndicator magnitude={earthquake.magnitude} />
 
       <div className="min-w-0 flex-1">
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-foreground">Magnitud</p>
         <p className="truncate text-sm font-medium text-card-foreground">{earthquake.details}</p>
         <p className="text-xs text-muted-foreground">
           {`${earthquake.date}, ${earthquake.time}`}

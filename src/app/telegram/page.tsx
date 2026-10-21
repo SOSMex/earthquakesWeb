@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { Apple, BellRing, MapPinned, ShieldCheck, Smartphone } from 'lucide-react';
 
-const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2';
+const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2&hl=es_MX&gl=MX';
 const IOS_STORE_URL = 'https://apps.apple.com/app/id6473684021';
 
 export const metadata: Metadata = {
