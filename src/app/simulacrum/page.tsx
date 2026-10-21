@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import {
   Apple,
   CheckCircle2,
@@ -13,12 +14,11 @@ const ANDROID_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.
 const IOS_DOWNLOAD_URL = 'https://apps.apple.com/app/id6473684021';
 
 export const metadata: Metadata = {
-  title: 'Simulacro Nacional 2026 - Sismos MX',
-  description:
-    'Sismos MX participa en el Simulacro Nacional 2026. Este 19 de septiembre a las 12:00 h, México practica como si fuera un sismo real. Abre la app y prepárate.',
-  alternates: {
-    canonical: '/simulacrum',
-  },
+  ...pageMetadata({
+    title: 'Simulacro Nacional 2026',
+    description: 'Sismos MX participa en el Simulacro Nacional 2026. El 19 de septiembre a las 12:00 h, México practica ante un sismo real.',
+    path: '/simulacrum',
+  }),
   robots: {
     index: true,
     follow: true,

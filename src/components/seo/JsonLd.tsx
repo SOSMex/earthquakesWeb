@@ -1,5 +1,6 @@
 import { EarthquakeProps } from '@/components/widgets';
 import { ReportStats } from '@/services';
+import { getCanonicalSiteUrl } from '@/lib/seo';
 
 interface JsonLdProps {
   data: Record<string, unknown>;
@@ -21,14 +22,14 @@ export function WebSiteJsonLd() {
     '@type': 'WebSite',
     name: 'Sismos México',
     alternateName: 'Sismos México App',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app',
+    url: getCanonicalSiteUrl(),
     description:
       'Información en tiempo real sobre los últimos sismos ocurridos en México. Datos oficiales del Servicio Sismológico Nacional.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app'}/sismos?q={search_term_string}`,
+        urlTemplate: `${getCanonicalSiteUrl()}/sismos?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -38,7 +39,7 @@ export function WebSiteJsonLd() {
 }
 
 export function OrganizationJsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+  const siteUrl = getCanonicalSiteUrl();
 
   const data = {
     '@context': 'https://schema.org',
@@ -95,7 +96,7 @@ interface EarthquakeEventJsonLdProps {
 export function EarthquakeEventJsonLd({
   earthquake, url, reportStats,
 }: EarthquakeEventJsonLdProps) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+  const siteUrl = getCanonicalSiteUrl();
   const pageId = url.split('/').pop() || '';
 
   const additionalProperties: Record<string, unknown>[] = [
@@ -105,6 +106,14 @@ export function EarthquakeEventJsonLd({
       value: earthquake.magnitude,
     },
   ];
+
+  if (earthquake.depth) {
+    additionalProperties.push({
+      '@type': 'PropertyValue',
+      name: 'Profundidad',
+      value: earthquake.depth,
+    });
+  }
 
   if (reportStats && reportStats.totalReports > 0) {
     additionalProperties.push(
@@ -215,7 +224,7 @@ const softwareAppOffers = {
 };
 
 export function SoftwareAppJsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+  const siteUrl = getCanonicalSiteUrl();
 
   const androidData = {
     '@context': 'https://schema.org',
@@ -270,21 +279,33 @@ export function FAQPageJsonLd({ questions }: { questions: FAQItem[] }) {
   return <JsonLd data={data} />;
 }
 
-export function EarthquakesListJsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+export function EarthquakesListJsonLd({
+  path = '/sismos',
+  earthquakes = [],
+}: {
+  path?: string;
+  earthquakes?: EarthquakeProps[];
+}) {
+  const siteUrl = getCanonicalSiteUrl();
+  const itemListElement = earthquakes.slice(0, 20).map((earthquake, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: earthquake.details || `Sismo de magnitud ${earthquake.magnitude}`,
+    url: `${siteUrl}/sismos/${earthquake.id}`,
+  }));
 
   const data = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Últimos Sismos en México Hoy',
+    name: 'Últimos sismos en México',
     description:
-      'Lista actualizada de los últimos sismos y temblores registrados en México. Información oficial del Servicio Sismológico Nacional.',
-    url: `${siteUrl}/sismos`,
+      'Lista de los últimos sismos en México. Datos del Servicio Sismológico Nacional.',
+    url: `${siteUrl}${path}`,
     mainEntity: {
       '@type': 'ItemList',
       name: 'Sismos recientes en México',
-      description: 'Listado de sismos ordenados por fecha',
-      numberOfItems: 10,
+      numberOfItems: itemListElement.length,
+      itemListElement,
     },
     provider: {
       '@type': 'Organization',

@@ -40,13 +40,13 @@ const levels: Level[] = [
 export function RitcherScaleSection() {
   return (
     <section className="container mx-auto my-8 w-full py-4">
-      {/* Mobile: single collapsible with title as trigger */}
+      <h2 className="mb-4 text-center text-xl font-semibold text-brand md:mb-6 md:text-3xl">
+        ¿Cómo funciona la escala de Richter?
+      </h2>
       <Accordion type="single" collapsible className="mx-auto max-w-7xl px-4 md:hidden">
         <AccordionItem value="richter-scale" className="border-none">
-          <AccordionTrigger className="justify-center gap-2">
-            <span className="text-xl font-semibold text-brand">
-              ¿Cómo funciona la escala de Richter?
-            </span>
+          <AccordionTrigger headingLevel="none" className="justify-center gap-2">
+            Ver niveles
           </AccordionTrigger>
           <AccordionContent>
             <ol className="flex flex-col gap-3 pt-2">
@@ -61,11 +61,6 @@ export function RitcherScaleSection() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
-      {/* Desktop: title + grid */}
-      <h2 className="mb-6 hidden text-center text-3xl font-semibold text-brand md:block">
-        ¿Cómo funciona la escala de Richter?
-      </h2>
       <ol className="mx-auto hidden max-w-7xl grid-cols-1 gap-12 md:grid md:grid-cols-2 lg:grid-cols-4">
         {levels.map((level) => (
           <RitcherCard {...level} key={level.id} />

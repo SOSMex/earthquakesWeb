@@ -17,12 +17,16 @@ const AccordionItem = React.forwardRef<
 ));
 AccordionItem.displayName = 'AccordionItem';
 
+type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+  headingLevel?: 'h2' | 'h3' | 'none';
+};
+
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+  AccordionTriggerProps
   // eslint-disable-next-line react/prop-types
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
+>(({ className, children, headingLevel = 'h2', ...props }, ref) => {
+  const trigger = (
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
@@ -34,8 +38,24 @@ const AccordionTrigger = React.forwardRef<
       {children}
       <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
     </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-));
+  );
+
+  if (headingLevel === 'none') {
+    return (
+      <AccordionPrimitive.Header asChild>
+        <div className="flex">{trigger}</div>
+      </AccordionPrimitive.Header>
+    );
+  }
+
+  const HeadingTag = headingLevel;
+
+  return (
+    <AccordionPrimitive.Header asChild>
+      <HeadingTag className="flex">{trigger}</HeadingTag>
+    </AccordionPrimitive.Header>
+  );
+});
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
 const AccordionContent = React.forwardRef<

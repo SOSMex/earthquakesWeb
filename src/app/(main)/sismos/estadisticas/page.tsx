@@ -1,4 +1,3 @@
-import { Metadata } from 'next';
 import {
   Activity,
   TrendingUp,
@@ -10,24 +9,16 @@ import {
 } from 'lucide-react';
 import { BreadcrumbJsonLd } from '@/components/seo';
 import { DownloadSection, SeeMoreSection } from '@/components/sections';
+import { getCanonicalSiteUrl, pageMetadata } from '@/lib/seo';
 import { getStatistics } from '@/services';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: 'Estadísticas de Sismos en México - Actividad Sísmica',
-  description:
-    'Estadísticas de actividad sísmica en México: total de sismos, magnitud promedio,'
-    + ' distribución por intensidad, estados más activos y tendencias.',
-  openGraph: {
-    title: 'Estadísticas de Sismos en México',
-    description:
-      'Estadísticas de actividad sísmica en México: total de sismos, magnitud promedio, distribución y tendencias.',
-  },
-  alternates: {
-    canonical: '/sismos/estadisticas',
-  },
-};
+export const metadata = pageMetadata({
+  title: 'Estadísticas de sismos',
+  description: 'Estadísticas de sismos en México: totales, magnitud y estados con más actividad en los últimos 30 días.',
+  path: '/sismos/estadisticas',
+});
 
 function formatDate(date: Date): string {
   return date.toISOString().split('T')[0];
@@ -105,7 +96,7 @@ export default async function StatisticsPage() {
   const stats = response?.data;
   const insights = stats?.insights || [];
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+  const siteUrl = getCanonicalSiteUrl();
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Sismos', url: `${siteUrl}/sismos` },

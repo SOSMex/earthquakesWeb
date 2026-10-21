@@ -6,6 +6,7 @@ export async function getEarthquakesData(limit: number = 10, page: number = 1) {
   try {
     const response = await fetch(
       `${BASE_URL}/api/earthquakes/latest?key=${process.env.SELF_SECRET}&limit=${limit}&page=${page}`,
+      { next: { revalidate: 60 } },
     );
     const data = await response.json();
 
@@ -46,6 +47,7 @@ export async function getEarthquakeDetail(id: string) {
   try {
     const response = await fetch(
       `${BASE_URL}/api/earthquakes/detail?key=${process.env.SELF_SECRET}&id=${id}`,
+      { next: { revalidate: 60 } },
     );
     const data = await response.json();
 

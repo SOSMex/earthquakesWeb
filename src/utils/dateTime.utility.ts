@@ -46,4 +46,14 @@ export function getCurrentMexicoCityDate(
   return formatDateInMexicoCity(new Date(), options);
 }
 
+/** Calendar date in Mexico City as YYYY-MM-DD. */
+export function mexicoCityDateKey(value: string | Date = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: MEXICO_CITY_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(getDate(value));
+}
+
 export { MEXICO_CITY_TIME_ZONE };

@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { getCanonicalSiteUrl } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismosmx.app';
+  const baseUrl = getCanonicalSiteUrl();
 
   return {
     rules: {

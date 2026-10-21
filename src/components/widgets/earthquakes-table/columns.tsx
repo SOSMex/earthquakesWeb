@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { ColumnDef } from '@tanstack/react-table';
 import { MagnitudeIndicator } from '@/components/ui';
 import { EarthquakeProps } from './model';
@@ -16,7 +17,18 @@ export const columns: ColumnDef<EarthquakeProps>[] = [
   {
     accessorKey: 'details',
     header: 'Epicentro',
-    cell: ({ row }) => row.getValue('details'),
+    cell: ({ row }) => {
+      const details = row.getValue('details') as string;
+      return (
+        <Link
+          href={`/sismos/${row.original.id}`}
+          className="underline-offset-2 hover:underline"
+          onClick={(event) => event.stopPropagation()}
+        >
+          {details}
+        </Link>
+      );
+    },
   },
 
   {

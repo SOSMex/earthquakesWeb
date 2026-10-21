@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { fitDescription, fitTitle, getCanonicalSiteUrl } from '@/lib/seo';
 import { getEarthquakeEvent, EarthquakeEventResponse } from '@/services';
 import { EarthquakeStoryCard } from './EarthquakeStoryCard';
 
@@ -74,27 +75,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description = `Sismo ${event.intensity} en ${event.location}. Descarga Sismos MX.`;
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismosmx.app';
+  const siteUrl = getCanonicalSiteUrl();
+  const pageTitle = fitTitle(title);
+  const pageDescription = fitDescription(description);
   const ogImageUrl = `${siteUrl}/api/og/event/${id}`;
+  const brandedTitle = `${pageTitle} | Sismos MX`;
 
   return {
-    title,
-    description,
+    title: pageTitle,
+    description: pageDescription,
     alternates: {
-      canonical: `${siteUrl}/event/${id}`,
+      canonical: `/event/${id}`,
     },
     openGraph: {
-      title,
-      description,
+      title: brandedTitle,
+      description: pageDescription,
       type: 'article',
       siteName: 'Sismos MX',
       url: `${siteUrl}/event/${id}`,
-      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: pageTitle }],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: brandedTitle,
+      description: pageDescription,
       images: [ogImageUrl],
     },
   };
