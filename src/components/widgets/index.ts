@@ -1,4 +1,6 @@
 export * from './app-download-button/AppDownloadButton';
+export * from './store-badges/StoreBadges';
+export * from './ssn-source/SsnSource';
 export * from './app-download-button/model';
 export * from './earthquakes-table/EarthquakesTable';
 export * from './earthquakes-table/columns';

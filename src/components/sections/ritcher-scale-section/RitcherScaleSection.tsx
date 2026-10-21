@@ -8,7 +8,7 @@ const levels: Level[] = [
     range: '2.0 a 3.0',
     label: 'Ligero',
     description:
-      'Puede estar entre 2.0 a 3.0 en la escala Ritcher, no es percibido ni causa daños en donde fue originado.',
+      'Magnitud de 2.0 a 3.0. Por lo general no se percibe y no causa daños donde se originó.',
     color: 'bg-ritcher-scales-green',
   },
   {
@@ -16,7 +16,7 @@ const levels: Level[] = [
     range: '3.0 a 5.0',
     label: 'Moderado',
     description:
-      'Puede estar entre 3.0 a 5.0 en la escala Ritcher, podria ser percibido cerca de tu ubicación.',
+      'Magnitud de 3.0 a 5.0. Puede percibirse cerca del epicentro.',
     color: 'bg-ritcher-scales-yellow',
   },
   {
@@ -24,7 +24,7 @@ const levels: Level[] = [
     range: '5.0 a 7.0',
     label: 'Fuerte',
     description:
-      'Puede estar entre 5.0 a 7.0 en la escala Ritcher, puede ser peligroso y va a ser percibido en tu ubicación.',
+      'Magnitud de 5.0 a 7.0. Puede sentirse con fuerza y causar daños.',
     color: 'bg-ritcher-scales-orange',
   },
   {
@@ -32,7 +32,7 @@ const levels: Level[] = [
     range: '7.0 en adelante',
     label: 'Extremo',
     description:
-      'Puede estar entre 7.0 en adelante en la escala Ritcher, es peligroso y causa grandes daños en distintos puntos.',
+      'Magnitud de 7.0 o mayor. Es peligroso y puede causar daños graves.',
     color: 'bg-ritcher-scales-red',
   },
 ];
@@ -45,7 +45,7 @@ export function RitcherScaleSection() {
         <AccordionItem value="richter-scale" className="border-none">
           <AccordionTrigger className="justify-center gap-2">
             <span className="text-xl font-semibold text-brand">
-              ¿Cómo funciona la escala de Richter?
+              ¿Qué significa la magnitud?
             </span>
           </AccordionTrigger>
           <AccordionContent>
@@ -64,7 +64,7 @@ export function RitcherScaleSection() {
 
       {/* Desktop: title + grid */}
       <h2 className="mb-6 hidden text-center text-3xl font-semibold text-brand md:block">
-        ¿Cómo funciona la escala de Richter?
+        ¿Qué significa la magnitud?
       </h2>
       <ol className="mx-auto hidden max-w-7xl grid-cols-1 gap-12 md:grid md:grid-cols-2 lg:grid-cols-4">
         {levels.map((level) => (

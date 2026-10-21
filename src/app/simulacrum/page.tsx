@@ -9,7 +9,7 @@ import {
   Waves,
 } from 'lucide-react';
 
-const ANDROID_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2';
+const ANDROID_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2&hl=es_MX&gl=MX';
 const IOS_DOWNLOAD_URL = 'https://apps.apple.com/app/id6473684021';
 
 export const metadata: Metadata = {

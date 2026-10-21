@@ -16,10 +16,10 @@ export function NavbarDesktop(props: NavbarDesktopProps) {
       <Link href="/">
         <Image
           alt="Sismos México"
-          className="h-[3.573rem] w-[9.813rem] text-xl font-bold"
-          src="logo.svg"
-          width={75}
-          height={57}
+          className="h-[4.75rem] w-[13rem]"
+          src="/logo.svg"
+          width={208}
+          height={76}
         />
       </Link>
       <nav>
