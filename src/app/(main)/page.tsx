@@ -33,7 +33,7 @@ export default async function HomePage() {
       <SoftwareAppJsonLd />
       <main>
         <HomeHeroSection updatedAt={updatedAt} />
-        <EarthquakesSection earthquakes={eartquakes} />
+        <EarthquakesSection earthquakes={eartquakes} showSource={false} />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"
           button={{

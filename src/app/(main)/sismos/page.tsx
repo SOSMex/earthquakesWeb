@@ -30,7 +30,7 @@ export default function EarthquakesPage() {
       <EarthquakesListJsonLd />
       <main>
         <HomeHeroSection />
-        <EarthquakesSection paginated earthquakes={[]} />
+        <EarthquakesSection paginated earthquakes={[]} showSource={false} />
         <DownloadSection />
       </main>
     </QueryClientWrapper>

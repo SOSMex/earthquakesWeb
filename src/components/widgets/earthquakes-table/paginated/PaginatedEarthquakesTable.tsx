@@ -11,7 +11,13 @@ import { useEarthquakesData } from '@/components/providers';
 
 const PAGE_SIZE = 25;
 
-export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string }) {
+export function PaginatedEarthquakesTable({
+  updatedAt,
+  showSource = true,
+}: {
+  updatedAt?: string;
+  showSource?: boolean;
+}) {
   const { earthquakes, setEarthquakes, setSelected } = useEarthquakesData();
   const [page, setPage] = useState(1);
 
@@ -52,6 +58,7 @@ export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string })
         columns={columns}
         data={earthquakes}
         updatedAt={pageUpdatedAt}
+        showSource={showSource}
         onRowClick={(row) => handleRowClick(row)}
       />
       <section className="mx-auto mt-12 flex w-full max-w-7xl items-center justify-center gap-2 pb-12">
