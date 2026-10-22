@@ -5,6 +5,7 @@ import {
 } from '@/components/sections';
 import { QueryClientWrapper } from '@/components/providers';
 import { BreadcrumbJsonLd, EarthquakesListJsonLd } from '@/components/seo';
+import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
 import { loadRecentEarthquakes } from '@/lib/earthquake-page';
 import { getCanonicalSiteUrl, pageMetadata } from '@/lib/seo';
 
@@ -18,6 +19,7 @@ export const metadata = pageMetadata({
 
 export default async function EarthquakesPage() {
   const earthquakes = await loadRecentEarthquakes(25);
+  const updatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate));
   const siteUrl = getCanonicalSiteUrl();
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
@@ -29,7 +31,7 @@ export default async function EarthquakesPage() {
       <BreadcrumbJsonLd items={breadcrumbs} />
       <EarthquakesListJsonLd earthquakes={earthquakes} />
       <main>
-        <HomeHeroSection />
+        <HomeHeroSection updatedAt={updatedAt} />
         <EarthquakesSection paginated earthquakes={earthquakes} />
         <DownloadSection />
       </main>

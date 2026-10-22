@@ -56,4 +56,32 @@ export function mexicoCityDateKey(value: string | Date = new Date()): string {
   }).format(getDate(value));
 }
 
+export function formatUpdatedAgo(value: string | Date, now: Date = new Date()): string {
+  const then = getDate(value);
+  const diffMs = now.getTime() - then.getTime();
+
+  if (Number.isNaN(then.getTime()) || diffMs < 0) {
+    return `Actualizado ${formatDateTimeInMexicoCity(now, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    })}`;
+  }
+
+  const minutes = Math.floor(diffMs / 60000);
+  if (minutes < 1) return 'Actualizado hace un momento';
+  if (minutes === 1) return 'Actualizado hace 1 min';
+  if (minutes < 60) return `Actualizado hace ${minutes} min`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours === 1) return 'Actualizado hace 1 h';
+  if (hours < 24) return `Actualizado hace ${hours} h`;
+
+  return `Actualizado ${formatDateTimeInMexicoCity(then, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })}`;
+}
+
 export { MEXICO_CITY_TIME_ZONE };

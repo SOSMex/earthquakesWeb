@@ -1,17 +1,19 @@
-// import { GoogleAdsBanner } from '@/features';
+import { StoreBadges } from '@/components/widgets/store-badges/StoreBadges';
+import { SsnSource } from '@/components/widgets/ssn-source/SsnSource';
 
-function HomeHeroSection() {
+function HomeHeroSection({ updatedAt }: { updatedAt?: string }) {
   return (
-    <section className="container mx-auto my-4 text-center text-7xl font-black max-md:hidden">
-      <div className="flex flex-col-reverse gap-8 lg:flex-col">
-        {/* <GoogleAdsBanner /> */}
-        <h1 className="text-5xl font-semibold text-brand">Sismos de México</h1>
-      </div>
-      <p className="mt-8 text-xl font-normal">
+    <section className="container mx-auto my-4 px-4 text-center">
+      <h1 className="text-3xl font-semibold text-brand md:text-5xl">Sismos de México</h1>
+      <p className="mt-3 text-base font-medium text-foreground md:text-lg">
+        Recibe la alerta en tu celular
+      </p>
+      <StoreBadges className="mt-4" />
+      <SsnSource updatedAt={updatedAt} className="mt-4" />
+      <p className="mx-auto mt-4 max-w-3xl text-base font-normal md:text-xl">
         A continuación te ofrecemos información oficial de los reportes de los últimos sismos
         ocurridos en el país
       </p>
-      {/* h1 hidden visually on mobile but present for SEO */}
     </section>
   );
 }

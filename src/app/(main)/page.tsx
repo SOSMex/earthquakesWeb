@@ -7,6 +7,7 @@ import {
   DownloadSection,
 } from '@/components/sections';
 import { WebSiteJsonLd, OrganizationJsonLd, SoftwareAppJsonLd, EarthquakesListJsonLd } from '@/components/seo';
+import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
 import { loadRecentEarthquakes } from '@/lib/earthquake-page';
 import { pageMetadata } from '@/lib/seo';
 
@@ -20,6 +21,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default async function HomePage() {
   const earthquakes = await loadRecentEarthquakes(20);
+  const updatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate));
 
   return (
     <>
@@ -28,7 +30,7 @@ export default async function HomePage() {
       <SoftwareAppJsonLd />
       <EarthquakesListJsonLd path="/" earthquakes={earthquakes} />
       <main>
-        <HomeHeroSection />
+        <HomeHeroSection updatedAt={updatedAt} />
         <EarthquakesSection earthquakes={earthquakes} />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"

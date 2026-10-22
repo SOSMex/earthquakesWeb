@@ -8,34 +8,37 @@ import { EarthquakeProps } from './model';
 export const columns: ColumnDef<EarthquakeProps>[] = [
   {
     accessorKey: 'magnitude',
-    header: 'Intensidad',
+    header: 'Magnitud',
     cell: ({ row }) => (
-      <MagnitudeIndicator magnitude={row.getValue('magnitude')} className="md:mx-auto" />
+      <div className="flex items-center gap-2 md:justify-center">
+        <span className="text-xs font-semibold uppercase tracking-wide text-foreground md:sr-only">
+          Magnitud
+        </span>
+        <MagnitudeIndicator magnitude={row.getValue('magnitude')} className="md:mx-auto" />
+      </div>
     ),
   },
 
   {
     accessorKey: 'details',
     header: 'Epicentro',
-    cell: ({ row }) => {
-      const details = row.getValue('details') as string;
-      return (
-        <Link
-          href={`/sismos/${row.original.id}`}
-          className="underline-offset-2 hover:underline"
-          onClick={(event) => event.stopPropagation()}
-        >
-          {details}
-        </Link>
-      );
-    },
+    cell: ({ row }) => (
+      <Link
+        href={`/sismos/${row.original.id}`}
+        className="block text-left underline-offset-2 hover:underline"
+        onClick={(event) => event.stopPropagation()}
+      >
+        {row.getValue('details') as string}
+      </Link>
+    ),
   },
 
   {
+    id: 'occurredAt',
     header: 'Fecha y hora',
     cell: ({ row }) => {
       const dateTimeLabel = `${row.original.date}, ${row.original.time}`;
-      return <span className="text-muted-foreground/60">{dateTimeLabel}</span>;
+      return <span className="font-medium text-foreground">{dateTimeLabel}</span>;
     },
   },
 ];

@@ -29,6 +29,7 @@ export function EarthquakeCard({ earthquake, isSelected, onSelect }: EarthquakeC
       </button>
 
       <div className="min-w-0 flex-1">
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-foreground">Magnitud</p>
         <Link
           href={`/sismos/${earthquake.id}`}
           className="block truncate text-sm font-medium text-card-foreground underline-offset-2 hover:underline"

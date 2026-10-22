@@ -7,7 +7,7 @@ import { EarthquakeEventResponse } from '@/services';
 import { formatDateTimeInMexicoCity, useStoreUrl } from '@/utils';
 
 const IOS_REVIEW_URL = 'https://apps.apple.com/app/id6473684021?action=write-review';
-const ANDROID_REVIEW_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2';
+const ANDROID_REVIEW_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2&hl=es_MX&gl=MX';
 
 const WEB_EVENT_CTA_SOURCE = 'web_event_page';
 

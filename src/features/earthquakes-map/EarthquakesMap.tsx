@@ -5,9 +5,41 @@ import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { DEFAULT_CENTER, darkMapStyle } from '@/config';
 import { EarthquakeProps } from '@/components/widgets';
 import { useEarthquakesData } from '@/components/providers';
-import { Markers } from './Markers';
+import { Markers, getMagnitudeColor } from './Markers';
 import { PerceptionMarkers } from './PerceptionMarkers';
 import { EarthquakesMapProps } from './model';
+
+const MAGNITUDE_LEGEND = [
+  { label: 'Menor a 3.0', min: 2 },
+  { label: '3.0 a 4.9', min: 3 },
+  { label: '5.0 a 6.9', min: 5 },
+  { label: '7.0 o más', min: 7 },
+];
+
+function MapLegend() {
+  return (
+    <ul className="mx-auto mt-3 flex max-w-5xl flex-col gap-2 px-4 text-left text-xs font-normal text-foreground md:text-sm">
+      <li className="flex items-center gap-2">
+        <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-neutral-500 text-[10px] font-bold text-white">
+          3
+        </span>
+        <span>Círculo gris: varios sismos en la misma zona. Acerca el mapa para ver cada uno.</span>
+      </li>
+      <li className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <span>Marcador de color: un sismo. El número es la magnitud.</span>
+        {MAGNITUDE_LEGEND.map((item) => (
+          <span key={item.label} className="inline-flex items-center gap-1.5">
+            <span
+              className="inline-block size-3.5 rounded-full border border-white"
+              style={{ backgroundColor: getMagnitudeColor(item.min) }}
+            />
+            {item.label}
+          </span>
+        ))}
+      </li>
+    </ul>
+  );
+}
 
 const parseMarkers = (earthquakes: EarthquakeProps[]) => {
   if (!earthquakes) return [];
@@ -60,6 +92,7 @@ export function EarthquakesMap(props: EarthquakesMapProps) {
           <Markers points={markers} />
         </Map>
       </div>
+      <MapLegend />
     </APIProvider>
   );
 }
