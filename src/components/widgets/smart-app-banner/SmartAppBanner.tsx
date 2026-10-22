@@ -11,7 +11,9 @@ const BANNER_DISMISSED_KEY = 'smart-app-banner-dismissed';
 export function SmartAppBanner() {
   const [visible, setVisible] = useState(false);
   const pathname = usePathname();
-  const isDetailPage = pathname.startsWith('/sismos/detalle/');
+  const detailSlug = pathname.match(/^\/sismos\/([^/]+)$/)?.[1];
+  const isDetailPage = pathname.startsWith('/sismos/detalle/')
+    || Boolean(detailSlug && detailSlug !== 'hoy' && detailSlug !== 'estadisticas');
   const storeUrl = useStoreUrl();
 
   useEffect(() => {

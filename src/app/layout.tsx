@@ -3,19 +3,21 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/AppThemeProvider/AppThemeProvider';
 import { Analytics } from '@vercel/analytics/react';
+import { getCanonicalSiteUrl } from '@/lib/seo';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sismosmx.app';
+const siteUrl = getCanonicalSiteUrl();
+const defaultTitle = 'Sismos en México hoy | Sismos MX';
+const defaultDescription = 'Sismos y temblores en México hoy: magnitud, epicentro y hora. Datos del Servicio Sismológico Nacional.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    template: '%s | Sismos México App',
-    default: 'Sismos en México Hoy - Últimos Temblores y Alertas Sísmicas',
+    template: '%s | Sismos MX',
+    default: defaultTitle,
   },
-  description:
-    'Información en tiempo real sobre sismos en México hoy. Consulta los últimos temblores, magnitudes y ubicaciones. Datos oficiales del Servicio Sismológico Nacional. Descarga la app para Android e iOS.',
+  description: defaultDescription,
   keywords: [
     'sismos méxico',
     'sismos méxico hoy',
@@ -37,24 +39,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_MX',
     siteName: 'Sismos México',
-    title: 'Sismos en México Hoy - Últimos Temblores y Alertas Sísmicas',
-    description:
-      'Información en tiempo real sobre sismos en México hoy. Consulta los últimos temblores, magnitudes y ubicaciones.',
+    title: defaultTitle,
+    description: defaultDescription,
     images: [
       {
-        url: '/logo.svg',
-        width: 512,
-        height: 512,
-        alt: 'Sismos México App Logo',
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Sismos MX',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sismos en México Hoy - Últimos Temblores',
-    description:
-      'Información en tiempo real sobre sismos en México. Datos oficiales del Servicio Sismológico Nacional.',
-    images: ['/logo.svg'],
+    title: defaultTitle,
+    description: defaultDescription,
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,

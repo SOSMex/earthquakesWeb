@@ -14,6 +14,10 @@ export const navigation: NavItemProps[] = [
     href: '/sismos/estadisticas',
   },
   {
+    label: 'Alerta sísmica',
+    href: '/alerta-sismica',
+  },
+  {
     label: 'Acerca de',
     href: '/acerca-de',
   },
