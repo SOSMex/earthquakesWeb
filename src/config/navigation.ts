@@ -6,6 +6,10 @@ export const navigation: NavItemProps[] = [
     href: '/',
   },
   {
+    label: 'Sismos hoy',
+    href: '/sismos/hoy',
+  },
+  {
     label: 'Listado de sismos',
     href: '/sismos',
   },
@@ -16,6 +20,13 @@ export const navigation: NavItemProps[] = [
   {
     label: 'Alerta sísmica',
     href: '/alerta-sismica',
+  },
+];
+
+export const footerNavigation: NavItemProps[] = [
+  {
+    label: 'Sismos hoy',
+    href: '/sismos/hoy',
   },
   {
     label: 'Acerca de',

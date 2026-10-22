@@ -63,14 +63,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  earthquakes.forEach((earthquake) => {
-    pages.push({
-      url: `${baseUrl}/sismos/${earthquake.id}`,
-      lastModified: earthquake.isoDate ? new Date(earthquake.isoDate) : quakeLastmod,
-      changeFrequency: 'weekly',
-      priority: 0.8,
+  earthquakes
+    .filter((earthquake) => earthquake.magnitude >= 4)
+    .forEach((earthquake) => {
+      pages.push({
+        url: `${baseUrl}/sismos/${earthquake.id}`,
+        lastModified: earthquake.isoDate ? new Date(earthquake.isoDate) : quakeLastmod,
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      });
     });
-  });
 
   return pages;
 }

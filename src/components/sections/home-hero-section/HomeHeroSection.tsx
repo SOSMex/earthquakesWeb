@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { StoreBadges } from '@/components/widgets/store-badges/StoreBadges';
 import { SsnSource } from '@/components/widgets/ssn-source/SsnSource';
 
@@ -10,6 +11,11 @@ function HomeHeroSection({ updatedAt }: { updatedAt?: string }) {
       </p>
       <StoreBadges className="mt-4" />
       <SsnSource updatedAt={updatedAt} className="mt-4" />
+      <p className="mt-4">
+        <Link href="/sismos/hoy" className="font-medium text-brand underline underline-offset-4">
+          Sismos hoy
+        </Link>
+      </p>
     </section>
   );
 }

@@ -6,6 +6,7 @@ import {
 } from '@/components/sections';
 import { BreadcrumbJsonLd, EarthquakesListJsonLd } from '@/components/seo';
 import { loadRecentEarthquakes } from '@/lib/earthquake-page';
+import { notifyIndexNow, quakeIndexPaths } from '@/lib/indexnow';
 import { getCanonicalSiteUrl, pageMetadata } from '@/lib/seo';
 import {
   formatDateInMexicoCity,
@@ -74,6 +75,7 @@ export default async function SismosHoyPage() {
   const emptyMessage = todays.length === 0
     ? `Sin sismos registrados hoy; últimos del ${latestOther ? shortDayLabel(latestOther.isoDate) : 'día anterior'}`
     : undefined;
+  await notifyIndexNow(['/sismos/hoy', ...quakeIndexPaths(visible)]);
 
   const siteUrl = getCanonicalSiteUrl();
   const breadcrumbs = [

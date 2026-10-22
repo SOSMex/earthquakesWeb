@@ -23,9 +23,14 @@ export function NavbarDesktop(props: NavbarDesktopProps) {
         />
       </Link>
       <nav>
-        <ul className="flex gap-10 transition-all duration-500 ease-in">
+        <ul className="flex gap-4 transition-all duration-500 ease-in lg:gap-6 xl:gap-8">
           {navigation.map((item) => (
-            <NavItem {...item} active={pathname === item.href} key={item.label} />
+            <NavItem
+              {...item}
+              active={pathname === item.href}
+              className="whitespace-nowrap text-sm xl:text-base"
+              key={item.label}
+            />
           ))}
         </ul>
       </nav>
