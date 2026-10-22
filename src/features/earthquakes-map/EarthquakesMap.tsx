@@ -1,13 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import { DEFAULT_CENTER, darkMapStyle } from '@/config';
+import { useEffect, useMemo } from 'react';
+import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
+import { darkMapStyle } from '@/config';
 import { EarthquakeProps } from '@/components/widgets';
 import { useEarthquakesData } from '@/components/providers';
 import { Markers, getMagnitudeColor } from './Markers';
 import { PerceptionMarkers } from './PerceptionMarkers';
 import { EarthquakesMapProps } from './model';
+import {
+  CameraFrame,
+  MAP_MAX_ZOOM,
+  MEXICO_CENTER,
+  MOBILE_OVERVIEW_ZOOM,
+  frameEarthquakeCamera,
+} from './frame-camera';
 
 const MAGNITUDE_LEGEND = [
   { label: 'Menor a 3.0', min: 2 },
@@ -41,7 +48,6 @@ function MapLegend() {
   );
 }
 
-const MEXICO_CENTER = { lat: 23.6345, lng: -102.5528 };
 const MOBILE_MAP_QUERY = '(max-width: 767px)';
 
 const parseMarkers = (earthquakes: EarthquakeProps[]) => {
@@ -55,63 +61,77 @@ const parseMarkers = (earthquakes: EarthquakeProps[]) => {
   }));
 };
 
+function applyCamera(map: NonNullable<ReturnType<typeof useMap>>, camera: CameraFrame) {
+  if (camera.kind === 'center') {
+    map.setCenter(camera.center);
+    map.setZoom(camera.zoom);
+    return undefined;
+  }
+
+  map.fitBounds(camera.bounds, camera.padding);
+  const clamp = () => {
+    const zoom = map.getZoom();
+    if (zoom != null && zoom > camera.maxZoom) map.setZoom(camera.maxZoom);
+  };
+  clamp();
+  return map.addListener('idle', clamp);
+}
+
+function MapCamera({
+  points,
+  selected,
+}: {
+  points: { lat: number; lng: number }[];
+  selected: { lat: number; lng: number } | null;
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map) return undefined;
+
+    let clampListener: { remove: () => void } | undefined;
+
+    const frame = () => {
+      clampListener?.remove();
+      const mobile = window.matchMedia(MOBILE_MAP_QUERY).matches;
+      const camera = frameEarthquakeCamera({ points, mobile, selected });
+      clampListener = applyCamera(map, camera);
+      if (selected) window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    frame();
+    const media = window.matchMedia(MOBILE_MAP_QUERY);
+    media.addEventListener('change', frame);
+    return () => {
+      media.removeEventListener('change', frame);
+      clampListener?.remove();
+    };
+  }, [map, points, selected]);
+
+  return null;
+}
+
 export function EarthquakesMap(props: EarthquakesMapProps) {
   const { earthquakes, perceptionLocations } = props;
   const { selected } = useEarthquakesData();
-
-  const isSingle = earthquakes?.length === 1;
-  const initialCenter = isSingle
-    ? { lat: earthquakes[0].lat, lng: earthquakes[0].lng }
-    : DEFAULT_CENTER;
-  const initialZoom = isSingle ? 8 : 4.7;
-
-  const [zoom, setZoom] = useState(initialZoom);
-  const [position, setPosition] = useState(initialCenter);
-  const [markers, setMarkers] = useState(parseMarkers(earthquakes));
-
-  useEffect(() => {
-    setMarkers(parseMarkers(earthquakes));
-  }, [earthquakes]);
-
-  useEffect(() => {
-    if (selected) {
-      setPosition({ lat: selected.lat, lng: selected.lng });
-      setZoom(10);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return undefined;
-    }
-
-    if (earthquakes?.length === 1) {
-      setPosition({ lat: earthquakes[0].lat, lng: earthquakes[0].lng });
-      setZoom(8);
-      return undefined;
-    }
-
-    const media = window.matchMedia(MOBILE_MAP_QUERY);
-    const frameMexico = () => {
-      if (media.matches) {
-        setPosition(MEXICO_CENTER);
-        setZoom(5);
-        return;
-      }
-      setPosition(DEFAULT_CENTER);
-      setZoom(4.7);
-    };
-
-    frameMexico();
-    media.addEventListener('change', frameMexico);
-    return () => media.removeEventListener('change', frameMexico);
-  }, [selected, earthquakes]);
+  const markers = useMemo(() => parseMarkers(earthquakes), [earthquakes]);
+  const selectedPoint = useMemo(() => (
+    selected && Number.isFinite(selected.lat) && Number.isFinite(selected.lng)
+      ? { lat: selected.lat, lng: selected.lng }
+      : null
+  ), [selected]);
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
       <div className="h-[min(320px,60vh)] w-full overflow-hidden md:h-96 lg:h-[31.25rem]">
         <Map
-          zoom={zoom}
-          center={position}
+          center={MEXICO_CENTER}
+          zoom={MOBILE_OVERVIEW_ZOOM}
+          maxZoom={MAP_MAX_ZOOM}
           styles={darkMapStyle}
           style={{ width: '100%', height: '100%' }}
         >
+          <MapCamera points={markers} selected={selectedPoint} />
           {perceptionLocations && perceptionLocations.length > 0 && (
             <PerceptionMarkers locations={perceptionLocations} />
           )}

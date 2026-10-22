@@ -36,8 +36,8 @@ export default function AlertaSismicaPage() {
         ]}
       />
       <FAQPageJsonLd questions={questions} />
-      <div className="flex min-h-dvh flex-col">
-        <main className="container mx-auto w-full max-w-3xl flex-1 px-4 py-10 leading-relaxed md:max-w-5xl md:px-8 md:py-16 md:text-lg lg:text-xl">
+      <div>
+        <main className="container mx-auto w-full max-w-3xl px-4 py-10 leading-relaxed md:max-w-5xl md:px-8 md:py-16 md:text-lg lg:text-xl">
           <h1 className="text-3xl font-semibold text-brand md:text-4xl">Alerta sísmica en México</h1>
           <p className="mt-4 text-lg md:text-xl lg:text-2xl">
             Sismos MX no es la alerta sísmica oficial. La alerta temprana la opera SASMEX,
