@@ -41,6 +41,9 @@ function MapLegend() {
   );
 }
 
+const MEXICO_CENTER = { lat: 23.6345, lng: -102.5528 };
+const MOBILE_MAP_QUERY = '(max-width: 767px)';
+
 const parseMarkers = (earthquakes: EarthquakeProps[]) => {
   if (!earthquakes) return [];
 
@@ -67,25 +70,48 @@ export function EarthquakesMap(props: EarthquakesMapProps) {
   const [markers, setMarkers] = useState(parseMarkers(earthquakes));
 
   useEffect(() => {
+    setMarkers(parseMarkers(earthquakes));
+  }, [earthquakes]);
+
+  useEffect(() => {
     if (selected) {
       setPosition({ lat: selected.lat, lng: selected.lng });
       setZoom(10);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else setPosition(DEFAULT_CENTER);
-  }, [selected]);
+      return undefined;
+    }
 
-  useEffect(() => {
-    setMarkers(parseMarkers(earthquakes));
     if (earthquakes?.length === 1) {
       setPosition({ lat: earthquakes[0].lat, lng: earthquakes[0].lng });
       setZoom(8);
+      return undefined;
     }
-  }, [earthquakes]);
+
+    const media = window.matchMedia(MOBILE_MAP_QUERY);
+    const frameMexico = () => {
+      if (media.matches) {
+        setPosition(MEXICO_CENTER);
+        setZoom(5);
+        return;
+      }
+      setPosition(DEFAULT_CENTER);
+      setZoom(4.7);
+    };
+
+    frameMexico();
+    media.addEventListener('change', frameMexico);
+    return () => media.removeEventListener('change', frameMexico);
+  }, [selected, earthquakes]);
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
-      <div className="h-[65vh] md:h-96 lg:h-[31.25rem]" style={{ width: '100%' }}>
-        <Map zoom={zoom} center={position} styles={darkMapStyle}>
+      <div className="h-[min(320px,60vh)] w-full overflow-hidden md:h-96 lg:h-[31.25rem]">
+        <Map
+          zoom={zoom}
+          center={position}
+          styles={darkMapStyle}
+          style={{ width: '100%', height: '100%' }}
+        >
           {perceptionLocations && perceptionLocations.length > 0 && (
             <PerceptionMarkers locations={perceptionLocations} />
           )}

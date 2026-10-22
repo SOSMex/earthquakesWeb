@@ -27,7 +27,7 @@ export function PaginatedEarthquakesTable({
     placeholderData: keepPreviousData,
   });
 
-  const maxPage = data?.pagination.total ?? 0;
+  const maxPage = data?.pagination?.total ?? 0;
 
   const handlePrevious = () => {
     if (page === 1) return;
@@ -70,7 +70,7 @@ export function PaginatedEarthquakesTable({
           {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
           <span>{page}</span> - <span> {maxPage} </span> resultados
         </p>
-        <Button variant="ghost" onClick={handleNext} disabled={page === maxPage} aria-label="Página siguiente">
+        <Button variant="ghost" onClick={handleNext} disabled={maxPage === 0 || page >= maxPage} aria-label="Página siguiente">
           <ChevronRight size={24} />
         </Button>
       </section>
