@@ -1,17 +1,17 @@
 import Image from 'next/image';
 import { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { Apple, BellRing, MapPinned, ShieldCheck, Smartphone } from 'lucide-react';
 
 const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.oscar.sismos_v2&hl=es_MX&gl=MX';
 const IOS_STORE_URL = 'https://apps.apple.com/app/id6473684021';
 
 export const metadata: Metadata = {
-  title: 'Descarga Sismos MX',
-  description:
-    'Descarga Sismos MX para recibir alertas sísmicas y consultar información de sismos en México.',
-  alternates: {
-    canonical: '/telegram',
-  },
+  ...pageMetadata({
+    title: 'Descarga Sismos MX',
+    description: 'Descarga Sismos MX para recibir avisos y consultar la información de sismos en México.',
+    path: '/telegram',
+  }),
   robots: {
     index: false,
     follow: true,

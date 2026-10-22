@@ -1,24 +1,26 @@
-import { EarthquakesSection, HomeHeroSection, DownloadSection } from '@/components/sections';
+import {
+  DownloadSection,
+  EarthquakesSection,
+  HomeHeroSection,
+} from '@/components/sections';
 import { QueryClientWrapper } from '@/components/providers';
 import { BreadcrumbJsonLd, EarthquakesListJsonLd } from '@/components/seo';
-import { Metadata } from 'next';
+import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
+import { loadRecentEarthquakes } from '@/lib/earthquake-page';
+import { getCanonicalSiteUrl, pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Últimos Sismos en México Hoy - Lista Completa de Temblores',
-  description:
-    'Lista completa de los últimos sismos en México hoy. Consulta magnitudes, ubicaciones y horarios de los temblores más recientes. Información oficial actualizada.',
-  openGraph: {
-    title: 'Últimos Sismos en México Hoy - Lista Completa',
-    description:
-      'Lista completa de los últimos sismos en México hoy. Consulta magnitudes, ubicaciones y horarios.',
-  },
-  alternates: {
-    canonical: '/sismos',
-  },
-};
+export const revalidate = 60;
 
-export default function EarthquakesPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+export const metadata = pageMetadata({
+  title: 'Últimos sismos en México',
+  description: 'Últimos sismos en México con magnitud, epicentro y hora. Datos del Servicio Sismológico Nacional.',
+  path: '/sismos',
+});
+
+export default async function EarthquakesPage() {
+  const earthquakes = await loadRecentEarthquakes(25);
+  const updatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate));
+  const siteUrl = getCanonicalSiteUrl();
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Sismos', url: `${siteUrl}/sismos` },
@@ -27,10 +29,10 @@ export default function EarthquakesPage() {
   return (
     <QueryClientWrapper>
       <BreadcrumbJsonLd items={breadcrumbs} />
-      <EarthquakesListJsonLd />
+      <EarthquakesListJsonLd earthquakes={earthquakes} />
       <main>
-        <HomeHeroSection />
-        <EarthquakesSection paginated earthquakes={[]} />
+        <HomeHeroSection updatedAt={updatedAt} />
+        <EarthquakesSection paginated earthquakes={earthquakes} />
         <DownloadSection />
       </main>
     </QueryClientWrapper>

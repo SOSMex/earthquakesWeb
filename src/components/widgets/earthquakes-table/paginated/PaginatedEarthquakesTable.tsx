@@ -55,7 +55,7 @@ export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string })
         onRowClick={(row) => handleRowClick(row)}
       />
       <section className="mx-auto mt-12 flex w-full max-w-7xl items-center justify-center gap-2 pb-12">
-        <Button variant="ghost" onClick={handlePrevious} disabled={page === 1}>
+        <Button variant="ghost" onClick={handlePrevious} disabled={page === 1} aria-label="Página anterior">
           <ChevronLeft size={24} />
         </Button>
 
@@ -63,7 +63,7 @@ export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string })
           {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
           <span>{page}</span> - <span> {maxPage} </span> resultados
         </p>
-        <Button variant="ghost" onClick={handleNext} disabled={page === maxPage}>
+        <Button variant="ghost" onClick={handleNext} disabled={page === maxPage} aria-label="Página siguiente">
           <ChevronRight size={24} />
         </Button>
       </section>

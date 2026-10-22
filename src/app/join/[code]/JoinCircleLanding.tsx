@@ -125,6 +125,7 @@ export function JoinCircleLanding({ code }: Props) {
                 type="button"
                 onClick={handleManualSubmit}
                 disabled={manualCode.length < 4}
+                aria-label="Continuar con el código"
                 className="px-4 py-3 bg-purple-600 text-white rounded-xl
                            hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >

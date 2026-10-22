@@ -30,7 +30,13 @@ export function NavbarMobile(props: NavbarMobileProps) {
 
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between bg-background px-8 py-4 md:hidden">
-      <button name="navigation menu" type="button" onClick={handleOpenMenu}>
+      <button
+        name="navigation menu"
+        type="button"
+        aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-expanded={isMenuOpen}
+        onClick={handleOpenMenu}
+      >
         <Menu className="cursor-pointer md:hidden" />
       </button>
       <nav>

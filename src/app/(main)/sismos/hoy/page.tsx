@@ -1,141 +1,81 @@
 import { Metadata } from 'next';
 import {
+  DownloadSection,
   EarthquakesSection,
   SeeMoreSection,
-  DownloadSection,
 } from '@/components/sections';
 import { BreadcrumbJsonLd, EarthquakesListJsonLd } from '@/components/seo';
-import { getEarthquakesData, parseEarthquakes } from '@/services';
+import { loadRecentEarthquakes } from '@/lib/earthquake-page';
+import { getCanonicalSiteUrl, pageMetadata } from '@/lib/seo';
 import {
   formatDateInMexicoCity,
-  getCurrentMexicoCityDate,
+  mexicoCityDateKey,
 } from '@/utils/dateTime.utility';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
-function formatDateForTitle(dateString: string): string {
-  return formatDateInMexicoCity(dateString, {
+const title = 'Sismo hoy en México: últimos temblores';
+const description = 'Temblor hoy en México: magnitud, epicentro y hora de los sismos registrados. Fuente: Servicio Sismológico Nacional.';
+
+export const metadata: Metadata = pageMetadata({
+  title,
+  description,
+  path: '/sismos/hoy',
+  ogType: 'article',
+});
+
+function todayLabel(): string {
+  return formatDateInMexicoCity(new Date(), {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
 }
 
-function formatDateForSEO(dateString: string): string {
-  return formatDateInMexicoCity(dateString, {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+function shortDayLabel(isoDate: string): string {
+  const day = formatDateInMexicoCity(isoDate, { day: 'numeric' });
+  const month = formatDateInMexicoCity(isoDate, { month: 'short' }).replace('.', '');
+  return `${day} de ${month}`;
 }
 
-function getDefaultFormattedDate(): string {
-  return getCurrentMexicoCityDate({
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-}
-
-async function getLatestEarthquakeDate(): Promise<string | null> {
-  const response = await getEarthquakesData(1);
-  const latestEarthquake = response?.data?.[0];
-  return latestEarthquake?.fecha || null;
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-  const fechaUltimoSismo = await getLatestEarthquakeDate();
-
-  const fechaFormateada = fechaUltimoSismo
-    ? formatDateForTitle(fechaUltimoSismo)
-    : getDefaultFormattedDate();
-
-  const fechaSEO = fechaUltimoSismo
-    ? formatDateForSEO(fechaUltimoSismo)
-    : '';
-
-  const title = `Sismos en México Hoy ${fechaFormateada} - Últimos Temblores`;
-  const description = `Sismos registrados en México hoy ${fechaSEO}. Consulta magnitudes, ubicaciones y horarios de los temblores más recientes. Información oficial actualizada en tiempo real.`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-    alternates: {
-      canonical: '/sismos/hoy',
-    },
-  };
-}
-
-function HoyHeroSection({ fecha }: { fecha: string }) {
+function HoyHeroSection({
+  dateLabel,
+  emptyMessage,
+}: {
+  dateLabel: string;
+  emptyMessage?: string;
+}) {
   return (
-    <section className="container mx-auto my-4 text-center">
-      <h1 className="text-4xl font-semibold text-brand md:text-5xl">
-        Sismos en México Hoy
-      </h1>
-      <p className="mt-2 text-xl font-medium text-primary">
-        {fecha}
-      </p>
-      <p className="mt-4 text-lg font-normal">
-        Información oficial de los sismos registrados hoy en México
-      </p>
+    <section className="container mx-auto my-4 px-4 text-center">
+      <h1 className="text-4xl font-semibold text-brand md:text-5xl">Sismo hoy en México</h1>
+      <h2 className="mt-2 text-2xl font-medium text-foreground">Temblor hoy en México</h2>
+      <p className="mt-2 text-xl font-medium text-primary">{dateLabel}</p>
+      {emptyMessage ? (
+        <p className="mt-4 text-lg font-medium">{emptyMessage}</p>
+      ) : (
+        <p className="mt-4 text-lg font-normal">
+          Sismos registrados hoy en México. Datos del Servicio Sismológico Nacional.
+        </p>
+      )}
     </section>
   );
 }
 
-function SismosHoyJsonLd({ fecha }: { fecha: string | null }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
-  const isoDate = fecha ? new Date(fecha).toISOString() : new Date().toISOString();
-
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'Sismos en México Hoy',
-    description: 'Lista actualizada de los sismos registrados hoy en México',
-    url: `${siteUrl}/sismos/hoy`,
-    datePublished: isoDate,
-    dateModified: isoDate,
-    publisher: {
-      '@type': 'Organization',
-      name: 'Sismos México',
-      url: siteUrl,
-    },
-    mainEntity: {
-      '@type': 'ItemList',
-      name: 'Sismos de hoy en México',
-      description: 'Listado de sismos registrados hoy',
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  );
-}
-
 export default async function SismosHoyPage() {
-  const response = await getEarthquakesData();
-  const earthquakes = parseEarthquakes(response?.data);
+  const earthquakes = await loadRecentEarthquakes(50);
+  const todayKey = mexicoCityDateKey();
+  const todays = earthquakes.filter((earthquake) => (
+    earthquake.isoDate && mexicoCityDateKey(earthquake.isoDate) === todayKey
+  ));
+  const visible = todays.length > 0 ? todays : earthquakes;
+  const latestOther = earthquakes.find((earthquake) => (
+    earthquake.isoDate && mexicoCityDateKey(earthquake.isoDate) !== todayKey
+  ));
+  const emptyMessage = todays.length === 0
+    ? `Sin sismos registrados hoy; últimos del ${latestOther ? shortDayLabel(latestOther.isoDate) : 'día anterior'}`
+    : undefined;
 
-  const fechaUltimoSismo = response?.data?.[0]?.fecha;
-  const fechaFormateada = fechaUltimoSismo
-    ? formatDateForTitle(fechaUltimoSismo)
-    : getDefaultFormattedDate();
-
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sismosmx.app';
+  const siteUrl = getCanonicalSiteUrl();
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },
     { name: 'Sismos', url: `${siteUrl}/sismos` },
@@ -145,11 +85,10 @@ export default async function SismosHoyPage() {
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbs} />
-      <EarthquakesListJsonLd />
-      <SismosHoyJsonLd fecha={fechaUltimoSismo} />
+      <EarthquakesListJsonLd path="/sismos/hoy" earthquakes={visible} />
       <main>
-        <HoyHeroSection fecha={fechaFormateada} />
-        <EarthquakesSection earthquakes={earthquakes} />
+        <HoyHeroSection dateLabel={todayLabel()} emptyMessage={emptyMessage} />
+        <EarthquakesSection earthquakes={visible} />
         <SeeMoreSection
           title="Ver todos los sismos"
           button={{

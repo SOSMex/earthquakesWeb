@@ -6,34 +6,32 @@ import {
   TestimonialsSection,
   DownloadSection,
 } from '@/components/sections';
-import { WebSiteJsonLd, OrganizationJsonLd, SoftwareAppJsonLd } from '@/components/seo';
+import { WebSiteJsonLd, OrganizationJsonLd, SoftwareAppJsonLd, EarthquakesListJsonLd } from '@/components/seo';
 import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
-import { getEarthquakesData, parseEarthquakes } from '@/services';
+import { loadRecentEarthquakes } from '@/lib/earthquake-page';
+import { pageMetadata } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: 'Sismos en México Hoy - Últimos Temblores y Alertas Sísmicas',
-  description:
-    'Consulta los sismos en México hoy en tiempo real. Información actualizada de los últimos temblores, magnitudes y ubicaciones. Datos oficiales del Servicio Sismológico Nacional.',
-  alternates: {
-    canonical: '/',
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: 'Sismos en México hoy',
+  description: 'Sismos y temblores en México hoy: magnitud, epicentro y hora. Datos del Servicio Sismológico Nacional.',
+  path: '/',
+});
 
 export default async function HomePage() {
-  const response = await getEarthquakesData();
-  const eartquakes = parseEarthquakes(response?.data);
-  const updatedAt = latestIsoTimestamp(eartquakes.map((earthquake) => earthquake.isoDate));
+  const earthquakes = await loadRecentEarthquakes(20);
+  const updatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate));
 
   return (
     <>
       <WebSiteJsonLd />
       <OrganizationJsonLd />
       <SoftwareAppJsonLd />
+      <EarthquakesListJsonLd path="/" earthquakes={earthquakes} />
       <main>
         <HomeHeroSection updatedAt={updatedAt} />
-        <EarthquakesSection earthquakes={eartquakes} />
+        <EarthquakesSection earthquakes={earthquakes} />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"
           button={{

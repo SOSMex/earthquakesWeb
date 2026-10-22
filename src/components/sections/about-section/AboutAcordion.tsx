@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   Accordion,
   AccordionContent,
@@ -14,15 +15,20 @@ export function AboutAcordion() {
         <h1 className="w-full text-center text-3xl font-semibold dark:text-white">
           Preguntas frecuentes
         </h1>
-        <p className="mb-12 mt-12 font-normal">
+        <p className="mb-4 mt-12 font-normal">
           Sabemos que en ocasiones se pueden tener dudas respecto a los sismos, así que a
           continuación tratamos de brindarte la mayor información posible.
+        </p>
+        <p className="mb-12">
+          <Link href="/alerta-sismica" className="font-medium underline">
+            Qué es la alerta sísmica SASMEX
+          </Link>
         </p>
       </section>
       <section className="mx-auto w-full max-w-7xl">
         <Accordion type="multiple">
           {faqQuestions.map((question) => (
-            <AccordionItem value={question.question}>
+            <AccordionItem key={question.question} value={question.question}>
               <AccordionTrigger className="border-2 border-black px-12 py-5 dark:border-white ">
                 {question.question}
               </AccordionTrigger>
