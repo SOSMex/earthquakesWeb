@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
 import { darkMapStyle } from '@/config';
 import { EarthquakeProps } from '@/components/widgets';
@@ -49,6 +49,20 @@ function MapLegend() {
 }
 
 const MOBILE_MAP_QUERY = '(max-width: 767px)';
+
+function useMobileMap() {
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(MOBILE_MAP_QUERY);
+    const apply = () => setMobile(media.matches);
+    apply();
+    media.addEventListener('change', apply);
+    return () => media.removeEventListener('change', apply);
+  }, []);
+
+  return mobile;
+}
 
 const parseMarkers = (earthquakes: EarthquakeProps[]) => {
   if (!earthquakes) return [];
@@ -115,6 +129,7 @@ export function EarthquakesMap(props: EarthquakesMapProps) {
   const { earthquakes, perceptionLocations } = props;
   const { selected } = useEarthquakesData();
   const markers = useMemo(() => parseMarkers(earthquakes), [earthquakes]);
+  const mobile = useMobileMap();
   const selectedPoint = useMemo(() => (
     selected && Number.isFinite(selected.lat) && Number.isFinite(selected.lng)
       ? { lat: selected.lat, lng: selected.lng }
@@ -128,6 +143,9 @@ export function EarthquakesMap(props: EarthquakesMapProps) {
           center={MEXICO_CENTER}
           zoom={MOBILE_OVERVIEW_ZOOM}
           maxZoom={MAP_MAX_ZOOM}
+          mapTypeControl={!mobile}
+          streetViewControl={!mobile}
+          fullscreenControl
           styles={darkMapStyle}
           style={{ width: '100%', height: '100%' }}
         >
