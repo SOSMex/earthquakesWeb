@@ -11,12 +11,14 @@ export function EarthquakesSection({
   mapTitle,
   perceptionLocations,
   hideTable = false,
+  showSource = true,
 }: {
   paginated?: boolean;
   earthquakes: EarthquakeProps[];
   mapTitle?: string;
   perceptionLocations?: ReportLocation[];
   hideTable?: boolean;
+  showSource?: boolean;
 }) {
   const updatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate));
 
@@ -29,7 +31,9 @@ export function EarthquakesSection({
         <>
           {!paginated && (
             <div className="md:hidden">
-              <SsnSource updatedAt={updatedAt} className="px-4 pt-2 text-center" />
+              {showSource && (
+                <SsnSource updatedAt={updatedAt} className="px-4 pt-2 text-center" />
+              )}
               <EarthquakeCardList earthquakes={earthquakes} />
             </div>
           )}
@@ -39,6 +43,7 @@ export function EarthquakesSection({
               type={paginated ? 'paginated' : 'default'}
               earthquakes={earthquakes}
               updatedAt={updatedAt}
+              showSource={showSource}
             />
           </div>
         </>

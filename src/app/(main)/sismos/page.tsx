@@ -32,7 +32,7 @@ export default async function EarthquakesPage() {
       <EarthquakesListJsonLd earthquakes={earthquakes} />
       <main>
         <HomeHeroSection updatedAt={updatedAt} />
-        <EarthquakesSection paginated earthquakes={earthquakes} />
+        <EarthquakesSection paginated earthquakes={earthquakes} showSource={false} />
         <DownloadSection />
       </main>
     </QueryClientWrapper>

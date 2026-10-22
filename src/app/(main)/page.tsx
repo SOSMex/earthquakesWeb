@@ -31,7 +31,7 @@ export default async function HomePage() {
       <EarthquakesListJsonLd path="/" earthquakes={earthquakes} />
       <main>
         <HomeHeroSection updatedAt={updatedAt} />
-        <EarthquakesSection earthquakes={earthquakes} />
+        <EarthquakesSection earthquakes={earthquakes} showSource={false} />
         <SeeMoreSection
           title="¿Quieres enterarte de más sismos?"
           button={{

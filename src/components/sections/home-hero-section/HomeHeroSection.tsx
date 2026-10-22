@@ -10,10 +10,6 @@ function HomeHeroSection({ updatedAt }: { updatedAt?: string }) {
       </p>
       <StoreBadges className="mt-4" />
       <SsnSource updatedAt={updatedAt} className="mt-4" />
-      <p className="mx-auto mt-4 max-w-3xl text-base font-normal md:text-xl">
-        A continuación te ofrecemos información oficial de los reportes de los últimos sismos
-        ocurridos en el país
-      </p>
     </section>
   );
 }

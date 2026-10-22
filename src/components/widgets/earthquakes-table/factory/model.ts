@@ -4,4 +4,5 @@ export interface EarthquakesTableFactoryProps {
   type: 'default' | 'paginated';
   earthquakes: EarthquakeProps[];
   updatedAt?: string;
+  showSource?: boolean;
 }

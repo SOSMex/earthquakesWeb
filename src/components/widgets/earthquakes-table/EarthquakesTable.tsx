@@ -23,6 +23,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   updatedAt?: string;
+  showSource?: boolean;
   // eslint-disable-next-line no-unused-vars
   onRowClick?: (row: TData) => void;
 }
@@ -31,6 +32,7 @@ export function EarthquakesTable<TData, TValue>({
   columns,
   data,
   updatedAt,
+  showSource = true,
   onRowClick,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
@@ -46,9 +48,11 @@ export function EarthquakesTable<TData, TValue>({
   return (
     <section className="container mx-auto overflow-x-auto">
       <Table className="mx-auto w-full max-w-7xl caption-top">
-        <caption className="mb-3 px-4 text-left text-sm font-normal">
-          <SsnSource updatedAt={updatedAt} />
-        </caption>
+        {showSource && (
+          <caption className="mb-3 px-4 text-left text-sm font-normal">
+            <SsnSource updatedAt={updatedAt} />
+          </caption>
+        )}
         {/* Ocultar TableHeader en resoluciones menores a lg */}
         <TableHeader className="hidden md:table-header-group">
           {table.getHeaderGroups().map((headerGroup) => (

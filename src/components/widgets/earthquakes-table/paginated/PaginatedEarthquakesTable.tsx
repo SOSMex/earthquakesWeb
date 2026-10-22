@@ -11,7 +11,13 @@ import { useEarthquakesData } from '@/components/providers';
 
 const PAGE_SIZE = 25;
 
-export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string }) {
+export function PaginatedEarthquakesTable({
+  updatedAt,
+  showSource = true,
+}: {
+  updatedAt?: string;
+  showSource?: boolean;
+}) {
   const { earthquakes, setEarthquakes, setSelected } = useEarthquakesData();
   const [page, setPage] = useState(1);
 
@@ -21,7 +27,7 @@ export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string })
     placeholderData: keepPreviousData,
   });
 
-  const maxPage = data?.pagination.total ?? 0;
+  const maxPage = data?.pagination?.total ?? 0;
 
   const handlePrevious = () => {
     if (page === 1) return;
@@ -52,6 +58,7 @@ export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string })
         columns={columns}
         data={earthquakes}
         updatedAt={pageUpdatedAt}
+        showSource={showSource}
         onRowClick={(row) => handleRowClick(row)}
       />
       <section className="mx-auto mt-12 flex w-full max-w-7xl items-center justify-center gap-2 pb-12">
@@ -63,7 +70,7 @@ export function PaginatedEarthquakesTable({ updatedAt }: { updatedAt?: string })
           {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
           <span>{page}</span> - <span> {maxPage} </span> resultados
         </p>
-        <Button variant="ghost" onClick={handleNext} disabled={page === maxPage} aria-label="Página siguiente">
+        <Button variant="ghost" onClick={handleNext} disabled={maxPage === 0 || page >= maxPage} aria-label="Página siguiente">
           <ChevronRight size={24} />
         </Button>
       </section>
