@@ -10,4 +10,6 @@ export * from './ritcher-scale-section/RitcherScaleSection';
 export * from './earthquakes-section/EarthquakesSection';
 export * from './earthquake-hero-section/EarthquakeHeroSection';
 export * from './community-reports-section/CommunityReportsSection';
+export * from './site-footer/SiteFooter';
+export * from './quake-context/QuakeContext';
 export * from './testimonials-section/TestimonialsSection';

@@ -9,6 +9,7 @@ import {
 import { WebSiteJsonLd, OrganizationJsonLd, SoftwareAppJsonLd, EarthquakesListJsonLd } from '@/components/seo';
 import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
 import { loadRecentEarthquakes } from '@/lib/earthquake-page';
+import { notifyIndexNow, quakeIndexPaths } from '@/lib/indexnow';
 import { pageMetadata } from '@/lib/seo';
 
 export const revalidate = 60;
@@ -22,6 +23,7 @@ export const metadata: Metadata = pageMetadata({
 export default async function HomePage() {
   const earthquakes = await loadRecentEarthquakes(20);
   const updatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate));
+  await notifyIndexNow(quakeIndexPaths(earthquakes));
 
   return (
     <>

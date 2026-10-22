@@ -7,6 +7,7 @@ import { QueryClientWrapper } from '@/components/providers';
 import { BreadcrumbJsonLd, EarthquakesListJsonLd } from '@/components/seo';
 import { latestIsoTimestamp } from '@/components/widgets/ssn-source/SsnSource';
 import { loadRecentEarthquakes } from '@/lib/earthquake-page';
+import { notifyIndexNow, quakeIndexPaths } from '@/lib/indexnow';
 import { getCanonicalSiteUrl, pageMetadata } from '@/lib/seo';
 
 export const revalidate = 60;
@@ -20,6 +21,7 @@ export const metadata = pageMetadata({
 export default async function EarthquakesPage() {
   const earthquakes = await loadRecentEarthquakes(25);
   const updatedAt = latestIsoTimestamp(earthquakes.map((earthquake) => earthquake.isoDate));
+  await notifyIndexNow(quakeIndexPaths(earthquakes));
   const siteUrl = getCanonicalSiteUrl();
   const breadcrumbs = [
     { name: 'Inicio', url: siteUrl },

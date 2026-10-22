@@ -5,11 +5,14 @@ import {
   DownloadSection,
   EarthquakeHeroSection,
   EarthquakesSection,
+  QuakeContext,
   SeeMoreSection,
 } from '@/components/sections';
 import { StickyDownloadBar } from '@/components/widgets';
 import { BreadcrumbJsonLd, EarthquakeEventJsonLd } from '@/components/seo';
-import { loadEarthquakeByPublicId } from '@/lib/earthquake-page';
+import { loadEarthquakeByPublicId, loadRecentEarthquakes } from '@/lib/earthquake-page';
+import { notifyIndexNow } from '@/lib/indexnow';
+import { pickRecentEarthquakes } from '@/lib/related-earthquakes';
 import { fitDescription, getCanonicalSiteUrl, pageMetadata } from '@/lib/seo';
 import { getReportLocations, getReportStats } from '@/services';
 
@@ -67,6 +70,10 @@ export default async function EarthquakePage({ params }: Props) {
 
   if (!earthquake) notFound();
 
+  const recentPool = await loadRecentEarthquakes(40);
+  const related = pickRecentEarthquakes(earthquake, recentPool, 6);
+  await notifyIndexNow([`/sismos/${earthquake.id}`]);
+
   const [reportStats, reportLocations] = await Promise.all([
     getReportStats(earthquake.id),
     getReportLocations(earthquake.id),
@@ -101,6 +108,7 @@ export default async function EarthquakePage({ params }: Props) {
             . Sismos MX no opera la alerta sísmica oficial.
           </p>
         </section>
+        <QuakeContext earthquake={earthquake} related={related} />
         <EarthquakesSection
           earthquakes={[earthquake]}
           mapTitle={`Sismo en ${place}`}

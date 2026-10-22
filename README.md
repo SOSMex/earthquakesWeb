@@ -20,6 +20,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## IndexNow
+
+Set `INDEXNOW_KEY` to the site key before building and deploying. The key is 8 to 128 characters and may contain letters, numbers, and dashes. The app serves that key, as plain text, at `/<INDEXNOW_KEY>.txt` (for example `https://sismosmx.app/<INDEXNOW_KEY>.txt`).
+
+When `/sismos/hoy` or a per-quake URL is rendered for the first time in a server process, the server POSTs those URLs to `https://api.indexnow.org/indexnow`. The same URL is not sent again by that process. A failed ping is written to the server log and does not change the page. Pings are skipped while `next build` is running.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
