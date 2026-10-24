@@ -1,0 +1,7 @@
+# Research — web001
+Decisión: conservar /event y /join y productores existentes. Razón: ya hay rutas/DTO/validador; nuevo backend o landing personal amplía privacidad y mantenimiento. Alternativa rechazada: estado de bienestar público o convertir collapseKey a catálogo.
+Decisión: validación server/no-store/10s y false distinto a red/5xx/malformed. Razón: Function existente solo distingue valid/false, no expired/used. Alternativa rechazada: sintaxis como disponibilidad o proxy/API nuevo.
+Decisión: open explícito y ayuda manual/stores, sin timer/auto-intent. Razón: installation/version no se deducen de UA/timer/localStorage. El nuevo launcher móvil requiere QA de build compatible. Alternativa rechazada: /premium como launcher o prometer mismo evento en inicio.
+Decisión: metadata privada genérica noindex/nofollow y ningún secreto en cliente; no roster. Alternativa rechazada: nombre/código en OG público.
+Decisión: Node built-in test + TypeScript ya instalado para helpers, browser para interacción/viewport; no nuevos paquetes. Razón: package.json solo tiene lint/build, no runner de tests. No asumir tests de RFC001 draft ya implementados.
+Fuentes: AGENTS.md, CLAUDE.md, .specify/memory/constitution.md, package.json, src/app/join/[code]/{page,JoinCircleLanding}.tsx, src/app/event/[id]/{page,EarthquakeStoryCard}.tsx, src/services/earthquakes/earthquakes.service.ts, public/.well-known/apple-app-site-association. develop5f8453d5e135b357aabf9926d5bb00482bbd7109. No despliegue/dispositivo/endpoint vivo probado.
