@@ -1,0 +1,64 @@
+{
+  "out": "local-review-artifact",
+  "chrome": "Chrome headless",
+  "scheme": "light",
+  "desktop": {
+    "size": [
+      320,
+      4505
+    ],
+    "png": "desktop-320.png"
+  },
+  "phone": {
+    "size": [
+      375,
+      4268
+    ],
+    "png": "phone-375.png",
+    "page_overflow_px": 0,
+    "scroll_containers": [],
+    "first_view": {
+      "display": 84,
+      "displayInResult": false,
+      "body": 25.6,
+      "ratio": 3.3,
+      "graphic": 0,
+      "graphicEl": null,
+      "field": 0,
+      "fieldEl": null,
+      "bold_move": true,
+      "summary": "display type 84px = 3.3× body · largest graphic 0% · saturated colour field 0%"
+    }
+  },
+  "nojs": {
+    "png": "nojs-320.png"
+  },
+  "surface": {
+    "dark_share": 0.08,
+    "polarity": "light",
+    "png": "measure.png"
+  },
+  "language": "light;low;grotesk;medium;square;illustration;left;choreographed;solid",
+  "declared_language": null,
+  "skeleton": "text>graphic>text>text",
+  "media": 0,
+  "dialect": "square;ruled;plain-labels;stacked-headers;grotesk",
+  "opening": "h-wide;panel-none;img-none",
+  "market_language": null,
+  "market_opening": null,
+  "first_view": {
+    "display": 84,
+    "displayInResult": false,
+    "body": 25.6,
+    "ratio": 3.3,
+    "graphic": 0,
+    "graphicEl": null,
+    "field": 0,
+    "fieldEl": null,
+    "register": null,
+    "bold_move": true,
+    "summary": "display type 84px = 3.3× body · largest graphic 0% · saturated colour field 0%",
+    "composition": "heading-and-panel"
+  },
+  "problems": []
+}

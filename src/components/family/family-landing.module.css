@@ -55,3 +55,11 @@
 @keyframes arrive{from{opacity:0;transform:translate(-20%,-50%) scale(.85)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @media(max-width:760px){.surface{padding:0 1.375rem}.header{padding:1.25rem 0}.header>span{max-width:8rem;text-align:right}.main{padding:1.875rem 0}.grid{grid-template-columns:1fr;gap:1.5rem}.copy h1{font-size:2.625rem;letter-spacing:-.075rem;margin:.75rem 0 1.125rem}.intro{font-size:.875rem}.network{max-width:300px}.host span,.guest span{width:3.125rem;height:3.125rem;font-size:.95rem}.aside{padding:1.5rem}.copy>.payoff{display:none}.trust{margin-top:1.75rem}.error h1{font-size:1.875rem}}
 @media(prefers-reduced-motion:reduce){.network *{animation:none!important}}
+
+/* Text zoom must reflow without sideways scrolling. */
+.header{flex-wrap:wrap}
+.copy h1,.aside h2,.error h1{overflow-wrap:anywhere}
+.primary{flex-wrap:wrap;overflow-wrap:anywhere}
+.stores{grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr))}
+.stores a,.code strong{min-width:0;overflow-wrap:anywhere}
+@media(max-width:760px){.surface{padding:0 clamp(.75rem,5vw,1.375rem)}.aside{padding:clamp(1rem,4vw,1.75rem)}}

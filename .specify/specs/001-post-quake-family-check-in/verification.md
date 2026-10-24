@@ -10,3 +10,6 @@ Implementación autorizada y publicada en [PR531](https://github.com/SOSMex/eart
 - [Galería, recibo y límites](https://github.com/SOSMex/earthquakesFlutter/blob/codex/post-quake-family-specs/docs/design/estoy-bien-concept/implementation-evidence/README.md).
 
 W006/W007 pendientes: Android/iOS instalados, app ausente/vieja/frío/caliente/embebido, asociaciones/certificados publicados, servidor autorizado y deploy. Abrir/copy/store no prueban apertura/instalación/aceptación. Sin merge ni despliegue. Publicar web compatible antes del cliente; rollback conserva rutas/códigos/datos.
+
+## Reflujo con texto grande
+Se reprodujo overflow de64px a375 con fuentes reales y texto200%. Ajustes de reflujo corrigen header/títulos/CTA/tiendas sin ocultar overflow; nueva medición0px. [Galería actual](../../../docs/design/post-quake-family-check-in/README.md). Lint/build vuelven a pasar tras retirar el fixture.
