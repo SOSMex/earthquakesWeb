@@ -66,6 +66,10 @@ export type PublicEventResult =
   | { status: 'notFound' }
   | { status: 'error' };
 
+export function isPublicEventId(value: string): boolean {
+  return value === value.trim() && /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/.test(value);
+}
+
 export function decodePublicEvent(value: unknown, expectedId: string): PublicEventResult {
   if (value === null || typeof value !== 'object') return { status: 'error' };
   const envelope = value as Record<string, unknown>;

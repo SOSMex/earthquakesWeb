@@ -63,3 +63,10 @@ test('automatic page metrics strip invitation codes, event IDs, queries and frag
     'https://sismosmx.app/event');
   assert.equal(links.familyAnalyticsUrl('https://sismosmx.app/legal'), 'https://sismosmx.app/legal');
 });
+
+test('public event identity rejects path, query and trailing newline injection', () => {
+  for (const id of ['../private', 'a?key=x', 'event\n', ' event', '', 'x'.repeat(129)]) {
+    assert.equal(links.isPublicEventId(id), false);
+  }
+  assert.equal(links.isPublicEventId('eq_public-2026'), true);
+});

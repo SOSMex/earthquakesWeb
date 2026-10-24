@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
+import { isPublicEventId } from '@/lib/family-links';
 import { formatDateTimeInMexicoCity } from '@/utils/dateTime.utility';
 
 export const runtime = 'edge';
@@ -54,6 +55,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
+  if (!isPublicEventId(id)) return fallbackImage();
 
   let event: {
     intensity: string;
@@ -69,7 +71,7 @@ export async function GET(
   try {
     const res = await fetch(
       `${MONITOR_ALERTS_URL}/EarthquakeEvent/${id}`,
-      { headers: { 'X-Api-Key': MONITOR_ALERTS_API_KEY } },
+      { headers: { 'X-Api-Key': MONITOR_ALERTS_API_KEY }, signal: AbortSignal.timeout(10000) },
     );
     if (res.ok) event = await res.json();
   } catch {

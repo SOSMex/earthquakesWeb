@@ -1,7 +1,7 @@
 'use server';
 
 import { BASE_URL } from '@/config';
-import { decodePublicEvent } from '@/lib/family-links';
+import { decodePublicEvent, isPublicEventId } from '@/lib/family-links';
 
 export async function getEarthquakesData(limit: number = 10, page: number = 1) {
   try {
@@ -142,7 +142,7 @@ export async function getEarthquakeEventResult(
   | { status: 'notFound' }
   | { status: 'error' }
 > {
-  if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/.test(id)) return { status: 'notFound' };
+  if (!isPublicEventId(id)) return { status: 'notFound' };
   try {
     const query = new URLSearchParams({ key: process.env.SELF_SECRET ?? '', id });
     const response = await fetch(
