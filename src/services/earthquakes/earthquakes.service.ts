@@ -1,6 +1,7 @@
 'use server';
 
 import { BASE_URL } from '@/config';
+import { decodePublicEvent } from '@/lib/family-links';
 
 export async function getEarthquakesData(limit: number = 10, page: number = 1) {
   try {
@@ -134,20 +135,35 @@ export interface EarthquakeEventResponse {
   etas: Record<string, CityEta>;
 }
 
-export async function getEarthquakeEvent(
+export async function getEarthquakeEventResult(
   id: string,
-): Promise<EarthquakeEventResponse | null> {
+): Promise<
+  | { status: 'found'; event: EarthquakeEventResponse }
+  | { status: 'notFound' }
+  | { status: 'error' }
+> {
+  if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/.test(id)) return { status: 'notFound' };
   try {
+    const query = new URLSearchParams({ key: process.env.SELF_SECRET ?? '', id });
     const response = await fetch(
-      `${BASE_URL}/api/earthquakes/event?key=${process.env.SELF_SECRET}&id=${id}`,
+      `${BASE_URL}/api/earthquakes/event?${query}`,
+      { cache: 'no-store', signal: AbortSignal.timeout(10000) },
     );
-    const json = await response.json();
-    return json?.data ?? null;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[getEarthquakeEvent] Error:', error);
-    return null;
+    if (response.status === 404) return { status: 'notFound' };
+    if (!response.ok) return { status: 'error' };
+    const result = decodePublicEvent(await response.json(), id);
+    return result.status === 'found'
+      ? { status: 'found', event: result.event as EarthquakeEventResponse } : result;
+  } catch {
+    // Never log the request URL: the existing server transport contains a secret.
+    return { status: 'error' };
   }
+}
+
+/** Compatibility adapter for existing consumers. New UI preserves errors. */
+export async function getEarthquakeEvent(id: string): Promise<EarthquakeEventResponse | null> {
+  const result = await getEarthquakeEventResult(id);
+  return result.status === 'found' ? result.event : null;
 }
 
 export async function getReportStats(

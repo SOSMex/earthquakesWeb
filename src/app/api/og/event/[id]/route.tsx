@@ -8,27 +8,6 @@ const MONITOR_ALERTS_URL = process.env.MONITOR_ALERTS_URL!;
 const MONITOR_ALERTS_API_KEY = process.env.MONITOR_ALERTS_API_KEY!;
 const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN!;
 
-const INTENSITY_ORDER = ['Extremo', 'MuyViolento', 'Violento', 'Fuerte', 'Moderado'];
-
-function getHeroEta(event: {
-  etas: Record<string, { eta?: number; intensity?: string }>;
-  latencySeconds?: number;
-}): number | null {
-  const etaValues = Object.values(event.etas);
-  const byIntensity = INTENSITY_ORDER.reduce<number | null>((found, target) => {
-    if (found !== null) return found;
-    const match = etaValues.find((c) => c.intensity === target && c.eta && c.eta > 0);
-    return match?.eta ?? null;
-  }, null);
-  if (byIntensity !== null) return byIntensity;
-  const allEtas = etaValues
-    .filter((c) => c.eta && c.eta > 0)
-    .map((c) => c.eta!);
-  if (allEtas.length > 0) return Math.min(...allEtas);
-  if (event.latencySeconds && event.latencySeconds > 0) return Math.round(event.latencySeconds);
-  return null;
-}
-
 function fallbackImage() {
   return new ImageResponse(
     (
@@ -78,6 +57,7 @@ export async function GET(
 
   let event: {
     intensity: string;
+    eventType?: string;
     location: string;
     dateUtc: string;
     latencySeconds?: number;
@@ -98,7 +78,7 @@ export async function GET(
 
   if (!event) return fallbackImage();
 
-  const heroEta = getHeroEta(event);
+  const eventLabel = event.eventType === 'drill' || event.eventType === 'drill_staging' ? 'Simulacro' : 'Sismo';
   const dateFormatted = formatDateTimeInMexicoCity(event.dateUtc, {
     day: 'numeric',
     month: 'short',
@@ -144,28 +124,16 @@ export async function GET(
             padding: '20px 60px',
           }}
         >
-          {/* Hero stat */}
-          {heroEta && (
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 16 }}>
-              <span style={{ fontSize: 80, fontWeight: 800, color: '#FFD600' }}>
-                {`${heroEta}s`}
-              </span>
-              <span style={{ fontSize: 24, color: '#a0a0b0', letterSpacing: '0.1em' }}>
-                {'de anticipaci\u00F3n'}
-              </span>
-            </div>
-          )}
-
           {/* Earthquake info */}
           <span
             style={{
-              fontSize: heroEta ? 36 : 48,
+              fontSize: 48,
               fontWeight: 700,
               color: 'white',
               textAlign: 'center',
             }}
           >
-            {`Sismo ${event.intensity} \u2014 ${event.location}`}
+            {`${eventLabel} ${event.intensity} \u2014 ${event.location}`}
           </span>
 
           <span style={{ fontSize: 24, color: '#a0a0b0', marginTop: 12 }}>

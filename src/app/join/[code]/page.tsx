@@ -1,24 +1,29 @@
 import { Metadata } from 'next';
-import { fitDescription, fitTitle, pageMetadata } from '@/lib/seo';
+import { validateCircleInvitation } from '@/services/family/invitation.service';
 import { JoinCircleLanding } from './JoinCircleLanding';
 
-type Props = {
-  params: Promise<{ code: string }>;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: 'Una invitación a tu círculo',
+  description: 'Revisa tu invitación y decide si quieres unirte en Sismos MX.',
+  robots: { index: false, follow: false, nocache: true },
+  alternates: { canonical: null },
+  openGraph: {
+    title: 'Una invitación a tu círculo | Sismos MX',
+    description: 'Tú decides si te unes. Revisa la invitación dentro de Sismos MX.',
+    images: ['/og-image.png'],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Una invitación a tu círculo | Sismos MX',
+    description: 'Revisa tu invitación dentro de Sismos MX.',
+  },
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { code } = await params;
-  return pageMetadata({
-    title: fitTitle(`Únete al círculo ${code}`),
-    description: fitDescription(
-      'Recibe notificaciones cuando tus seres queridos reporten que están bien después de un sismo.',
-    ),
-    path: `/join/${code}`,
-  });
-}
-
-export default async function JoinPage({ params }: Props) {
-  const { code } = await params;
-
-  return <JoinCircleLanding code={code} />;
+export default async function JoinPage({ params }: { params: { code: string } }) {
+  const { code } = params;
+  const validation = await validateCircleInvitation(code);
+  return <JoinCircleLanding code={code} validation={validation} />;
 }

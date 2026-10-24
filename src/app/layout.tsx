@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/AppThemeProvider/AppThemeProvider';
-import { Analytics } from '@vercel/analytics/react';
+import { SiteAnalytics } from '@/components/family/SiteAnalytics';
 import { getCanonicalSiteUrl } from '@/lib/seo';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
@@ -92,7 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
         >
           {children}
-          <Analytics />
+          <SiteAnalytics />
         </ThemeProvider>
       </body>
     </html>

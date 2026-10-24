@@ -1,123 +1,48 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { fitDescription, fitTitle, getCanonicalSiteUrl } from '@/lib/seo';
-import { getEarthquakeEvent, EarthquakeEventResponse } from '@/services';
+import { getEarthquakeEventResult } from '@/services';
+import { FamilyLookupFailure } from '@/components/family/FamilyLookupFailure';
 import { EarthquakeStoryCard } from './EarthquakeStoryCard';
 
-type Props = {
-  params: Promise<{ id: string }>;
-};
-
-const INTENSITY_ORDER = ['Extremo', 'MuyViolento', 'Violento', 'Fuerte', 'Moderado'];
-
-/**
- * RFC-033: a drill share URL must surface drill-flavored OG metadata so
- * recipients on WhatsApp / Twitter see "Completé el simulacro nacional"
- * instead of "Sismo Fuerte" — even though the URL pattern is identical
- * to a real-event share.
- */
-function isDrillEvent(eventType?: string): boolean {
-  return eventType === 'drill' || eventType === 'drill_staging';
-}
-
-/**
- * Hero stat: best available anticipation metric.
- * 1. City with highest intensity that has ETA > 0
- * 2. Any city with smallest ETA > 0
- * 3. latencySeconds from event detection
- * 4. null (no hero stat)
- */
-function getHeroEta(event: Pick<EarthquakeEventResponse, 'etas' | 'latencySeconds'>): number | null {
-  const etaValues = Object.values(event.etas);
-
-  // Find city with highest intensity that has ETA > 0
-  const byIntensity = INTENSITY_ORDER.reduce<number | null>((found, target) => {
-    if (found !== null) return found;
-    const match = etaValues.find((c) => c.intensity === target && c.eta && c.eta > 0);
-    return match?.eta ?? null;
-  }, null);
-  if (byIntensity !== null) return byIntensity;
-
-  // Fallback: smallest ETA > 0
-  const allEtas = etaValues
-    .filter((c) => c.eta && c.eta > 0)
-    .map((c) => c.eta!);
-  if (allEtas.length > 0) return Math.min(...allEtas);
-
-  // Last resort: latency from event detection
-  if (event.latencySeconds && event.latencySeconds > 0) {
-    return Math.round(event.latencySeconds);
-  }
-
-  return null;
-}
+export const dynamic = 'force-dynamic';
+type Props = { params: { id: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const event = await getEarthquakeEvent(id);
-  if (!event) return { title: 'Sismo no encontrado' };
-
-  const isDrill = isDrillEvent(event.eventType);
-  const heroEta = getHeroEta(event);
-  let title: string;
-  let description: string;
-  if (isDrill) {
-    // Drill share: reframe around participation. Same URL serves both real
-    // and drill events; only the OG payload changes.
-    title = 'Completé el simulacro nacional con Sismos MX';
-    description = 'Practiqué el simulacro nacional 2026. '
-      + 'Descarga Sismos MX para participar la próxima vez.';
-  } else if (heroEta) {
-    title = `${heroEta}s de anticipacion — Sismo ${event.intensity} en ${event.location}`;
-    description = `Sismos MX envio la alerta ${heroEta} segundos antes. Descarga la app.`;
-  } else {
-    title = `Sismo ${event.intensity} en ${event.location}`;
-    description = `Sismo ${event.intensity} en ${event.location}. Descarga Sismos MX.`;
+  const result = await getEarthquakeEventResult(params.id);
+  if (result.status !== 'found') {
+    return {
+      title: result.status === 'error' ? 'Consulta de evento no disponible' : 'Evento no disponible',
+      robots: { index: false, follow: false },
+    };
   }
-
-  const siteUrl = getCanonicalSiteUrl();
-  const pageTitle = fitTitle(title);
-  const pageDescription = fitDescription(description);
-  const ogImageUrl = `${siteUrl}/api/og/event/${id}`;
-  const brandedTitle = `${pageTitle} | Sismos MX`;
-
+  const { event } = result;
+  const drill = event.eventType === 'drill' || event.eventType === 'drill_staging';
+  const title = fitTitle(`${drill ? 'Simulacro' : 'Sismo'} en ${event.location}`);
+  const description = fitDescription(
+    'Consulta la información disponible del evento en Sismos MX. Este enlace no publica estados personales.',
+  );
+  const site = getCanonicalSiteUrl();
+  const image = `${site}/api/og/event/${encodeURIComponent(params.id)}?v=family1`;
   return {
-    title: pageTitle,
-    description: pageDescription,
-    alternates: {
-      canonical: `/event/${id}`,
-    },
+    title,
+    description,
+    alternates: { canonical: `/event/${encodeURIComponent(params.id)}` },
     openGraph: {
-      title: brandedTitle,
-      description: pageDescription,
+      title: `${title} | Sismos MX`,
+      description,
       type: 'article',
       siteName: 'Sismos MX',
-      url: `${siteUrl}/event/${id}`,
-      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: pageTitle }],
+      url: `${site}/event/${encodeURIComponent(params.id)}`,
+      images: [{ url: image, width: 1200, height: 630, alt: title }],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: brandedTitle,
-      description: pageDescription,
-      images: [ogImageUrl],
-    },
+    twitter: { card: 'summary_large_image', title, description, images: [image] },
   };
 }
 
-function buildMapUrl(lat: number, lng: number): string | null {
-  const token = process.env.MAPBOX_ACCESS_TOKEN;
-  if (!token) return null;
-  return `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/pin-l+ef4444(${lng},${lat})/${lng},${lat},5.5,0/800x300@2x?access_token=${token}&logo=false&attribution=false`;
-}
-
 export default async function EventPage({ params }: Props) {
-  const { id } = await params;
-  const event = await getEarthquakeEvent(id);
-  if (!event) notFound();
-
-  const mapUrl = event.epicenterLat != null && event.epicenterLng != null
-    ? buildMapUrl(event.epicenterLat, event.epicenterLng)
-    : null;
-
-  return <EarthquakeStoryCard event={event} heroEta={getHeroEta(event)} mapUrl={mapUrl} />;
+  const result = await getEarthquakeEventResult(params.id);
+  if (result.status === 'notFound') notFound();
+  if (result.status === 'error') return <FamilyLookupFailure />;
+  return <EarthquakeStoryCard event={result.event} />;
 }
