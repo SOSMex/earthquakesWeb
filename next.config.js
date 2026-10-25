@@ -3,6 +3,13 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/join/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'private, no-store, max-age=0' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+        ],
+      },
+      {
         // Android App Links
         source: '/.well-known/assetlinks.json',
         headers: [
