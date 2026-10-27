@@ -38,3 +38,7 @@ define phase accountability; skills are the tools each role uses.
   alert delivery contracts that belong in `MonitorAlertsApi`.
 - Keep public copy and metadata aligned with Sismos MX trust and emergency-use
   expectations.
+
+<!-- SPECKIT START -->
+Current plan: [Spec002](.specify/specs/002-store-review-link/plan.md).
+<!-- SPECKIT END -->
