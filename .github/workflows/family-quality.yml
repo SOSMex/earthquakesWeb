@@ -28,5 +28,6 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run test:family
+      - run: npm run test:review
       - run: npm run lint
       - run: npm run build

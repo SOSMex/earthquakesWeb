@@ -11,7 +11,9 @@
     "start": "next start",
     "lint": "next lint",
     "pretest:family": "tsc -p tests/family-links/tsconfig.json",
-    "test:family": "node --test tests/family-links/contracts.test.cjs"
+    "test:family": "node --test tests/family-links/contracts.test.cjs",
+    "pretest:review": "tsc -p tests/review-links/tsconfig.json",
+    "test:review": "node --test tests/review-links/contracts.test.cjs"
   },
   "dependencies": {
     "@google/markerclustererplus": "^5.1.3",
