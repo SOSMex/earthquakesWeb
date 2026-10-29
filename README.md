@@ -50,7 +50,8 @@ effect, which must run before download/review redirect effects.
 The Vercel project owner must enable **Analytics → Web Analytics** in the project
 dashboard and confirm the plan supports custom events. Deploy the reviewed change,
 then verify page views for `/`, `/descargar`, and `/calificar` and the events below.
-No dashboard settings or deployments are performed by this PR.
+No dashboard settings or production deployments are performed by this PR.
+The repository may automatically build a Vercel preview for the draft.
 
 | Event | Properties | Trigger |
 | --- | --- | --- |

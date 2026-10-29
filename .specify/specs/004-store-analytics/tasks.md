@@ -5,4 +5,4 @@
 - [x] T004 Integrate redirects, buttons and URL redaction.
 - [x] T005 Update README, privacy notice, ADR and CI.
 - [x] T006 Run local checks and record release limitations.
-- [ ] T007 Deliver draft PR and inspect remote checks.
+- [x] T007 Deliver draft PR #536; remote check results are recorded on the PR.
