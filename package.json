@@ -13,7 +13,10 @@
     "pretest:family": "tsc -p tests/family-links/tsconfig.json",
     "test:family": "node --test tests/family-links/contracts.test.cjs",
     "pretest:review": "tsc -p tests/review-links/tsconfig.json",
-    "test:review": "node --test tests/review-links/contracts.test.cjs"
+    "test:review": "node --test tests/review-links/contracts.test.cjs",
+    "typecheck": "tsc --noEmit",
+    "pretest:download": "tsc -p tests/download-links/tsconfig.json",
+    "test:download": "node --test tests/download-links/contracts.test.cjs"
   },
   "dependencies": {
     "@google/markerclustererplus": "^5.1.3",
