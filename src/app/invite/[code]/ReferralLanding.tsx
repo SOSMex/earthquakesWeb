@@ -1,5 +1,6 @@
 'use client';
 
+import { StoreLink } from '@/components/widgets/store-link/StoreLink';
 import { useEffect, useState } from 'react';
 import {
   Gift,
@@ -180,23 +181,27 @@ export function ReferralLanding({ code }: Props) {
         </p>
 
         {/* Download buttons */}
-        <a
+        <StoreLink
+          store="play"
+          placement="referral"
           href="https://play.google.com/store/apps/details?id=com.oscar.sismos_v2&hl=es_MX&gl=MX"
           className="w-full bg-gray-900 dark:bg-gray-700 text-white py-4 rounded-2xl font-semibold mb-3
                      hover:bg-gray-800 dark:hover:bg-gray-600 transition flex items-center justify-center gap-2"
         >
           <Smartphone className="w-5 h-5" />
           Descargar en Google Play
-        </a>
+        </StoreLink>
 
-        <a
+        <StoreLink
+          store="app_store"
+          placement="referral"
           href="https://apps.apple.com/app/sismos-mx/id1234567890"
           className="w-full bg-gray-900 dark:bg-gray-700 text-white py-4 rounded-2xl font-semibold
                      hover:bg-gray-800 dark:hover:bg-gray-600 transition flex items-center justify-center gap-2"
         >
           <Apple className="w-5 h-5" />
           Descargar en App Store
-        </a>
+        </StoreLink>
 
         {/* Referral info */}
         <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">

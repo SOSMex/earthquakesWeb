@@ -1,5 +1,7 @@
 'use client';
 
+import { appStoreUrl } from '@/config/stores';
+import { StoreLink } from '@/components/widgets/store-link/StoreLink';
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { useStoreUrl } from '@/utils/useStoreUrl';
@@ -29,14 +31,16 @@ export function StickyDownloadBar() {
         <p className="text-xs text-white/70">Alertas de sismos en tiempo real</p>
       </div>
 
-      <a
+      <StoreLink
+        store={storeUrl === appStoreUrl(process.env.NEXT_PUBLIC_IOS_APP_URL) ? 'app_store' : 'play'}
+        placement="sticky_bar"
         href={storeUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="shrink-0 rounded-full bg-white px-5 py-2 text-sm font-bold text-brand"
       >
         Descargar
-      </a>
+      </StoreLink>
 
       <button
         type="button"

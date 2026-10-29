@@ -14,7 +14,7 @@ export function DownloadSection({ showDailyAverage = true }: { showDailyAverage?
           <p className="text-white">
             {message}
           </p>
-          <StoreBadges className="justify-center lg:justify-start" />
+          <StoreBadges placement="download_section" className="justify-center lg:justify-start" />
         </div>
         <Image
           width={450}

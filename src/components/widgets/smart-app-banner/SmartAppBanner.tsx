@@ -1,5 +1,7 @@
 'use client';
 
+import { appStoreUrl } from '@/config/stores';
+import { StoreLink } from '@/components/widgets/store-link/StoreLink';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
@@ -52,14 +54,16 @@ export function SmartAppBanner() {
         <p className="truncate text-xs text-muted-foreground">Abre la app para más funciones</p>
       </div>
 
-      <a
+      <StoreLink
+        store={storeUrl === appStoreUrl(process.env.NEXT_PUBLIC_IOS_APP_URL) ? 'app_store' : 'play'}
+        placement="smart_banner"
         href={storeUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="shrink-0 rounded-full bg-brand px-4 py-1 text-sm font-medium text-white"
       >
         Abrir
-      </a>
+      </StoreLink>
     </div>
   );
 }

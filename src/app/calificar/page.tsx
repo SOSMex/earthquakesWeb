@@ -1,3 +1,4 @@
+import { StoreLink } from '@/components/widgets/store-link/StoreLink';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -25,18 +26,22 @@ export default function ReviewPage() {
           Comparte tu experiencia con Sismos MX. Si la tienda no se abre, elige una opción.
         </p>
         <div className="mt-8 flex flex-col gap-3">
-          <a
+          <StoreLink
+            store="play"
+            placement="review_fallback"
             href={DEFAULT_PLAY_STORE_URL}
             className="rounded-lg bg-amber-300 px-5 py-4 text-center font-semibold text-[#171322] hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
           >
             Calificar en Google Play
-          </a>
-          <a
+          </StoreLink>
+          <StoreLink
+            store="app_store"
+            placement="review_fallback"
             href={APP_STORE_REVIEW_URL}
             className="rounded-lg border border-white/30 px-5 py-4 text-center font-semibold hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
           >
             Escribir reseña en App Store
-          </a>
+          </StoreLink>
         </div>
         <p className="mt-5 text-sm leading-6 text-white/65">
           Es posible que la tienda te pida iniciar sesión.

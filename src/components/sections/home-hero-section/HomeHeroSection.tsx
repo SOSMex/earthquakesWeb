@@ -9,7 +9,7 @@ function HomeHeroSection({ updatedAt }: { updatedAt?: string }) {
       <p className="mt-3 text-base font-medium text-foreground md:text-lg">
         Recibe la alerta en tu celular
       </p>
-      <StoreBadges className="mt-4" />
+      <StoreBadges placement="hero" className="mt-4" />
       <SsnSource updatedAt={updatedAt} className="mt-4" />
       <p className="mt-4">
         <Link href="/sismos/hoy" className="font-medium text-brand underline underline-offset-4">

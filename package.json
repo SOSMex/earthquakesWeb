@@ -16,7 +16,9 @@
     "test:review": "node --test tests/review-links/contracts.test.cjs",
     "typecheck": "tsc --noEmit",
     "pretest:download": "tsc -p tests/download-links/tsconfig.json",
-    "test:download": "node --test tests/download-links/contracts.test.cjs"
+    "test:download": "node --test tests/download-links/contracts.test.cjs",
+    "pretest:analytics": "tsc -p tests/analytics/tsconfig.json",
+    "test:analytics": "node --test tests/analytics/*.test.cjs"
   },
   "dependencies": {
     "@google/markerclustererplus": "^5.1.3",

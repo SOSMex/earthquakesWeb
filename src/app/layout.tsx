@@ -91,8 +91,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          {children}
           <SiteAnalytics />
+          {children}
         </ThemeProvider>
       </body>
     </html>

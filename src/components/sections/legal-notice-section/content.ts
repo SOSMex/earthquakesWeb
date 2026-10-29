@@ -1,4 +1,14 @@
-export const content = `<p>En cumplimiento a lo dispuesto en la Ley Federal de Protecci&oacute;n de Datos Personales
+export const content = `<h2>Estadísticas de uso del sitio web</h2>
+<p>Utilizamos Vercel Web Analytics para medir visitas al sitio, tipo de dispositivo,
+    redirecciones y clics hacia Google Play y App Store. Esta medición no utiliza cookies.
+    Los eventos de tiendas incluyen la página, la tienda elegida, la ubicación del botón
+    y etiquetas de campaña cuando están presentes. No incluimos códigos de invitación,
+    identificadores de eventos sísmicos ni datos de cuenta en estos eventos.
+    Puedes consultar cómo funciona el servicio en
+    <a href="https://vercel.com/docs/analytics/privacy-policy">la documentación de privacidad
+    de Vercel Web Analytics</a>. La descarga sigue disponible si la medición está bloqueada.
+</p>
+<p>En cumplimiento a lo dispuesto en la Ley Federal de Protecci&oacute;n de Datos Personales
     en Posesi&oacute;n de los Particulares y su Reglamento (ambas en su conjunto la &ldquo;Ley
     y Reglamento&rdquo;) Oscar Emilio P&eacute;rez Mart&iacute;nez con domicilio en&nbsp;Bugambilia
     n&uacute;mero 48, Colonia San Miguel Chalma, Tlalnepantla, Estado de M&eacute;xico, es

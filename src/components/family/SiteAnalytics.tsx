@@ -1,10 +1,10 @@
 'use client';
 
 import { Analytics } from '@vercel/analytics/react';
-import { familyAnalyticsUrl } from '@/lib/family-links';
+import { analyticsUrl } from '@/lib/analytics';
 
 export function SiteAnalytics() {
   return (
-    <Analytics beforeSend={(event) => ({ ...event, url: familyAnalyticsUrl(event.url) })} />
+    <Analytics beforeSend={(event) => ({ ...event, url: analyticsUrl(event.url) })} />
   );
 }

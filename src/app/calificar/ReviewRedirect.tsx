@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { redirectToStore } from '@/lib/analytics';
 import { reviewDestination, reviewPlatform } from '@/lib/review-links';
 
 const ATTEMPT_KEY = 'sismos-review-opened';
@@ -10,11 +11,12 @@ export default function ReviewRedirect() {
 
   useEffect(() => {
     if (attempted.current) return;
-    const destination = reviewDestination(reviewPlatform(
+    const platform = reviewPlatform(
       navigator.userAgent,
       navigator.platform,
       navigator.maxTouchPoints,
-    ));
+    );
+    const destination = reviewDestination(platform);
     if (!destination) return;
     attempted.current = true;
 
@@ -26,7 +28,7 @@ export default function ReviewRedirect() {
     }
 
     try {
-      window.location.replace(destination);
+      redirectToStore(destination, platform === 'ios' ? 'app_store' : 'play', (url) => window.location.replace(url));
     } catch {
       // The server-rendered store links remain usable if automatic opening is blocked.
     }
