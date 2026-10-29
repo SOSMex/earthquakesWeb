@@ -1,0 +1,4 @@
+# Validation
+Run npm ci --ignore-scripts --no-audit --no-fund and all commands in plan.md.
+After owner activation/deployment, visit /, /descargar and /calificar with ?utm_source=youtube&utm_medium=demandgen&utm_campaign=sismos_mx_demand_gen on Android, iPhone, iPad desktop mode and desktop. Confirm correct stores, unchanged review guard, one redirect event per actual attempt and store_click on each fallback. Test all home badge/banner buttons and referral buttons with a dummy code. Block the analytics script and repeat navigation. Disable JS and verify fallback anchors.
+In Vercel verify pageviews and custom-event properties separately; inspect outgoing URLs to confirm referral codes and arbitrary queries are absent. Clear the review session key between independent attempts. Local tests do not establish dashboard ingestion or native store opening.

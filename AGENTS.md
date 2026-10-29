@@ -40,5 +40,5 @@ define phase accountability; skills are the tools each role uses.
   expectations.
 
 <!-- SPECKIT START -->
-Current plan: [Spec003](.specify/specs/003-platform-download-link/plan.md).
+Current plan: [Spec004](.specify/specs/004-store-analytics/plan.md).
 <!-- SPECKIT END -->

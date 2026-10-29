@@ -40,3 +40,42 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Web Analytics and store conversion events
+
+The root layout already mounts `SiteAnalytics` using `@vercel/analytics`.
+Keep it **before page children**: SDK 1.2.2 initializes its event queue in an
+effect, which must run before download/review redirect effects.
+
+The Vercel project owner must enable **Analytics → Web Analytics** in the project
+dashboard and confirm the plan supports custom events. Deploy the reviewed change,
+then verify page views for `/`, `/descargar`, and `/calificar` and the events below.
+No dashboard settings or production deployments are performed by this PR.
+The repository may automatically build a Vercel preview for the draft.
+
+| Event | Properties | Trigger |
+| --- | --- | --- |
+| `store_redirect` | `route`, `platform`, `store`, optional UTM fields | Before an actual automatic `/descargar` or `/calificar` navigation attempt |
+| `store_click` | Same, plus `placement` | Store anchors on home, download/review fallbacks, referral page and shared banners |
+
+Platforms: `android`, `ios`, `desktop` (includes unknown browsers).
+Stores: `play`, `app_store`. Placements: `hero`, `download_section`,
+`download_fallback`, `review_fallback`, `referral`, `smart_banner`, `sticky_bar`.
+UTM fields: `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, read from
+the current URL at the time of the event (no persisted attribution). Only the
+first value is considered; empty/unsafe values are omitted. Labels support letters,
+digits, spaces, underscores and hyphens, up to 100 characters, with at least one
+letter. Campaign operators must never include personal information in labels.
+These analytics restrictions do not change the existing store attribution URLs.
+
+Private routes are normalized to `/invite/[code]`, `/join/[code]`, `/event/[id]`.
+Page-view URLs omit private-route queries, arbitrary query fields and fragments;
+custom props never include destination URLs, codes, raw user agents or account data.
+No cookies or storage are added. The existing family event remains separate.
+
+Tracking is synchronous and best effort: failure never blocks navigation, and no
+wait/timer is added. Queueing does **not** prove that Vercel received an event before
+navigation; blocked or unloaded scripts may lose events. Verify live receipts
+separately, using the [validation guide](.specify/specs/004-store-analytics/quickstart.md).
+Run `npm run test:analytics` for payload, privacy, redirect and component checks.
+See [Vercel custom events](https://vercel.com/docs/analytics/custom-events).

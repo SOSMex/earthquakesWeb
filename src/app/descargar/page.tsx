@@ -1,3 +1,4 @@
+import { StoreLink } from '@/components/widgets/store-link/StoreLink';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,18 +28,22 @@ export default function DownloadPage({ searchParams }: { searchParams: DownloadQ
           Descarga la app para Android o iPhone. Si la tienda no se abre, elige una opción.
         </p>
         <div className="mt-8 flex flex-col gap-3">
-          <a
+          <StoreLink
+            store="play"
+            placement="download_fallback"
             href={links.playStore}
             className="rounded-lg bg-amber-300 px-5 py-4 text-center font-semibold text-[#171322] hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
           >
             Descargar en Google Play
-          </a>
-          <a
+          </StoreLink>
+          <StoreLink
+            store="app_store"
+            placement="download_fallback"
             href={links.appStore}
             className="rounded-lg border border-white/30 px-5 py-4 text-center font-semibold hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
           >
             Descargar en App Store
-          </a>
+          </StoreLink>
         </div>
         <Link href="/" className="mt-8 inline-block text-sm text-white/80 underline underline-offset-4">
           Volver a Sismos MX
