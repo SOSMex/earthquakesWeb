@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   quality:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, sosmex-linux]
     timeout-minutes: 15
     env:
       NEXT_TELEMETRY_DISABLED: '1'
